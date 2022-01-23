@@ -84,13 +84,17 @@ def getPlayerDetails(player_id):
 
 def getBothSquadDetails():
     """
-
-    :return:
+    1. Extract both squad ids
+    2. Extract each player details from their ids and add them to the global variable bothSquadDetails
+    :return:None
     """
-    global bothSquadDetails, totalPlayers
+    global totalPlayers
 
+    # 1. Extract both squad ids
     both_squad_ids = getBothSquadIds()
     totalPlayers = len(both_squad_ids)
+
+    # 2. Extract each player details from their ids and add them to the global variable bothSquadDetails
     for player_id in both_squad_ids:
         getPlayerDetails(player_id)
     pass
