@@ -11,7 +11,6 @@ import requests
 
 # Global Variable
 # global bothSquadDetails, totalPlayers
-
 bothSquadDetails = {}
 sleepTime = 1
 totalPlayers = 0
@@ -23,8 +22,11 @@ def getBothSquadIds():
     2. Using BeautifulSoup extract html text and separate player id's from players url
     :return: List of all player ids in both teams
     """
+
+    # 1. convert match url into squads url.
     match_squad_link = matchUrl.replace("live-cricket-score", "match-squads")
 
+    # 2. Using BeautifulSoup extract html text and separate player id's from players url
     html_text = requests.get(match_squad_link, time.sleep(sleepTime)).text
     soup = BeautifulSoup(html_text, "lxml")
 
