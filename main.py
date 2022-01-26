@@ -10,13 +10,12 @@ import time
 
 import pandas as pd
 from bs4 import BeautifulSoup
+from espncricinfo.match import Match
 
 import requests
 
 # Global Variable
 # global bothSquadDetails
-from espncricinfo.match import Match
-
 bothSquadDetails = {}
 sleepTime = 1
 totalPlayers = 0
@@ -53,7 +52,7 @@ def getPlayerDetails(player_id) -> None:
     :param player_id: int
     :return: None
     """
-    global bothSquadDetails, totalPlayers, names2Ids
+    global bothSquadDetails, totalPlayers
     print(f"{totalPlayers} players to download")
 
     # 1. Get Player API link
@@ -295,7 +294,7 @@ def downloadRecentMatchRecords(player_matches_url, player_id) -> None:
 
     # 3.2B Get match ids for generating additional info and update table_body
     recent_matches_ids = []
-    additional_info = {"MATCH_CLASS": [], "TOTAL_RUNS": [], "TOTAL_WICKETS": []}
+    additional_info = {"MATCH_CLASS": [], "TOTAL_RUNS": [], "TOTAL_WICKETS": [], "PERFORMANCE": []}
     table_body.update(additional_info)
 
     # 3.3 extract values and add them to table_body
@@ -348,6 +347,26 @@ def downloadRecentMatchRecords(player_matches_url, player_id) -> None:
 
         pagesLeft -= 1
 
+    # Performance
+    for i in range(len(table_body["TOTAL_WICKETS"])):
+        runs = 0
+        wickets = 0
+        if "BAT" in table_body:
+            runs = table_body["BAT"][i]
+        if "BOWL" in table_body:
+            wickets = table_body["BOWL"][i]
+        match_runs = table_body["TOTAL_RUNS"][i]
+        match_wickets = table_body["TOTAL_WICKETS"][i]
+
+        player_points = int(runs) + (int(wickets) * 25)
+        match_points = int(match_runs) + (int(match_wickets) * 25)
+
+        performance = 0
+        if (player_points != 0) and (match_points != 0):
+            performance = (player_points / match_points) * 100
+
+        table_body["PERFORMANCE"].append(round(performance, 3))
+
     # 4 Convert Dict into DataFrame and then save it in CSV format
     recent_records_df = pd.DataFrame()
     for column in table_body:
@@ -370,6 +389,222 @@ def getRecentMatchRecords() -> None:
     pass
 
 
+def getInternationalRecordsLink(player_id) -> str:
+    """
+    check if international records are available
+    :param player_id: int
+    :return: str
+    """
+    test_odi_t20i_records_link = f"https://stats.espncricinfo.com/ci/engine/player/{player_id}.html?class=11;template=results;type=allround;view=match"
+    youth_odi_link = f"https://stats.espncricinfo.com/ci/engine/player/{player_id}.html?class=21;template=results;type=allround;view=match"
+
+    html_text = requests.get(test_odi_t20i_records_link, time.sleep(sleepTime)).text
+    soup = BeautifulSoup(html_text, "lxml")
+
+    # 2. Check if the records' table is available if not return youth odi link
+    table_header = soup.find_all("tr", class_="headlinks")
+    if len(table_header) == 0:
+        return youth_odi_link
+
+    return test_odi_t20i_records_link
+
+
+def getInternationalRecordsDict(records_link) -> dict:
+    """
+    1. Extract html text from link
+    2. Check if the records' table is available if not return None
+    3. Extract table html data
+    4. Convert html table into DataFrame
+    4.1 Extract table header
+        4.1A Check if the head is empty
+    4.2 Extract table body
+        4.2A if last column then convert it to match id
+    :param records_link: str
+    :return: Dictionary
+    """
+    global pagesLeft
+    # 1. Extract html text from link
+    html_text = requests.get(records_link, time.sleep(sleepTime)).text
+    soup = BeautifulSoup(html_text, "lxml")
+
+    # 2. Check if the records' table is available if not return None
+    table_header = soup.find_all("tr", class_="headlinks")
+    if len(table_header) == 0:
+        pagesLeft -= 20
+        print(f"{pagesLeft} pages to download in international Match Records")
+        return {}
+
+    # 3. Extract table html data
+    table_data = soup.find_all("table", class_="engineTable")
+    table_data = table_data[3]
+
+    # 4. Convert html table into DataFrame
+    # 4.1 Extract table header
+    head_data = table_data.find_all("th")
+    column = []
+    table = {}
+    count = 1
+    for head in head_data:
+        header = head.text
+        # 4.1A Check if the head is empty
+        if header == "":
+            header = "empty-" + str(count)
+            count += 1
+        column.append(header)
+        table[header] = []
+
+    # 4.2 Extract table body
+    table_body_data = table_data.find_all("td")
+    num_table_cols = len(column)
+    for index in range(len(table_body_data)):
+        cols_index = index % num_table_cols
+
+        # if last column then convert it to match id
+        if cols_index == num_table_cols - 1:
+            # match_name = table_body_data[index].text
+            match_url = table_body_data[index]
+            match_url = match_url.find_all("a")
+            match_url = match_url[0]['href']
+            match_id = getMatchId(match_url)
+            type_and_id = str(match_id)
+            table[column[cols_index]].append(type_and_id)
+        elif column[cols_index] == "Start Date":
+            year = table_body_data[index].text
+            year = year.split(" ")
+            year = year[2]
+            table[column[cols_index]].append(year)
+        else:
+            table[column[cols_index]].append(table_body_data[index].text)
+
+    return table
+
+
+def getInternationalRecordsTable(player_id) -> None:
+    """
+    1. Check if the player recent match records are downloaded
+    2. Extract international matches records and extract the data
+    3. Create table and download it into a csv file
+        3.1 Create table dictionary format
+        3.2 Go through each row in a sequential order and append the extracted values
+            3.2A Extract runs
+            3.2B Extract wickets
+            3.2C Extract match
+            3.2D Extract year
+            3.2E Extract ground
+            3.2F extract Match ID
+            3.2G Extract Match Class
+            3.2H Extract Match runs and wickets
+            3.2I Calculate performance
+    4. convert dict into DataFrame and then CSV
+    :param player_id:
+    :return:
+    """
+    global pagesLeft
+
+    # 1. Check if the player recent match records are downloaded
+    file_name = str(player_id) + ".csv"
+    folder_path = "DataBase/internationalMatchRecords"
+    file_path = folder_path + "/" + file_name
+    if fileExists(file_name, folder_path):
+        pagesLeft -= 20
+        print(f"{pagesLeft} pages to download in international Match Records")
+        return
+
+    # 2. Extract international matches records and extract the data
+    records_link = getInternationalRecordsLink(player_id)
+    records_dict = getInternationalRecordsDict(records_link)
+
+    # 3. Create table and download it into a csv file
+    # 3.1 Create table dictionary format
+    table = {"MATCH": [], "BAT": [], "BALL": [], "DATE": [], "GROUND": [], "MATCH_ID": [], "MATCH_CLASS": [],
+             "TOTAL_RUNS": [], "TOTAL_WICKETS": [], "PERFORMANCE": []}
+
+    records_dict_keys_list = []
+    for keys in records_dict:
+        records_dict_keys_list.append(keys)
+
+    # 3.2 Go through each row in a sequential order and append the extracted values
+    if len(records_dict) != 0:
+        for i in range(len(records_dict["Bat1"])):
+            if currentYear - int(records_dict["Start Date"][i]) <= intPeriod:
+
+                # 3.2A Extract runs
+                bat2 = 0
+                bat1 = getRunsSimplified(records_dict["Bat1"][i])
+                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB":
+                    bat1 = 0
+                if "Bat2" in records_dict:
+                    bat2 = getRunsSimplified(records_dict["Bat2"][i])
+                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB":
+                    bat2 = 0
+                runs = int(bat1) + int(bat2)
+                table["BAT"].append(runs)
+
+                # 3.2B Extract wickets
+                wickets = records_dict["Wkts"][i]
+                if wickets == "-":
+                    wickets = 0
+                table["BALL"].append(wickets)
+
+                # 3.2C Extract match
+                table["MATCH"].append(records_dict["Opposition"][i])
+
+                # 3.2D Extract year
+                table["DATE"].append(records_dict["Start Date"][i])
+
+                # 3.2E Extract ground
+                table["GROUND"].append(records_dict["Ground"][i])
+
+                # 3.2F extract Match ID
+                key_value = records_dict_keys_list[len(records_dict) - 1]
+                match_id = records_dict[key_value][i]
+                table["MATCH_ID"].append(match_id)
+
+                match_api = Match(match_id)
+
+                # 3.2G Extract Match Class
+                table["MATCH_CLASS"].append(getMatchClass(match_api))
+
+                match_runs, match_wickets = getMatchTotalRunsAndWickets(match_api)
+
+                # 3.2H Extract Match runs and wickets
+                table["TOTAL_RUNS"].append(match_runs)
+                table["TOTAL_WICKETS"].append(match_wickets)
+
+                # 3.2I Calculate performance
+                player_points = int(runs) + (int(wickets) * 25)
+                match_points = int(match_runs) + (int(match_wickets) * 25)
+
+                performance = 0
+                if (player_points != 0) and (match_points != 0):
+                    performance = (player_points / match_points) * 100
+                table["PERFORMANCE"].append(round(performance, 3))
+
+                pagesLeft -= 1
+                print(f"{pagesLeft} pages to download in international Match Records")
+
+    # 4. convert dict into DataFrame and then CSV
+    international_records_df = pd.DataFrame()
+    for head in table:
+        international_records_df[head] = table[head]
+    international_records_df.to_csv(file_path, index=False)
+
+    pass
+
+
+def getInternationalMatchRecords() -> None:
+    """
+    Go through each player ID and generate international records table
+    :return: None
+    """
+    global bothSquadDetails, pagesLeft
+    pagesLeft = len(bothSquadDetails) * 20
+
+    for player_id in bothSquadDetails:
+        getInternationalRecordsTable(player_id)
+    pass
+
+
 def preMatchPreparation():
     """
     Extract Squad Details
@@ -382,6 +617,7 @@ def preMatchPreparation():
     """
     getBothSquadDetails()
     getRecentMatchRecords()
+    getInternationalMatchRecords()
     pass
 
 
@@ -391,5 +627,6 @@ if __name__ == '__main__':
     # vpnStatus = input("Are you using VPN?(y/n) ")
     # if vpnStatus == "y":
     #     sleepTime = 0
-
+    currentYear = 2022
+    intPeriod = 2
     preMatchPreparation()
