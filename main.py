@@ -797,6 +797,8 @@ def preMatchPreparation():
     getRecentMatchRecords()
     getInternationalMatchRecords()
     getPreMatchStatistics()
+    for i in range(3):
+        print("")
     pass
 
 
@@ -975,23 +977,16 @@ def clientInputs():
     """
     global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass
 
-    # matchUrl = "https://www.espncricinfo.com/series/pakistan-super-league-2021-22-1292999/karachi-kings-vs-multan-sultans-1st-match-1293000/live-cricket-score"
-    # matchUrl = ""
-    matchUrl = "https://www.espncricinfo.com/series/icc-under-19-world-cup-2021-22-1289790/afghanistan-under-19s-vs-sri-lanka-under-19s-super-league-quarter-final-4-1289822/live-cricket-score"
-    # matchUrl = input("Enter the ESPNCricInfo match URL: ")
+    matchUrl = input("Enter the ESPNCricInfo match URL: ")
 
-    vpnStatus = "n"
-    # vpnStatus = input("Are you using VPN?(y/n) ")
+    vpnStatus = input("Are you using VPN?(y/n) ")
     if vpnStatus == "y":
         sleepTime = 0
 
     currentYear = 2022
     intPeriod = 2
 
-    matchClass = "ODI"
-    # matchClass = "T20"
-    # matchClass = "Test"
-    # matchClass = input(" please enter type of match class (T20/Test/ODI): ")
+    matchClass = input(" please enter type of match class (T20/Test/ODI): ")
 
     checkDirectory()
     pass
