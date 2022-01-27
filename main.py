@@ -1038,4 +1038,3 @@ if __name__ == '__main__':
 
     if input("Delete unwanted files") == "y":
         deleteFiles()
-
