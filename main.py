@@ -821,7 +821,6 @@ def clientInputs():
 
     matchClass = "T20"
     # matchClass = input(" please enter type of match class (T20/Test/ODI): ")
-
     pass
 
 
