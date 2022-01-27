@@ -52,6 +52,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/DataBase/playing11Statistics/1289822.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/DataBase/playing11Statistics/1293000.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/DataBase/preMatchStatistics/1289822.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/DataBase/preMatchStatistics/1293000.csv">
           <value>
             <Attribute>
@@ -73,7 +94,35 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/DataBase/recentMatchRecords/288992.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/DataBase/recentMatchRecords/297498.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/DataBase/recentMatchRecords/316363.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/DataBase/recentMatchRecords/333066.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/DataBase/recentMatchRecords/462727.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

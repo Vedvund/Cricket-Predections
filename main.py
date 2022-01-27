@@ -26,6 +26,7 @@ vpnStatus = "n"
 matchClass = ""
 currentYear = 0
 intPeriod = 0
+considerInternational = ""
 
 
 def getBothSquadIds() -> list:
@@ -78,7 +79,8 @@ def getPlayerDetails(player_id) -> None:
         "URL": player_details["links"][0]["href"],
         "PLAYING_11_STATUS": False,
         "RECENT_FORM": 0,
-        "MATCH_CLASS_FORM": 0,
+        "RECENT_CLASS_FORM": 0,
+        "INT_CLASS_FORM": 0,
         "INTERNATIONAL_FORM": 0,
         "EXPERTS_CHOICE": 0,
         "PREDICTION": 0
@@ -767,7 +769,8 @@ def getPreMatchStatistics() -> None:
         # 2.4C Calculate average of both
         match_class_form = (recent_class + int_class) / 2
         statistics_table["MATCH_CLASS_FORM"].append(round(match_class_form, 2))
-        bothSquadDetails[player_id]["MATCH_CLASS_FORM"] = match_class_form
+        bothSquadDetails[player_id]["RECENT_CLASS_FORM"] = recent_class
+        bothSquadDetails[player_id]["INT_CLASS_FORM"] = int_class
 
     # 3.0 Create csv file from the statistics table dictionary
     match_id = getMatchId(matchUrl)
@@ -829,7 +832,7 @@ def getCleanNames(team_names_string):
     players_names = []
     for player in names:
         name = player.split(" ")
-        full_name = name[1] + " " + name[2]
+        full_name = name[0] + " " + name[1]
         players_names.append(full_name)
     return players_names
 
@@ -903,9 +906,10 @@ def extractPlayingXI():
 
 
 def getPlaying11Statistics():
-    global matchUrl, sleepTime, bothSquadDetails, totalPlayers
+    global matchUrl, sleepTime, bothSquadDetails, totalPlayers, considerInternational
 
-    table = {"NAME": [], "POSITION": [], "RECENT_FORM": [], "INT_FORM": [], "MATCH_CLASS_FORM": [],
+    table = {"NAME": [], "POSITION": [], "RECENT_FORM": [], "INT_FORM": [], "INT_CLASS_FORM": [],
+             "RECENT_CLASS_FORM": [],
              "PREDICTION": []}
 
     for player in bothSquadDetails:
@@ -917,15 +921,23 @@ def getPlaying11Statistics():
             table["POSITION"].append(position)
 
             recent_form = bothSquadDetails[player]["RECENT_FORM"]
-            table["RECENT_FORM"].append(round(recent_form,3))
+            table["RECENT_FORM"].append(round(recent_form, 3))
 
             int_form = bothSquadDetails[player]["INTERNATIONAL_FORM"]
-            table["INT_FORM"].append(round(int_form,3))
+            table["INT_FORM"].append(round(int_form, 3))
 
-            match_class = bothSquadDetails[player]["MATCH_CLASS_FORM"]
-            table["MATCH_CLASS_FORM"].append(round(match_class,3))
+            recent_class = bothSquadDetails[player]["RECENT_CLASS_FORM"]
+            table["RECENT_CLASS_FORM"].append(round(recent_class, 3))
 
-            prediction = int(recent_form) + (int(match_class) * 0.5) + (int(int_form) * 0.25)
+            int_class = bothSquadDetails[player]["INT_CLASS_FORM"]
+            table["INT_CLASS_FORM"].append(round(int_class, 3))
+
+            if considerInternational == "y":
+                prediction = ((int(recent_form) * (int(recent_class) * 0.5)) + (
+                        int(int_form) + (int(int_class) * 0.5))) / 2
+            else:
+                prediction = int(recent_form) + (int(recent_class) * 0.5)
+
             table["PREDICTION"].append(round(prediction, 3))
 
     # 3.0 Create csv file from the statistics table dictionary
@@ -937,8 +949,11 @@ def getPlaying11Statistics():
     statistics_table_df = pd.DataFrame()
     for column in table:
         statistics_table_df[column] = table[column]
-    statistics_table_df.to_csv(file_path, index=False)
-    statistics_table_df.to_csv("currentMatchPrediction.csv", index=False)
+
+    sorted_statistics_table_df = statistics_table_df.sort_values(by=['PREDICTION'], ascending=False)
+
+    sorted_statistics_table_df.to_csv(file_path, index=False)
+    sorted_statistics_table_df.to_csv("currentMatchPrediction.csv", index=False)
 
     pass
 
@@ -954,7 +969,7 @@ def afterToss():
 
 
 def checkDirectory():
-    dir = [
+    directories = [
         "DataBase/internationalMatchRecords",
         "DataBase/playing11Statistics",
         "DataBase/preMatchStatistics",
@@ -962,7 +977,7 @@ def checkDirectory():
         "DataBase/squadDetails",
     ]
 
-    for path in dir:
+    for path in directories:
         if os.path.isdir(path):
             print("exists")
         else:
@@ -975,7 +990,7 @@ def clientInputs():
 
     :return:
     """
-    global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass
+    global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass, considerInternational
 
     matchUrl = input("Enter the ESPNCricInfo match URL: ")
 
@@ -988,7 +1003,25 @@ def clientInputs():
 
     matchClass = input(" please enter type of match class (T20/Test/ODI): ")
 
+    considerInternational = input(" Do you want to consider International matches form? (y/n): ")
+
     checkDirectory()
+    # getCleanNames()
+
+    pass
+
+
+def deleteFiles():
+    path = "DataBase/squadDetails"
+    os.rmdir(path)
+    path = "DataBase/internationalMatchRecords"
+    os.rmdir(path)
+    path = "DataBase/preMatchStatistics"
+    os.rmdir(path)
+    path = "DataBase/recentMatchRecords"
+    os.rmdir(path)
+    path = "currentMatchPrediction.csv"
+    os.remove(path)
     pass
 
 
@@ -998,3 +1031,7 @@ if __name__ == '__main__':
     toss = input("Toss Done? (y/n) ")
     if toss == "y":
         afterToss()
+
+    if input("Delete unwanted files") == "y":
+        deleteFiles()
+
