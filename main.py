@@ -7,6 +7,7 @@ import json
 import os
 import re
 import time
+from typing import Union
 
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -20,6 +21,11 @@ bothSquadDetails = {}
 sleepTime = 1
 totalPlayers = 0
 pagesLeft = 0
+matchUrl = ""
+vpnStatus = "n"
+matchClass = ""
+currentYear = 0
+intPeriod = 0
 
 
 def getBothSquadIds() -> list:
@@ -28,6 +34,7 @@ def getBothSquadIds() -> list:
     2. Using BeautifulSoup extract html text and separate player id's from players url
     :return: List of all player ids in both teams
     """
+    global matchUrl
 
     # 1. convert match url into squads url.
     match_squad_link = matchUrl.replace("live-cricket-score", "match-squads")
@@ -120,7 +127,7 @@ def getBothSquadDetails() -> None:
 
     :return:None
     """
-    global totalPlayers, bothSquadDetails
+    global totalPlayers, bothSquadDetails, matchUrl
 
     # Check of the json file already exists
     match_id = getMatchId(matchUrl)
@@ -365,7 +372,7 @@ def downloadRecentMatchRecords(player_matches_url, player_id) -> None:
         if (player_points != 0) and (match_points != 0):
             performance = (player_points / match_points) * 100
 
-        table_body["PERFORMANCE"].append(round(performance, 3))
+        table_body["PERFORMANCE"].append(round(performance, 2))
 
     # 4 Convert Dict into DataFrame and then save it in CSV format
     recent_records_df = pd.DataFrame()
@@ -384,8 +391,16 @@ def getRecentMatchRecords() -> None:
     pagesLeft = len(bothSquadDetails) * 10
 
     for player_id in bothSquadDetails:
-        player_matches_url = getPlayerMatchUrl(bothSquadDetails[player_id]["URL"])
-        downloadRecentMatchRecords(player_matches_url, player_id)
+
+        # 1. Check if the player recent match records are downloaded
+        file_name = str(player_id) + ".csv"
+        folder_path = "DataBase/recentMatchRecords"
+        if fileExists(file_name, folder_path):
+            pagesLeft -= 10
+            print(f"{pagesLeft} pages to download in recent match records")
+        else:
+            player_matches_url = getPlayerMatchUrl(bothSquadDetails[player_id]["URL"])
+            downloadRecentMatchRecords(player_matches_url, player_id)
     pass
 
 
@@ -499,7 +514,7 @@ def getInternationalRecordsTable(player_id) -> None:
     :param player_id:
     :return:
     """
-    global pagesLeft
+    global pagesLeft, currentYear, intPeriod
 
     # 1. Check if the player recent match records are downloaded
     file_name = str(player_id) + ".csv"
@@ -578,7 +593,7 @@ def getInternationalRecordsTable(player_id) -> None:
                 performance = 0
                 if (player_points != 0) and (match_points != 0):
                     performance = (player_points / match_points) * 100
-                table["PERFORMANCE"].append(round(performance, 3))
+                table["PERFORMANCE"].append(round(performance, 2))
 
                 pagesLeft -= 1
                 print(f"{pagesLeft} pages to download in international Match Records")
@@ -605,6 +620,169 @@ def getInternationalMatchRecords() -> None:
     pass
 
 
+def getAllRecentPerformance(player_id) -> Union[int, float]:
+    """
+    1. open the csv file as DataFrame
+    2. calculate average performance in all recent matches
+    :param player_id: int
+    :return: int
+    """
+    file_name = f"{player_id}.csv"
+    folder_path = "DataBase/recentMatchRecords"
+    if fileExists(file_name, folder_path):
+        recent_matches = pd.read_csv(f"DataBase/recentMatchRecords/{player_id}.csv")
+        total = 0
+        count = 0
+        for index, row in recent_matches.iterrows():
+            total += row["PERFORMANCE"]
+            count += 1
+        if total == 0 or count == 0:
+            return 0
+        return round((total / count), 2)
+    print(f"{player_id} recent performance doesn't exist")
+    return 0
+
+
+def getMatchClassRecentPerformance(player_id) -> Union[int, float]:
+    """
+    1. open the csv file as DataFrame
+    2. calculate average performance in similar match class in  recent matches
+    :param player_id: int
+    :return: int
+    """
+    global matchClass
+
+    file_name = f"{player_id}.csv"
+    folder_path = "DataBase/recentMatchRecords"
+    if fileExists(file_name, folder_path):
+        recent_matches = pd.read_csv(f"DataBase/recentMatchRecords/{player_id}.csv")
+        total = 0
+        count = 0
+        for index, row in recent_matches.iterrows():
+            if matchClass == row["MATCH_CLASS"]:
+                total += row["PERFORMANCE"]
+                count += 1
+        if total == 0 or count == 0:
+            return 0
+        return round((total / count), 2)
+    print(f"{player_id} recent performance doesn't exist")
+    return 0
+
+
+def getAllInternationalPerformance(player_id) -> Union[int, float]:
+    """
+    1. open the csv file as DataFrame
+    2. calculate average performance in all international matches in the last 2 years period
+    :param player_id: int
+    :return: int
+    """
+    file_name = f"{player_id}.csv"
+    folder_path = "DataBase/internationalMatchRecords"
+    if fileExists(file_name, folder_path):
+        international_matches = pd.read_csv(f"DataBase/internationalMatchRecords/{player_id}.csv")
+        total = 0
+        count = 0
+        for index, row in international_matches.iterrows():
+            total += row["PERFORMANCE"]
+            count += 1
+        if total == 0 or count == 0:
+            return 0
+        return round((total / count), 2)
+    print(f"{player_id} international performance doesn't exist")
+    return 0
+
+
+def getMatchClassInternationalPerformance(player_id) -> Union[int, float]:
+    """
+    1. open the csv file as DataFrame
+    2. calculate average performance in similar match class in international matches
+    :param player_id: int
+    :return: int
+    """
+    global matchClass
+    file_name = f"{player_id}.csv"
+    folder_path = "DataBase/internationalMatchRecords"
+    if fileExists(file_name, folder_path):
+        international_matches = pd.read_csv(f"DataBase/internationalMatchRecords/{player_id}.csv")
+        total = 0
+        count = 0
+        for index, row in international_matches.iterrows():
+            if matchClass == row["MATCH_CLASS"]:
+                total += row["PERFORMANCE"]
+                count += 1
+        if total == 0 or count == 0:
+            return 0
+        return round((total / count), 2)
+    print(f"{player_id} international performance doesn't exist")
+    return 0
+
+
+def getPreMatchStatistics() -> None:
+    """
+    1. Create Statistics table dictionary
+    2. Generate table dictionary content
+    2.1 Extract name and position from global variable bothSquadDetails
+    2.2 Calculate all recent matches form
+    2.3 Calculate all international matches form
+    2.4 Calculate all similar class matches form (average of international and recent matches form)
+    2.4A Calculate similar class recent matches form
+    2.4B Calculate similar class international matches form
+    3. Create csv file from the statistics table dictionary
+    :return: None
+    """
+    global bothSquadDetails, matchUrl
+
+    # 1. Create Statistics table dictionary
+    statistics_table = {"NAME": [], "POSITION": [], "RECENT_CLASS_FORM": [],
+                        "INT_CLASS_FORM": [], "RECENT_FORM": [], "MATCH_CLASS_FORM": [], "INTERNATIONAL_FORM": []}
+
+    # 2. Generate table dictionary content
+    for player_id in bothSquadDetails:
+        # 2.1 Extract name and position from global variable bothSquadDetails
+        name = bothSquadDetails[player_id]["NAME"]
+        statistics_table["NAME"].append(name)
+
+        position = bothSquadDetails[player_id]["POSITION"]
+        statistics_table["POSITION"].append(position)
+
+        # 2.2 Calculate all recent matches form
+        recent_all = getAllRecentPerformance(player_id)
+        statistics_table["RECENT_FORM"].append(recent_all)
+        bothSquadDetails[player_id]["RECENT_FORM"] = recent_all
+
+        # 2.3 Calculate all international matches form
+        int_all = getAllInternationalPerformance(player_id)
+        statistics_table["INTERNATIONAL_FORM"].append(int_all)
+        bothSquadDetails[player_id]["INTERNATIONAL_FORM"] = int_all
+
+        # 2.4 Calculate all similar class matches form (average of international and recent matches form)
+        # 2.4A Calculate similar class recent matches form
+        recent_class = getMatchClassRecentPerformance(player_id)
+        statistics_table["RECENT_CLASS_FORM"].append(recent_class)
+
+        # 2.4B Calculate similar class international matches form
+        int_class = getMatchClassInternationalPerformance(player_id)
+        statistics_table["INT_CLASS_FORM"].append(int_class)
+
+        # 2.4C Calculate average of both
+        match_class_form = (recent_class + int_class) / 2
+        statistics_table["MATCH_CLASS_FORM"].append(round(match_class_form, 2))
+        bothSquadDetails[player_id]["MATCH_CLASS_FORM"] = match_class_form
+
+    # 3.0 Create csv file from the statistics table dictionary
+    match_id = getMatchId(matchUrl)
+    file_name = f"{match_id}.csv"
+    folder_path = "DataBase/preMatchStatistics"
+    file_path = folder_path + "/" + file_name
+
+    statistics_table_df = pd.DataFrame()
+    for column in statistics_table:
+        statistics_table_df[column] = statistics_table[column]
+    statistics_table_df.to_csv(file_path, index=False)
+
+    pass
+
+
 def preMatchPreparation():
     """
     Extract Squad Details
@@ -618,15 +796,35 @@ def preMatchPreparation():
     getBothSquadDetails()
     getRecentMatchRecords()
     getInternationalMatchRecords()
+    getPreMatchStatistics()
+    pass
+
+
+def clientInputs():
+    """
+
+    :return:
+    """
+    global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass
+
+    matchUrl = "https://www.espncricinfo.com/series/pakistan-super-league-2021-22-1292999/karachi-kings-vs-multan-sultans-1st-match-1293000/live-cricket-score"
+    # matchUrl = ""
+    # matchUrl = input("Enter the ESPNCricInfo match URL: ")
+
+    vpnStatus = "n"
+    # vpnStatus = input("Are you using VPN?(y/n) ")
+    if vpnStatus == "y":
+        sleepTime = 0
+
+    currentYear = 2022
+    intPeriod = 2
+
+    matchClass = "T20"
+    # matchClass = input(" please enter type of match class (T20/Test/ODI): ")
+
     pass
 
 
 if __name__ == '__main__':
-    # matchUrl = input("Enter the ESPNCricInfo match URL: ")
-    matchUrl = "https://www.espncricinfo.com/series/pakistan-super-league-2021-22-1292999/karachi-kings-vs-multan-sultans-1st-match-1293000/live-cricket-score"
-    # vpnStatus = input("Are you using VPN?(y/n) ")
-    # if vpnStatus == "y":
-    #     sleepTime = 0
-    currentYear = 2022
-    intPeriod = 2
+    clientInputs()
     preMatchPreparation()
