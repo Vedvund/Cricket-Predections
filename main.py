@@ -221,7 +221,7 @@ def getMatchClass(match_api) -> str:
     match_class = match_api.match_class
 
     classes_list = {"Twenty20": "T20", "Test": "Test", "First-class": "Test", "List A": "ODI", "ODI": "ODI",
-                    "T20I": "T20", "Youth ODI": "ODI"}
+                    "T20I": "T20", "Youth ODI": "ODI", "Youth Test": "Test"}
     if match_class == "":
         return "Warm-up"
     return classes_list[match_class]
@@ -800,6 +800,174 @@ def preMatchPreparation():
     pass
 
 
+def getPlayingXIIds(match_api) -> list:
+    """
+    1. extract playing 11 form team 1 and team 2
+    2. append all into one single list variable
+    :param match_api: dict
+    :return: list
+    """
+    # 1. extract playing 11 form team 1 and team 2
+    team_1 = match_api.team_1_players
+    team_2 = match_api.team_2_players
+
+    # 2. append all into one single list variable
+    all_playing_11_players_ids = []
+    for i in range(len(team_1)):
+        all_playing_11_players_ids.append(team_1[i]["object_id"])
+    for i in range(len(team_2)):
+        all_playing_11_players_ids.append(team_2[i]["object_id"])
+
+    return all_playing_11_players_ids
+
+
+def getCleanNames(team_names_string):
+    names = team_names_string.replace(".", "")
+    names = names.split(", ")
+    players_names = []
+    for player in names:
+        name = player.split(" ")
+        full_name = name[1] + " " + name[2]
+        players_names.append(full_name)
+    return players_names
+
+
+def getPlaying11Manually():
+    global bothSquadDetails
+
+    playing_11_names = []
+
+    team_1_string = input("Enter team 1 names: ")
+    playing_11_names += getCleanNames(team_1_string)
+
+    team_2_string = input("Enter team 2 names: ")
+    playing_11_names += getCleanNames(team_2_string)
+
+    squad_names = {}
+    for ids in bothSquadDetails:
+        name = bothSquadDetails[ids]["NAME"].lower()
+        squad_names[name] = ids
+
+    playing_11_ids = []
+    for player_name in playing_11_names:
+
+        if player_name.lower() in squad_names:
+            player_id = squad_names[player_name.lower()]
+            playing_11_ids.append(player_id)
+        else:
+            print(f"{player_name} not present in any of the squad")
+            player_id = input(f"enter {player_name} ID: ")
+            playing_11_ids.append(player_id)
+    return playing_11_ids
+
+
+def extractPlayingXI():
+    global matchUrl, sleepTime, bothSquadDetails, totalPlayers
+
+    match_id = getMatchId(matchUrl)
+    time.sleep(sleepTime)
+    available = input("is playing xi available? (y/n) ")
+    if available == "y":
+        match_api = Match(match_id)
+        playing_11_ids = getPlayingXIIds(match_api)
+    else:
+        playing_11_ids = []
+
+    if len(playing_11_ids) == 0:
+        print("Playing xi not yet announced. Please enter playing XI manually")
+        playing_11_ids = getPlaying11Manually()
+
+    totalPlayers = len(playing_11_ids)
+
+    match_id = getMatchId(matchUrl)
+    file_name = str(match_id) + ".json"
+    folder_path = "DataBase/squadDetails"
+    file_path = folder_path + "/" + file_name
+
+    for player_id in playing_11_ids:
+        if player_id in bothSquadDetails:
+            totalPlayers -= 1
+            print(f"{totalPlayers} players to download")
+        else:
+            getPlayerDetails(player_id)
+
+        bothSquadDetails[player_id]["PLAYING_11_STATUS"] = True
+
+    # 3. Save the squad details into a json file
+    with open(file_path, 'w') as json_file:
+        json.dump(bothSquadDetails, json_file)
+
+    pass
+
+
+def getPlaying11Statistics():
+    global matchUrl, sleepTime, bothSquadDetails, totalPlayers
+
+    table = {"NAME": [], "POSITION": [], "RECENT_FORM": [], "INT_FORM": [], "MATCH_CLASS_FORM": [],
+             "PREDICTION": []}
+
+    for player in bothSquadDetails:
+        if bothSquadDetails[player]["PLAYING_11_STATUS"]:
+            name = bothSquadDetails[player]["NAME"]
+            table["NAME"].append(name)
+
+            position = bothSquadDetails[player]["POSITION"]
+            table["POSITION"].append(position)
+
+            recent_form = bothSquadDetails[player]["RECENT_FORM"]
+            table["RECENT_FORM"].append(round(recent_form,3))
+
+            int_form = bothSquadDetails[player]["INTERNATIONAL_FORM"]
+            table["INT_FORM"].append(round(int_form,3))
+
+            match_class = bothSquadDetails[player]["MATCH_CLASS_FORM"]
+            table["MATCH_CLASS_FORM"].append(round(match_class,3))
+
+            prediction = int(recent_form) + (int(match_class) * 0.5) + (int(int_form) * 0.25)
+            table["PREDICTION"].append(round(prediction, 3))
+
+    # 3.0 Create csv file from the statistics table dictionary
+    match_id = getMatchId(matchUrl)
+    file_name = f"{match_id}.csv"
+    folder_path = "DataBase/playing11Statistics"
+    file_path = folder_path + "/" + file_name
+
+    statistics_table_df = pd.DataFrame()
+    for column in table:
+        statistics_table_df[column] = table[column]
+    statistics_table_df.to_csv(file_path, index=False)
+    statistics_table_df.to_csv("currentMatchPrediction.csv", index=False)
+
+    pass
+
+
+def afterToss():
+    extractPlayingXI()
+    getRecentMatchRecords()
+    getInternationalMatchRecords()
+    getPreMatchStatistics()
+    getPlaying11Statistics()
+
+    pass
+
+
+def checkDirectory():
+    dir = [
+        "DataBase/internationalMatchRecords",
+        "DataBase/playing11Statistics",
+        "DataBase/preMatchStatistics",
+        "DataBase/recentMatchRecords",
+        "DataBase/squadDetails",
+    ]
+
+    for path in dir:
+        if os.path.isdir(path):
+            print("exists")
+        else:
+            os.makedirs(path)
+    pass
+
+
 def clientInputs():
     """
 
@@ -807,8 +975,9 @@ def clientInputs():
     """
     global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass
 
-    matchUrl = "https://www.espncricinfo.com/series/pakistan-super-league-2021-22-1292999/karachi-kings-vs-multan-sultans-1st-match-1293000/live-cricket-score"
+    # matchUrl = "https://www.espncricinfo.com/series/pakistan-super-league-2021-22-1292999/karachi-kings-vs-multan-sultans-1st-match-1293000/live-cricket-score"
     # matchUrl = ""
+    matchUrl = "https://www.espncricinfo.com/series/icc-under-19-world-cup-2021-22-1289790/afghanistan-under-19s-vs-sri-lanka-under-19s-super-league-quarter-final-4-1289822/live-cricket-score"
     # matchUrl = input("Enter the ESPNCricInfo match URL: ")
 
     vpnStatus = "n"
@@ -819,11 +988,18 @@ def clientInputs():
     currentYear = 2022
     intPeriod = 2
 
-    matchClass = "T20"
+    matchClass = "ODI"
+    # matchClass = "T20"
+    # matchClass = "Test"
     # matchClass = input(" please enter type of match class (T20/Test/ODI): ")
+
+    checkDirectory()
     pass
 
 
 if __name__ == '__main__':
     clientInputs()
     preMatchPreparation()
+    toss = input("Toss Done? (y/n) ")
+    if toss == "y":
+        afterToss()
