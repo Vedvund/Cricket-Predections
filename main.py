@@ -828,11 +828,15 @@ def getPlayingXIIds(match_api) -> list:
 
 def getCleanNames(team_names_string):
     names = team_names_string.replace(".", "")
+    names = names.replace(" (wk)", "")
+    names = names.replace(" (c & wk)", "")
+    names = names.replace(" (c)", "")
     names = names.split(", ")
     players_names = []
     for player in names:
-        name = player.split(" ")
-        full_name = name[0] + " " + name[1]
+        full_name = player
+        # name = player.split(" ")
+        # full_name = name[1] + " " + name[2]
         players_names.append(full_name)
     return players_names
 
