@@ -28,6 +28,31 @@ currentYear = 0
 intPeriod = 0
 
 
+def clientInputs():
+    """
+
+    :return:
+    """
+    global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass
+
+    matchUrl = "https://www.espncricinfo.com/series/pakistan-super-league-2021-22-1292999/karachi-kings-vs-multan-sultans-1st-match-1293000/live-cricket-score"
+    # matchUrl = ""
+    # matchUrl = input("Enter the ESPNCricInfo match URL: ")
+
+    vpnStatus = "n"
+    # vpnStatus = input("Are you using VPN?(y/n) ")
+    if vpnStatus == "y":
+        sleepTime = 0
+
+    currentYear = 2022
+    intPeriod = 2
+
+    matchClass = "T20"
+    # matchClass = input(" please enter type of match class (T20/Test/ODI): ")
+
+    pass
+
+
 def getBothSquadIds() -> list:
     """
     1. convert match url into squads url.
@@ -797,31 +822,6 @@ def preMatchPreparation():
     getRecentMatchRecords()
     getInternationalMatchRecords()
     getPreMatchStatistics()
-    pass
-
-
-def clientInputs():
-    """
-
-    :return:
-    """
-    global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass
-
-    matchUrl = "https://www.espncricinfo.com/series/pakistan-super-league-2021-22-1292999/karachi-kings-vs-multan-sultans-1st-match-1293000/live-cricket-score"
-    # matchUrl = ""
-    # matchUrl = input("Enter the ESPNCricInfo match URL: ")
-
-    vpnStatus = "n"
-    # vpnStatus = input("Are you using VPN?(y/n) ")
-    if vpnStatus == "y":
-        sleepTime = 0
-
-    currentYear = 2022
-    intPeriod = 2
-
-    matchClass = "T20"
-    # matchClass = input(" please enter type of match class (T20/Test/ODI): ")
-
     pass
 
 
