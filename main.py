@@ -19,7 +19,7 @@ import requests
 # Global Variable
 # global bothSquadDetails
 bothSquadDetails = {}
-sleepTime = 1
+sleepTime = 2
 totalPlayers = 0
 pagesLeft = 0
 matchUrl = ""
@@ -1067,16 +1067,11 @@ def clientInputs() -> None:
     vpnStatus = ""
     matchClass = ""
 
-    # Duplicate above
-    matchUrl = "https://www.espncricinfo.com/series/bangladesh-premier-league-2021-22-1296684/chattogram-challengers-vs-khulna-tigers-9th-match-1296693/live-cricket-score"
-    vpnStatus = "y"
-    matchClass = "T20"
-
     # 1. Enter Match URL
-    # matchUrl = input("Enter the ESPNCricInfo match URL: ")
+    matchUrl = input("Enter the ESPNCricInfo match URL: ")
 
     # 2. If client is using vpn
-    # vpnStatus = input("Are you using VPN?(y/n) ")
+    vpnStatus = input("Are you using VPN?(y/n) ")
     if vpnStatus == "y":
         sleepTime = 0
 
@@ -1085,7 +1080,12 @@ def clientInputs() -> None:
     intPeriod = 1
 
     # 4. Enter current match class
-    # matchClass = input(" please enter type of match class (T20/Test/ODI): ")
+    matchClass = input(" please enter type of match class (T20/Test/ODI): ")
+
+    # Duplicate above
+    # matchUrl = "https://www.espncricinfo.com/series/big-bash-league-2021-22-1269637/perth-scorchers-vs-sydney-sixers-final-1269698/live-cricket-score"
+    # vpnStatus = "n"
+    # matchClass = "T20"
 
     # 5. Check directory before going forward
     checkDirectory()
@@ -1120,5 +1120,5 @@ if __name__ == '__main__':
     preMatchPreparation()
     if input("Toss Done? (y/n) ") == "y":
         afterToss()
-        if input("Delete unwanted files") == "y":
+        if input("Do you want to Delete unwanted files? (y/n) ") == "y":
             deleteFiles()
