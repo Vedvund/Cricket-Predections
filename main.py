@@ -51,6 +51,25 @@ def getBothSquadIds() -> list:
     return both_squad_ids
 
 
+def getSimplifiedPosition(player_primary_role):
+    """
+    Checks what is players' primary role and converts it to simpler format
+    :param player_primary_role: str
+    :return: str
+    """
+    if player_primary_role is None:
+        return "5 Unknown"
+    if "wicketkeeper" in player_primary_role.lower():
+        return "1 Wicketkeeper"
+    if "all" in player_primary_role.lower():
+        return "3 All Rounder"
+    if "bat" in player_primary_role.lower():
+        return "2 Batsmen"
+    if "bowl" in player_primary_role.lower():
+        return "4 Bowler"
+    return player_primary_role
+
+
 def getPlayerDetails(player_id) -> None:
     """
     1. Get Player API link
@@ -75,7 +94,7 @@ def getPlayerDetails(player_id) -> None:
         "NAME": player_details["name"],
         "ID": player_details["id"],
         "AGE": player_details["age"],
-        "POSITION": player_details["position"]["name"],
+        "POSITION": getSimplifiedPosition(player_details["position"]["name"]),
         "URL": player_details["links"][0]["href"],
         "PLAYING_11_STATUS": False,
         "RECENT_FORM": 0,
@@ -237,6 +256,13 @@ def getMatchTotalRunsAndWickets(match_api):
     :param match_api: Dictionary
     :return: int, int
     """
+
+    # Check if the match has a result
+    time.sleep(sleepTime)
+    result = match_api.result
+    if result == "No result":
+        return 0, 0
+
     innings = match_api.innings
     match_runs = 0
     match_wickets = 0
@@ -550,11 +576,11 @@ def getInternationalRecordsTable(player_id) -> None:
                 # 3.2A Extract runs
                 bat2 = 0
                 bat1 = getRunsSimplified(records_dict["Bat1"][i])
-                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB":
+                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB" or bat1 == "sub":
                     bat1 = 0
                 if "Bat2" in records_dict:
                     bat2 = getRunsSimplified(records_dict["Bat2"][i])
-                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB":
+                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB" or bat2 == "sub":
                     bat2 = 0
                 runs = int(bat1) + int(bat2)
                 table["BAT"].append(runs)
@@ -796,7 +822,7 @@ def getPreMatchStatistics() -> None:
     for column in statistics_table:
         statistics_table_df[column] = statistics_table[column]
 
-    sorted_statistics_table_df = statistics_table_df.sort_values(by=['INT_PREDICTION'], ascending=False)
+    sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
     sorted_statistics_table_df.to_csv("currentPreMatchPrediction.csv", index=False)
@@ -1012,7 +1038,7 @@ def getPlaying11Statistics() -> None:
     for column in table:
         statistics_table_df[column] = table[column]
 
-    sorted_statistics_table_df = statistics_table_df.sort_values(by=['INT_PREDICTION'], ascending=False)
+    sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
     sorted_statistics_table_df.to_csv("currentAfterTossPrediction.csv", index=False)
@@ -1120,5 +1146,5 @@ if __name__ == '__main__':
     preMatchPreparation()
     if input("Toss Done? (y/n) ") == "y":
         afterToss()
-        if input("Do you want to Delete unwanted files? (y/n) ") == "y":
-            deleteFiles()
+        # if input("Do you want to Delete unwanted files? (y/n) ") == "y":
+        #     deleteFiles()
