@@ -7,6 +7,7 @@ import json
 import os
 import re
 import time
+import timeit
 from typing import Union
 
 import pandas as pd
@@ -18,7 +19,7 @@ import requests
 # Global Variable
 # global bothSquadDetails
 bothSquadDetails = {}
-sleepTime = 1
+sleepTime = 2
 totalPlayers = 0
 pagesLeft = 0
 matchUrl = ""
@@ -26,7 +27,6 @@ vpnStatus = "n"
 matchClass = ""
 currentYear = 0
 intPeriod = 0
-considerInternational = ""
 
 
 def getBothSquadIds() -> list:
@@ -49,6 +49,25 @@ def getBothSquadIds() -> list:
     both_squad_ids = re.findall("[0-9][0-9][0-9]+", str(data))
 
     return both_squad_ids
+
+
+def getSimplifiedPosition(player_primary_role):
+    """
+    Checks what is players' primary role and converts it to simpler format
+    :param player_primary_role: str
+    :return: str
+    """
+    if player_primary_role is None:
+        return "5 Unknown"
+    if "wicketkeeper" in player_primary_role.lower():
+        return "1 Wicketkeeper"
+    if "all" in player_primary_role.lower():
+        return "3 All Rounder"
+    if "bat" in player_primary_role.lower():
+        return "2 Batsmen"
+    if "bowl" in player_primary_role.lower():
+        return "4 Bowler"
+    return player_primary_role
 
 
 def getPlayerDetails(player_id) -> None:
@@ -75,7 +94,7 @@ def getPlayerDetails(player_id) -> None:
         "NAME": player_details["name"],
         "ID": player_details["id"],
         "AGE": player_details["age"],
-        "POSITION": player_details["position"]["name"],
+        "POSITION": getSimplifiedPosition(player_details["position"]["name"]),
         "URL": player_details["links"][0]["href"],
         "PLAYING_11_STATUS": False,
         "RECENT_FORM": 0,
@@ -83,7 +102,9 @@ def getPlayerDetails(player_id) -> None:
         "INT_CLASS_FORM": 0,
         "INTERNATIONAL_FORM": 0,
         "EXPERTS_CHOICE": 0,
-        "PREDICTION": 0
+        "PREDICTION": 0,
+        "RECENT_PREDICTION": 0,
+        "INT_PREDICTION": 0
     }
     # 3B. Extract player style separately because all the players doesn't have batting style and bowling style.
     for style in player_details["style"]:
@@ -229,12 +250,19 @@ def getMatchClass(match_api) -> str:
     return classes_list[match_class]
 
 
-def getMatchTotalRunsAndWickets(match_api) -> [int, int]:
+def getMatchTotalRunsAndWickets(match_api):
     """
     Extract all runs and wickets and get total runs and total wickets of that match
     :param match_api: Dictionary
     :return: int, int
     """
+
+    # Check if the match has a result
+    time.sleep(sleepTime)
+    result = match_api.result
+    if result == "No result":
+        return 0, 0
+
     innings = match_api.innings
     match_runs = 0
     match_wickets = 0
@@ -548,11 +576,11 @@ def getInternationalRecordsTable(player_id) -> None:
                 # 3.2A Extract runs
                 bat2 = 0
                 bat1 = getRunsSimplified(records_dict["Bat1"][i])
-                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB":
+                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB" or bat1 == "sub":
                     bat1 = 0
                 if "Bat2" in records_dict:
                     bat2 = getRunsSimplified(records_dict["Bat2"][i])
-                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB":
+                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB" or bat2 == "sub":
                     bat2 = 0
                 runs = int(bat1) + int(bat2)
                 table["BAT"].append(runs)
@@ -736,7 +764,8 @@ def getPreMatchStatistics() -> None:
 
     # 1. Create Statistics table dictionary
     statistics_table = {"NAME": [], "POSITION": [], "RECENT_CLASS_FORM": [],
-                        "INT_CLASS_FORM": [], "RECENT_FORM": [], "MATCH_CLASS_FORM": [], "INTERNATIONAL_FORM": []}
+                        "INT_CLASS_FORM": [], "RECENT_FORM": [], "MATCH_CLASS_FORM": [], "INTERNATIONAL_FORM": [],
+                        "RECENT_PREDICTION": [], "INT_PREDICTION": []}
 
     # 2. Generate table dictionary content
     for player_id in bothSquadDetails:
@@ -772,6 +801,17 @@ def getPreMatchStatistics() -> None:
         bothSquadDetails[player_id]["RECENT_CLASS_FORM"] = recent_class
         bothSquadDetails[player_id]["INT_CLASS_FORM"] = int_class
 
+        # 2.4D Calculate Recent prediction
+        recent_prediction = int(recent_all) + (int(recent_class) * 0.5)
+        statistics_table["RECENT_PREDICTION"].append(round(recent_prediction, 2))
+        bothSquadDetails[player_id]["RECENT_PREDICTION"] = round(recent_prediction, 2)
+
+        # 2.4E Calculate International prediction
+        int_prediction = ((int(recent_all) * (int(recent_class) * 0.5)) + (
+                int(int_all) + (int(int_class) * 0.5))) / 2
+        statistics_table["INT_PREDICTION"].append(round(int_prediction, 2))
+        bothSquadDetails[player_id]["INT_PREDICTION"] = round(int_prediction, 2)
+
     # 3.0 Create csv file from the statistics table dictionary
     match_id = getMatchId(matchUrl)
     file_name = f"{match_id}.csv"
@@ -781,7 +821,11 @@ def getPreMatchStatistics() -> None:
     statistics_table_df = pd.DataFrame()
     for column in statistics_table:
         statistics_table_df[column] = statistics_table[column]
-    statistics_table_df.to_csv(file_path, index=False)
+
+    sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
+
+    sorted_statistics_table_df.to_csv(file_path, index=False)
+    sorted_statistics_table_df.to_csv("currentPreMatchPrediction.csv", index=False)
 
     pass
 
@@ -796,12 +840,19 @@ def preMatchPreparation():
     Calculate Pre Match Statistics.
     :return: None
     """
+    # Start stopwatch
+    start = timeit.default_timer()
+
     getBothSquadDetails()
     getRecentMatchRecords()
     getInternationalMatchRecords()
     getPreMatchStatistics()
     for i in range(3):
         print("")
+
+    # Stop stopwatch & calculate elapsed time
+    stop = timeit.default_timer()
+    print('Time elapsed for Pre Match Statistics: ', round(((stop - start) / 60), 2), "'s")
     pass
 
 
@@ -826,11 +877,23 @@ def getPlayingXIIds(match_api) -> list:
     return all_playing_11_players_ids
 
 
-def getCleanNames(team_names_string):
-    names = team_names_string.replace(".", "")
-    names = names.replace(" (wk)", "")
-    names = names.replace(" (c & wk)", "")
+def getCleanNames(team_names_string) -> list:
+    """
+    1. Clear the string from unwanted text
+    2. split the string into names
+    3. send the names list
+    :param team_names_string: str 
+    :return: list
+    """
+    # 1. Clear the string from unwanted text
+    names = team_names_string.replace(" (wk)", "")
+    names = names.replace(" (capt.)", "")
     names = names.replace(" (c)", "")
+    names = names.replace(" (capt./wk)", "")
+    names = names.replace(" (c & wk)", "")
+    names = names.replace(".", "")
+
+    # 2. split the string into names
     names = names.split(", ")
     players_names = []
     for player in names:
@@ -838,28 +901,37 @@ def getCleanNames(team_names_string):
         # name = player.split(" ")
         # full_name = name[1] + " " + name[2]
         players_names.append(full_name)
+
+    # 3. send the names list
     return players_names
 
 
-def getPlaying11Manually():
+def getPlaying11Manually() -> list:
+    """
+    # 1. Extract playing 11 names of both teams from input and combine them
+    # 2. extract all squad players names from bothSquadDetails
+    # 3. Check if the name exists in bothSquadDetails. if yes extract player id, else take player id from input()
+    # 4. send all the player ids
+    :return: list
+    """
     global bothSquadDetails
 
+    # 1. Extract playing 11 names of both teams from input and combine them
     playing_11_names = []
-
     team_1_string = input("Enter team 1 names: ")
     playing_11_names += getCleanNames(team_1_string)
-
     team_2_string = input("Enter team 2 names: ")
     playing_11_names += getCleanNames(team_2_string)
 
+    # 2. extract all squad players names from bothSquadDetails
     squad_names = {}
     for ids in bothSquadDetails:
         name = bothSquadDetails[ids]["NAME"].lower()
         squad_names[name] = ids
 
+    # 3. Check if the name exists in bothSquadDetails. if yes extract player id, else take player id from input()
     playing_11_ids = []
     for player_name in playing_11_names:
-
         if player_name.lower() in squad_names:
             player_id = squad_names[player_name.lower()]
             playing_11_ids.append(player_id)
@@ -867,12 +939,25 @@ def getPlaying11Manually():
             print(f"{player_name} not present in any of the squad")
             player_id = input(f"enter {player_name} ID: ")
             playing_11_ids.append(player_id)
+
+    # 4. send all the player ids
     return playing_11_ids
 
 
-def extractPlayingXI():
+def extractPlayingXI() -> None:
+    """
+    1. Extract both teams Playing 11 ids
+    1.1 Check if playing 11 is available
+    1.2 if playing 11 is not available then extract ids manually
+    2. check if extracted ids are in bothSquadDetails and change the status of PLAYING_11_STATUS in bothSquadDetails
+    2.1 if not present then extract player details and add them to bothSquadDetails
+    2.2 change the status of PLAYING_11_STATUS of each player in bothSquadDetails
+    :return: None
+    """
     global matchUrl, sleepTime, bothSquadDetails, totalPlayers
 
+    # 1. Extract both teams Playing 11 ids
+    # 1.1 Check if playing 11 is available
     match_id = getMatchId(matchUrl)
     time.sleep(sleepTime)
     available = input("is playing xi available? (y/n) ")
@@ -882,17 +967,14 @@ def extractPlayingXI():
     else:
         playing_11_ids = []
 
+    # 1.2 if playing 11 is not available then extract ids manually
     if len(playing_11_ids) == 0:
         print("Playing xi not yet announced. Please enter playing XI manually")
         playing_11_ids = getPlaying11Manually()
 
+    # 2. check if extracted ids are in bothSquadDetails and change the status of PLAYING_11_STATUS in bothSquadDetails
+    # 2.1 if not present then extract player details and add them to bothSquadDetails
     totalPlayers = len(playing_11_ids)
-
-    match_id = getMatchId(matchUrl)
-    file_name = str(match_id) + ".json"
-    folder_path = "DataBase/squadDetails"
-    file_path = folder_path + "/" + file_name
-
     for player_id in playing_11_ids:
         if player_id in bothSquadDetails:
             totalPlayers -= 1
@@ -900,22 +982,26 @@ def extractPlayingXI():
         else:
             getPlayerDetails(player_id)
 
+        # 2.2 change the status of PLAYING_11_STATUS of each player in bothSquadDetails
         bothSquadDetails[player_id]["PLAYING_11_STATUS"] = True
-
-    # 3. Save the squad details into a json file
-    with open(file_path, 'w') as json_file:
-        json.dump(bothSquadDetails, json_file)
-
     pass
 
 
-def getPlaying11Statistics():
-    global matchUrl, sleepTime, bothSquadDetails, totalPlayers, considerInternational
+def getPlaying11Statistics() -> None:
+    """
+    # 1.0 Create table dictionary with empty values
+    # 2.0 check PLAYING_11_STATUS in bothSquadDetails and extract data and append them to the table
+    # 3.0 Create csv file from the statistics table dictionary
 
+    :return:
+    """
+    global matchUrl, sleepTime, bothSquadDetails, totalPlayers
+
+    # 1.0 Create table dictionary with empty values
     table = {"NAME": [], "POSITION": [], "RECENT_FORM": [], "INT_FORM": [], "INT_CLASS_FORM": [],
-             "RECENT_CLASS_FORM": [],
-             "PREDICTION": []}
+             "RECENT_CLASS_FORM": [], "RECENT_PREDICTION": [], "INT_PREDICTION": []}
 
+    # 2.0 check PLAYING_11_STATUS in bothSquadDetails and extract data and append them to the table
     for player in bothSquadDetails:
         if bothSquadDetails[player]["PLAYING_11_STATUS"]:
             name = bothSquadDetails[player]["NAME"]
@@ -936,15 +1022,13 @@ def getPlaying11Statistics():
             int_class = bothSquadDetails[player]["INT_CLASS_FORM"]
             table["INT_CLASS_FORM"].append(round(int_class, 3))
 
-            if considerInternational == "y":
-                prediction = ((int(recent_form) * (int(recent_class) * 0.5)) + (
-                        int(int_form) + (int(int_class) * 0.5))) / 2
-            else:
-                prediction = int(recent_form) + (int(recent_class) * 0.5)
+            int_class = bothSquadDetails[player]["RECENT_PREDICTION"]
+            table["RECENT_PREDICTION"].append(round(int_class, 3))
 
-            table["PREDICTION"].append(round(prediction, 3))
+            int_class = bothSquadDetails[player]["INT_PREDICTION"]
+            table["INT_PREDICTION"].append(round(int_class, 3))
 
-    # 3.0 Create csv file from the statistics table dictionary
+    # 3.0 Create csv file from table dictionary
     match_id = getMatchId(matchUrl)
     file_name = f"{match_id}.csv"
     folder_path = "DataBase/playing11Statistics"
@@ -954,10 +1038,10 @@ def getPlaying11Statistics():
     for column in table:
         statistics_table_df[column] = table[column]
 
-    sorted_statistics_table_df = statistics_table_df.sort_values(by=['PREDICTION'], ascending=False)
+    sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
-    sorted_statistics_table_df.to_csv("currentMatchPrediction.csv", index=False)
+    sorted_statistics_table_df.to_csv("currentAfterTossPrediction.csv", index=False)
 
     pass
 
@@ -972,7 +1056,11 @@ def afterToss():
     pass
 
 
-def checkDirectory():
+def checkDirectory() -> None:
+    """
+    Check if required directory exists or not, ff it doesn't exist then Create directory
+    :return: None
+    """
     directories = [
         "DataBase/internationalMatchRecords",
         "DataBase/playing11Statistics",
@@ -989,52 +1077,74 @@ def checkDirectory():
     pass
 
 
-def clientInputs():
+def clientInputs() -> None:
     """
-
-    :return:
+    1. Enter Match URL
+    2. If client is using vpn
+    3. Check the international period. Not more than 1 year works
+    4. Enter current match class
+    5. Check directory before going forward
+    6. check clearNames before going forward
+    :return: None
     """
-    global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass, considerInternational
+    global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass
 
+    matchUrl = ""
+    vpnStatus = ""
+    matchClass = ""
+
+    # 1. Enter Match URL
     matchUrl = input("Enter the ESPNCricInfo match URL: ")
 
+    # 2. If client is using vpn
     vpnStatus = input("Are you using VPN?(y/n) ")
     if vpnStatus == "y":
         sleepTime = 0
 
+    # 3. Check the international period. Not more than 1 year works
     currentYear = 2022
-    intPeriod = 2
+    intPeriod = 1
 
+    # 4. Enter current match class
     matchClass = input(" please enter type of match class (T20/Test/ODI): ")
 
-    considerInternational = input(" Do you want to consider International matches form? (y/n): ")
+    # Duplicate above
+    # matchUrl = "https://www.espncricinfo.com/series/big-bash-league-2021-22-1269637/perth-scorchers-vs-sydney-sixers-final-1269698/live-cricket-score"
+    # vpnStatus = "n"
+    # matchClass = "T20"
 
+    # 5. Check directory before going forward
     checkDirectory()
-    # getCleanNames()
 
+    # 6. check clearNames before going forward
+    # getCleanNames()
     pass
 
 
-def deleteFiles():
-    path = "DataBase/squadDetails"
-    os.rmdir(path)
-    path = "DataBase/internationalMatchRecords"
-    os.rmdir(path)
-    path = "DataBase/preMatchStatistics"
-    os.rmdir(path)
-    path = "DataBase/recentMatchRecords"
-    os.rmdir(path)
-    path = "currentMatchPrediction.csv"
-    os.remove(path)
+def deleteFiles() -> None:
+    """
+    Delete all required files 
+    add directory path into omit_paths to omit that path from deleting
+    :return: None
+    """
+    omit_paths = ["DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
+
+    if input("Do you want to delete all files in DataBase? (y/n)") == "y":
+        omit_paths = ["DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
+
+    all_paths = ["DataBase/squadDetails", "DataBase/internationalMatchRecords", "DataBase/recentMatchRecords",
+                 "DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
+
+    for path in all_paths:
+        if path not in omit_paths:
+            os.rmdir(path)
     pass
 
 
 if __name__ == '__main__':
     clientInputs()
     preMatchPreparation()
-    toss = input("Toss Done? (y/n) ")
-    if toss == "y":
+    if input("Toss Done? (y/n) ") == "y":
         afterToss()
-
-    if input("Delete unwanted files") == "y":
-        deleteFiles()
+        # if input("Do you want to Delete unwanted files? (y/n) ") == "y":
+        #     deleteFiles()

@@ -3,62 +3,6 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="/DataBase/internationalMatchRecords/1158538.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/internationalMatchRecords/1185475.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/internationalMatchRecords/1248374.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/internationalMatchRecords/290948.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/internationalMatchRecords/434429.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/internationalMatchRecords/462727.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/internationalMatchRecords/827051.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/playing11Statistics/1289822.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="/DataBase/playing11Statistics/1293000.csv">
           <value>
             <Attribute>
@@ -66,70 +10,28 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/DataBase/preMatchStatistics/1289822.csv">
+        <entry key="/DataBase/preMatchStatistics/1269698.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/DataBase/preMatchStatistics/1293000.csv">
+        <entry key="/DataBase/recentMatchRecords/932569.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/DataBase/recentMatchRecords/227762.csv">
+        <entry key="/currentAfterTossPrediction.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/DataBase/recentMatchRecords/233901.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/recentMatchRecords/288992.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/recentMatchRecords/297498.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/recentMatchRecords/316363.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/recentMatchRecords/333066.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/DataBase/recentMatchRecords/462727.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/currentMatchPrediction.csv">
+        <entry key="/currentPreMatchPrediction.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
