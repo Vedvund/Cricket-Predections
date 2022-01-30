@@ -1128,17 +1128,27 @@ def deleteFiles() -> None:
     add directory path into omit_paths to omit that path from deleting
     :return: None
     """
-    omit_paths = ["DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
+    global bothSquadDetails, matchUrl
+    # omit_paths = ["DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
+    #
+    # if input("Do you want to delete all files in DataBase? (y/n)") == "y":
+    #     omit_paths = ["DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
+    #
+    # all_paths = ["DataBase/squadDetails", "DataBase/internationalMatchRecords", "DataBase/recentMatchRecords",
+    #              "DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
 
-    if input("Do you want to delete all files in DataBase? (y/n)") == "y":
-        omit_paths = ["DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
+    for player_id in bothSquadDetails:
+        file_name = str(player_id) + ".csv"
+        os.remove(f"DataBase/recentMatchRecords/{file_name}")
+        os.remove(f"DataBase/internationalMatchRecords/{file_name}")
 
-    all_paths = ["DataBase/squadDetails", "DataBase/internationalMatchRecords", "DataBase/recentMatchRecords",
-                 "DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
+    match_id = getMatchId(matchUrl)
+    file_name = str(match_id) + ".json"
+    os.remove(f"DataBase/squadDetails/{file_name}")
 
-    for path in all_paths:
-        if path not in omit_paths:
-            os.rmdir(path)
+    # for path in all_paths:
+    #     if path not in omit_paths:
+    #         os.rmdir(path)
     pass
 
 
@@ -1147,5 +1157,5 @@ if __name__ == '__main__':
     preMatchPreparation()
     if input("Toss Done? (y/n) ") == "y":
         afterToss()
-        # if input("Do you want to Delete unwanted files? (y/n) ") == "y":
-        #     deleteFiles()
+        if input("Do you want to Delete unwanted files? (y/n) ") == "y":
+            deleteFiles()
