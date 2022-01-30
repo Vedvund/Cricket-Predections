@@ -403,7 +403,7 @@ def downloadRecentMatchRecords(player_matches_url, player_id) -> None:
         if (player_points != 0) and (match_points != 0):
             performance = (player_points / match_points) * 100
 
-        table_body["PERFORMANCE"].append(round(performance, 2))
+        table_body["PERFORMANCE"].append(round(performance, 3))
 
     # 4 Convert Dict into DataFrame and then save it in CSV format
     recent_records_df = pd.DataFrame()
@@ -624,7 +624,7 @@ def getInternationalRecordsTable(player_id) -> None:
                 performance = 0
                 if (player_points != 0) and (match_points != 0):
                     performance = (player_points / match_points) * 100
-                table["PERFORMANCE"].append(round(performance, 2))
+                table["PERFORMANCE"].append(round(performance, 3))
 
                 pagesLeft -= 1
                 print(f"{pagesLeft} pages to download in international Match Records, Current player id: {player_id}")
@@ -669,7 +669,7 @@ def getAllRecentPerformance(player_id) -> Union[int, float]:
             count += 1
         if total == 0 or count == 0:
             return 0
-        return round((total / count), 2)
+        return round((total / count), 3)
     print(f"{player_id} recent performance doesn't exist")
     return 0
 
@@ -695,7 +695,7 @@ def getMatchClassRecentPerformance(player_id) -> Union[int, float]:
                 count += 1
         if total == 0 or count == 0:
             return 0
-        return round((total / count), 2)
+        return round((total / count), 3)
     print(f"{player_id} recent performance doesn't exist")
     return 0
 
@@ -718,7 +718,7 @@ def getAllInternationalPerformance(player_id) -> Union[int, float]:
             count += 1
         if total == 0 or count == 0:
             return 0
-        return round((total / count), 2)
+        return round((total / count), 3)
     print(f"{player_id} international performance doesn't exist")
     return 0
 
@@ -743,7 +743,7 @@ def getMatchClassInternationalPerformance(player_id) -> Union[int, float]:
                 count += 1
         if total == 0 or count == 0:
             return 0
-        return round((total / count), 2)
+        return round((total / count), 3)
     print(f"{player_id} international performance doesn't exist")
     return 0
 
@@ -798,20 +798,20 @@ def getPreMatchStatistics() -> None:
 
         # 2.4C Calculate average of both
         match_class_form = (recent_class + int_class) / 2
-        statistics_table["MATCH_CLASS_FORM"].append(round(match_class_form, 2))
+        statistics_table["MATCH_CLASS_FORM"].append(round(match_class_form, 3))
         bothSquadDetails[player_id]["RECENT_CLASS_FORM"] = recent_class
         bothSquadDetails[player_id]["INT_CLASS_FORM"] = int_class
 
         # 2.4D Calculate Recent prediction
         recent_prediction = int(recent_all) + (int(recent_class) * 0.5)
-        statistics_table["RECENT_PREDICTION"].append(round(recent_prediction, 2))
-        bothSquadDetails[player_id]["RECENT_PREDICTION"] = round(recent_prediction, 2)
+        statistics_table["RECENT_PREDICTION"].append(round(recent_prediction, 3))
+        bothSquadDetails[player_id]["RECENT_PREDICTION"] = round(recent_prediction, 3)
 
         # 2.4E Calculate International prediction
         int_prediction = ((int(recent_all) * (int(recent_class) * 0.5)) + (
                 int(int_all) + (int(int_class) * 0.5))) / 2
-        statistics_table["INT_PREDICTION"].append(round(int_prediction, 2))
-        bothSquadDetails[player_id]["INT_PREDICTION"] = round(int_prediction, 2)
+        statistics_table["INT_PREDICTION"].append(round(int_prediction, 3))
+        bothSquadDetails[player_id]["INT_PREDICTION"] = round(int_prediction, 3)
 
     # 3.0 Create csv file from the statistics table dictionary
     match_id = getMatchId(matchUrl)
@@ -853,7 +853,7 @@ def preMatchPreparation():
 
     # Stop stopwatch & calculate elapsed time
     stop = timeit.default_timer()
-    print('Time elapsed for Pre Match Statistics: ', round(((stop - start) / 60), 2), "'s")
+    print('Time elapsed for Pre Match Statistics: ', round(((stop - start) / 60), 3), "'s")
     pass
 
 
@@ -1072,7 +1072,7 @@ def checkDirectory() -> None:
 
     for path in directories:
         if os.path.isdir(path):
-            print(f"{directories} exists")
+            print(f"{path} exists")
         else:
             os.makedirs(path)
     pass
