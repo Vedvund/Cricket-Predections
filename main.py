@@ -80,7 +80,7 @@ def getPlayerDetails(player_id) -> None:
     :return: None
     """
     global bothSquadDetails, totalPlayers
-    print(f"{totalPlayers} players to download")
+    print(f"{totalPlayers} players to download, Current player ID: {player_id}")
 
     # 1. Get Player API link
     player_api = f"http://core.espnuk.org/v2/sports/cricket/athletes/{player_id}"
@@ -302,13 +302,14 @@ def downloadRecentMatchRecords(player_matches_url, player_id) -> None:
     file_path = folder_path + "/" + file_name
     if fileExists(file_name, folder_path):
         pagesLeft -= 10
-        print(f"{pagesLeft} pages to download in recent match records")
+
+        print(f"{file_name} exists & {pagesLeft} pages to download in recent match records")
         return
 
     # 2. Check if player_matches_url exists or not
     if player_matches_url is None:
         pagesLeft -= 10
-        print(f"{pagesLeft} pages to download in recent match records")
+        print(f" matches page doesn't exists for {player_id} & {pagesLeft} pages to download in recent match records")
         return
 
     # 3. Extract recent records' table from player_matches_url
@@ -368,7 +369,7 @@ def downloadRecentMatchRecords(player_matches_url, player_id) -> None:
     # 3.4 Additional Details like ["MATCH_CLASS", "TOTAL_RUNS", "TOTAL_WICKETS"]
 
     for match_id in recent_matches_ids:
-        print(f"{pagesLeft} pages to download in recent match records")
+        print(f"{pagesLeft} pages to download in recent match records, Current player id: {player_id}")
 
         time.sleep(sleepTime)
         match_api = Match(match_id)
@@ -427,7 +428,7 @@ def getRecentMatchRecords() -> None:
         folder_path = "DataBase/recentMatchRecords"
         if fileExists(file_name, folder_path):
             pagesLeft -= 10
-            print(f"{pagesLeft} pages to download in recent match records")
+            print(f"for {player_id} recent matches rewords are already downloaded & {pagesLeft} pages to download in recent match records")
         else:
             player_matches_url = getPlayerMatchUrl(bothSquadDetails[player_id]["URL"])
             downloadRecentMatchRecords(player_matches_url, player_id)
@@ -476,7 +477,7 @@ def getInternationalRecordsDict(records_link) -> dict:
     table_header = soup.find_all("tr", class_="headlinks")
     if len(table_header) == 0:
         pagesLeft -= 20
-        print(f"{pagesLeft} pages to download in international Match Records")
+        print(f"No international records found, {pagesLeft} pages to download in international Match Records")
         return {}
 
     # 3. Extract table html data
@@ -552,7 +553,7 @@ def getInternationalRecordsTable(player_id) -> None:
     file_path = folder_path + "/" + file_name
     if fileExists(file_name, folder_path):
         pagesLeft -= 20
-        print(f"{pagesLeft} pages to download in international Match Records")
+        print(f"For {player_id} International records are already downloaded, {pagesLeft} pages to download in international Match Records")
         return
 
     # 2. Extract international matches records and extract the data
@@ -626,7 +627,7 @@ def getInternationalRecordsTable(player_id) -> None:
                 table["PERFORMANCE"].append(round(performance, 2))
 
                 pagesLeft -= 1
-                print(f"{pagesLeft} pages to download in international Match Records")
+                print(f"{pagesLeft} pages to download in international Match Records, Current player id: {player_id}")
 
     # 4. convert dict into DataFrame and then CSV
     international_records_df = pd.DataFrame()
@@ -978,7 +979,7 @@ def extractPlayingXI() -> None:
     for player_id in playing_11_ids:
         if player_id in bothSquadDetails:
             totalPlayers -= 1
-            print(f"{totalPlayers} players to download")
+            print(f"{bothSquadDetails[player_id]['NAME']} already exists in Squad Details, {totalPlayers} players left  to download")
         else:
             getPlayerDetails(player_id)
 
@@ -1071,7 +1072,7 @@ def checkDirectory() -> None:
 
     for path in directories:
         if os.path.isdir(path):
-            print("exists")
+            print(f"{directories} exists")
         else:
             os.makedirs(path)
     pass

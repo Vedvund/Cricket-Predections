@@ -10,21 +10,14 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/DataBase/preMatchStatistics/1269698.csv">
+        <entry key="/DataBase/playing11Statistics/1293002.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/DataBase/recentMatchRecords/932569.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/currentAfterTossPrediction.csv">
+        <entry key="/DataBase/playing11Statistics/1293003.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
