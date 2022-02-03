@@ -38,14 +38,28 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/currentAfterTossPrediction.csv">
+        <entry key="/DataBase/playing11Statistics/1293006.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/currentPreMatchPrediction.csv">
+        <entry key="/DataBase/playing11Statistics/1293007.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/DataBase/playing11Statistics/1293008.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/all_matches_top3.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

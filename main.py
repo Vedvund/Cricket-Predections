@@ -1132,8 +1132,29 @@ def clientInputs() -> None:
     pass
 
 
+def getAllTop3():
+    path = "DataBase/playing11Statistics"
+    all_match_files = os.listdir(path)
+    all_match_files.sort()
+    top3_df = pd.DataFrame(
+        columns=["NAME", "POSITION", "RECENT_FORM", "INT_FORM", "INT_CLASS_FORM", "RECENT_CLASS_FORM",
+                 "RECENT_PREDICTION", "INT_PREDICTION", "DREAM11"]
+    )
+    for match_file in all_match_files:
+        match_df = pd.read_csv(f"DataBase/playing11Statistics/{match_file}")
+        match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
+        result = match_df.iloc[[1, 2, 3]]
+        frames = [top3_df, result]
+        top3_df = pd.concat(frames)
+
+    top3_df = top3_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
+    top3_df.to_csv("all_matches_top3.csv", index=False)
+    pass
+
+
 if __name__ == '__main__':
     clientInputs()
     preMatchPreparation()
     if input("Toss Done? (y/n) ") == "y":
         afterToss()
+    # getAllTop3()
