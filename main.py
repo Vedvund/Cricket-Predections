@@ -1155,6 +1155,6 @@ def getAllTop3():
 if __name__ == '__main__':
     clientInputs()
     preMatchPreparation()
+    getAllTop3()
     if input("Toss Done? (y/n) ") == "y":
         afterToss()
-    # getAllTop3()
