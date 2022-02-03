@@ -428,7 +428,8 @@ def getRecentMatchRecords() -> None:
         folder_path = "DataBase/recentMatchRecords"
         if fileExists(file_name, folder_path):
             pagesLeft -= 10
-            print(f"for {player_id} recent matches rewords are already downloaded & {pagesLeft} pages to download in recent match records")
+            print(
+                f"for {player_id} recent matches rewords are already downloaded & {pagesLeft} pages to download in recent match records")
         else:
             player_matches_url = getPlayerMatchUrl(bothSquadDetails[player_id]["URL"])
             downloadRecentMatchRecords(player_matches_url, player_id)
@@ -553,7 +554,8 @@ def getInternationalRecordsTable(player_id) -> None:
     file_path = folder_path + "/" + file_name
     if fileExists(file_name, folder_path):
         pagesLeft -= 20
-        print(f"For {player_id} International records are already downloaded, {pagesLeft} pages to download in international Match Records")
+        print(
+            f"For {player_id} International records are already downloaded, {pagesLeft} pages to download in international Match Records")
         return
 
     # 2. Extract international matches records and extract the data
@@ -887,12 +889,19 @@ def getCleanNames(team_names_string) -> list:
     :return: list
     """
     # 1. Clear the string from unwanted text
-    names = team_names_string.replace(" (wk)", "")
-    names = names.replace(" (capt.)", "")
-    names = names.replace(" (c)", "")
-    names = names.replace(" (capt./wk)", "")
-    names = names.replace(" (c & wk)", "")
-    names = names.replace(".", "")
+    names = team_names_string
+    unwanted_text = [" (wk)", " (c)", " (c)(wk)", " (capt.)", " (capt./wk)", " (c & wk)", "(wk)", "(c)",
+                     "(c)(wk)", "(capt.)", "(capt./wk)", "(c & wk)", "."]
+
+    for text in unwanted_text:
+        names = names.replace(text, "")
+
+    # names = team_names_string.replace(" (wk)", "")
+    # names = names.replace(" (capt.)", "")
+    # names = names.replace(" (c)", "")
+    # names = names.replace(" (capt./wk)", "")
+    # names = names.replace(" (c & wk)", "")
+    # names = names.replace(".", "")
 
     # 2. split the string into names
     names = names.split(", ")
@@ -979,7 +988,8 @@ def extractPlayingXI() -> None:
     for player_id in playing_11_ids:
         if player_id in bothSquadDetails:
             totalPlayers -= 1
-            print(f"{bothSquadDetails[player_id]['NAME']} already exists in Squad Details, {totalPlayers} players left  to download")
+            print(
+                f"{bothSquadDetails[player_id]['NAME']} already exists in Squad Details, {totalPlayers} players left  to download")
         else:
             getPlayerDetails(player_id)
 
@@ -1122,40 +1132,8 @@ def clientInputs() -> None:
     pass
 
 
-def deleteFiles() -> None:
-    """
-    Delete all required files 
-    add directory path into omit_paths to omit that path from deleting
-    :return: None
-    """
-    global bothSquadDetails, matchUrl
-    # omit_paths = ["DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
-    #
-    # if input("Do you want to delete all files in DataBase? (y/n)") == "y":
-    #     omit_paths = ["DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
-    #
-    # all_paths = ["DataBase/squadDetails", "DataBase/internationalMatchRecords", "DataBase/recentMatchRecords",
-    #              "DataBase/playing11Statistics", "DataBase/preMatchStatistics"]
-
-    for player_id in bothSquadDetails:
-        file_name = str(player_id) + ".csv"
-        os.remove(f"DataBase/recentMatchRecords/{file_name}")
-        os.remove(f"DataBase/internationalMatchRecords/{file_name}")
-
-    match_id = getMatchId(matchUrl)
-    file_name = str(match_id) + ".json"
-    os.remove(f"DataBase/squadDetails/{file_name}")
-
-    # for path in all_paths:
-    #     if path not in omit_paths:
-    #         os.rmdir(path)
-    pass
-
-
 if __name__ == '__main__':
     clientInputs()
     preMatchPreparation()
     if input("Toss Done? (y/n) ") == "y":
         afterToss()
-        if input("Do you want to Delete unwanted files? (y/n) ") == "y":
-            deleteFiles()
