@@ -890,8 +890,8 @@ def getCleanNames(team_names_string) -> list:
     """
     # 1. Clear the string from unwanted text
     names = team_names_string
-    unwanted_text = [" (wk)", " (c)", " (c)(wk)", " (capt.)", " (capt./wk)", " (c & wk)", "(wk)", "(c)",
-                     "(c)(wk)", "(capt.)", "(capt./wk)", "(c & wk)", "."]
+    unwanted_text = [" (wk)", " (c)", " (c)(wk)", " (capt.)", " (capt./wk)", " (c & wk)", "(wk)", "(c)", " (c/w)",
+                     "(c)(wk)", "(capt.)", "(capt./wk)", "(c & wk)", "(c/w)", "."]
 
     for text in unwanted_text:
         names = names.replace(text, "")
@@ -947,7 +947,7 @@ def getPlaying11Manually() -> list:
             playing_11_ids.append(player_id)
         else:
             print(f"{player_name} not present in any of the squad")
-            player_id = input(f"enter {player_name} ID: ")
+            player_id = input(f"enter {player_name}_ESPNCricInfo ID: ")
             playing_11_ids.append(player_id)
 
     # 4. send all the player ids
@@ -1138,12 +1138,20 @@ def getAllTop3():
     all_match_files.sort()
     top3_df = pd.DataFrame(
         columns=["NAME", "POSITION", "RECENT_FORM", "INT_FORM", "INT_CLASS_FORM", "RECENT_CLASS_FORM",
-                 "RECENT_PREDICTION", "INT_PREDICTION", "DREAM11"]
+                 "RECENT_PREDICTION", "INT_PREDICTION", "DREAM11", "MATCH_ID"]
     )
     for match_file in all_match_files:
         match_df = pd.read_csv(f"DataBase/playing11Statistics/{match_file}")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
+
+        ids = []
+        match_id = match_file.replace(".csv", "")
+        for i in range(len(match_df.index)):
+            ids.append(match_id)
+        match_df["MATCH_ID"] = ids
+
         result = match_df.iloc[[1, 2, 3]]
+
         frames = [top3_df, result]
         top3_df = pd.concat(frames)
 

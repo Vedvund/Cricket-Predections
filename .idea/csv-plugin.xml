@@ -3,13 +3,6 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="/DataBase/playing11Statistics/1293000.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="/DataBase/playing11Statistics/1293002.csv">
           <value>
             <Attribute>
@@ -60,6 +53,13 @@
           </value>
         </entry>
         <entry key="/all_matches_top3.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/currentAfterTossPrediction.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
