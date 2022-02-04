@@ -1095,7 +1095,6 @@ def clientInputs() -> None:
     3. Check the international period. Not more than 1 year works
     4. Enter current match class
     5. Check directory before going forward
-    6. check clearNames before going forward
     :return: None
     """
     global matchUrl, vpnStatus, sleepTime, currentYear, intPeriod, matchClass
@@ -1119,16 +1118,9 @@ def clientInputs() -> None:
     # 4. Enter current match class
     matchClass = input(" please enter type of match class (T20/Test/ODI): ")
 
-    # Duplicate above
-    # matchUrl = "https://www.espncricinfo.com/series/big-bash-league-2021-22-1269637/perth-scorchers-vs-sydney-sixers-final-1269698/live-cricket-score"
-    # vpnStatus = "n"
-    # matchClass = "T20"
-
     # 5. Check directory before going forward
     checkDirectory()
 
-    # 6. check clearNames before going forward
-    # getCleanNames()
     pass
 
 
