@@ -13,6 +13,7 @@ from typing import Union
 import pandas as pd
 from bs4 import BeautifulSoup
 from espncricinfo.match import Match
+import matplotlib.pyplot as plt
 
 import requests
 
@@ -828,7 +829,7 @@ def getPreMatchStatistics() -> None:
     sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
-    sorted_statistics_table_df.to_csv("currentPreMatchPrediction.csv", index=False)
+    sorted_statistics_table_df.to_csv("report/currentPreMatchPrediction.csv", index=False)
 
     pass
 
@@ -1052,7 +1053,7 @@ def getPlaying11Statistics() -> None:
     sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
-    sorted_statistics_table_df.to_csv("currentAfterTossPrediction.csv", index=False)
+    sorted_statistics_table_df.to_csv("report/currentAfterTossPrediction.csv", index=False)
 
     pass
 
@@ -1078,6 +1079,7 @@ def checkDirectory() -> None:
         "DataBase/preMatchStatistics",
         "DataBase/recentMatchRecords",
         "DataBase/squadDetails",
+        "report"
     ]
 
     for path in directories:
@@ -1136,19 +1138,142 @@ def getAllTop3():
         match_df = pd.read_csv(f"DataBase/playing11Statistics/{match_file}")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
 
-        ids = []
-        match_id = match_file.replace(".csv", "")
-        for i in range(len(match_df.index)):
-            ids.append(match_id)
-        match_df["MATCH_ID"] = ids
+        if 'DREAM11' in match_df.columns:
+            ids = []
+            match_id = match_file.replace(".csv", "")
+            for i in range(len(match_df.index)):
+                ids.append(match_id)
+            match_df["MATCH_ID"] = ids
 
-        result = match_df.iloc[[1, 2, 3]]
+            result = match_df.iloc[[1, 2, 3]]
 
-        frames = [top3_df, result]
-        top3_df = pd.concat(frames)
+            frames = [top3_df, result]
+            top3_df = pd.concat(frames)
 
+    top3_df = top3_df.sort_values(by=['INT_FORM'], ascending=False)
+    top3_df = top3_df.sort_values(by=['POSITION'], ascending=False)
     top3_df = top3_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
-    top3_df.to_csv("all_matches_top3.csv", index=False)
+    top3_df.to_csv("report/all_matches_top3.csv", index=False)
+    pass
+
+
+def getTopPlayersInsights(all_top3_df):
+    frequency = {}
+    for index, row in all_top3_df.iterrows():
+        recent_prediction = round(row["RECENT_PREDICTION"], 1)
+        if recent_prediction not in frequency:
+            frequency[recent_prediction] = 0
+        frequency[recent_prediction] += 1
+
+    # creating the dataset
+    form = list(frequency.keys())
+    count = list(frequency.values())
+
+    fig = plt.figure(figsize=(10, 5))
+    plt.xticks(form)
+
+    # creating the bar plot
+    plt.bar(form, count, color='maroon',
+            width=0.4)
+
+    plt.xlabel("RECENT PREDICTION")
+    plt.ylabel("COUNT")
+    plt.title("FREQUENCY BASED ON RECENT PREDICTION RESULTS")
+    plt.savefig('report/recent_prediction_insights.png')
+    plt.close(fig)
+    pass
+
+
+def getTopBattingInsights(all_top3_df):
+    frequency = {}
+    for index, row in all_top3_df.iterrows():
+        if row["POSITION"] == "2 Batsmen":
+            recent_prediction = round(row["RECENT_PREDICTION"], 1)
+            if recent_prediction not in frequency:
+                frequency[recent_prediction] = 0
+            frequency[recent_prediction] += 1
+
+    # creating the dataset
+    form = list(frequency.keys())
+    count = list(frequency.values())
+
+    fig = plt.figure(figsize=(10, 5))
+    plt.xticks(form)
+
+    # creating the bar plot
+    plt.bar(form, count, color='maroon',
+            width=0.4)
+
+    plt.xlabel("RECENT PREDICTION of BATTING")
+    plt.ylabel("COUNT")
+    plt.title("BATTING FREQUENCY BASED ON RECENT PREDICTION RESULTS")
+    plt.savefig('report/batting_insights.png')
+    plt.close(fig)
+    pass
+
+
+def getTopBowlingInsights(all_top3_df):
+    frequency = {}
+    for index, row in all_top3_df.iterrows():
+        if row["POSITION"] == "4 Bowler":
+            recent_prediction = round(row["RECENT_PREDICTION"], 1)
+            if recent_prediction not in frequency:
+                frequency[recent_prediction] = 0
+            frequency[recent_prediction] += 1
+
+    # creating the dataset
+    form = list(frequency.keys())
+    count = list(frequency.values())
+
+    fig = plt.figure(figsize=(10, 5))
+    plt.xticks(form)
+
+    # creating the bar plot
+    plt.bar(form, count, color='maroon',
+            width=0.4)
+
+    plt.xlabel("RECENT PREDICTION of BOWLING")
+    plt.ylabel("COUNT")
+    plt.title("BOWLING FREQUENCY BASED ON RECENT PREDICTION RESULTS")
+    plt.savefig('report/bowling_insights.png')
+    plt.close(fig)
+    pass
+
+
+def getTopAllRounderInsights(all_top3_df):
+    frequency = {}
+    for index, row in all_top3_df.iterrows():
+        if row["POSITION"] == "3 All Rounder":
+            recent_prediction = round(row["RECENT_PREDICTION"], 1)
+            if recent_prediction not in frequency:
+                frequency[recent_prediction] = 0
+            frequency[recent_prediction] += 1
+
+    # creating the dataset
+    form = list(frequency.keys())
+    count = list(frequency.values())
+
+    fig = plt.figure(figsize=(10, 5))
+    plt.xticks(form)
+
+    # creating the bar plot
+    plt.bar(form, count, color='maroon',
+            width=0.4)
+
+    plt.xlabel("RECENT PREDICTION of ALL ROUNDERS")
+    plt.ylabel("COUNT")
+    plt.title("ALL ROUNDERS FREQUENCY BASED ON RECENT PREDICTION RESULTS")
+    plt.savefig('report/all_rounder_insights.png')
+    plt.close(fig)
+    pass
+
+
+def getInsights():
+    all_top3_df = pd.read_csv("report/all_matches_top3.csv")
+    getTopPlayersInsights(all_top3_df)
+    getTopBattingInsights(all_top3_df)
+    getTopBowlingInsights(all_top3_df)
+    getTopAllRounderInsights(all_top3_df)
     pass
 
 
@@ -1156,5 +1281,6 @@ if __name__ == '__main__':
     clientInputs()
     preMatchPreparation()
     getAllTop3()
+    getInsights()
     if input("Toss Done? (y/n) ") == "y":
         afterToss()
