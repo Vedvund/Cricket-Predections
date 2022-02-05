@@ -892,17 +892,10 @@ def getCleanNames(team_names_string) -> list:
     # 1. Clear the string from unwanted text
     names = team_names_string
     unwanted_text = [" (wk)", " (c)", " (c)(wk)", " (capt.)", " (capt./wk)", " (c & wk)", "(wk)", "(c)", " (c/w)",
-                     "(c)(wk)", "(capt.)", "(capt./wk)", "(c & wk)", "(c/w)", "."]
+                     "(c)(wk)", "(capt.)", "(capt./wk)", "(c & wk)", "(c/w)", "(w)", " (w)", "."]
 
     for text in unwanted_text:
         names = names.replace(text, "")
-
-    # names = team_names_string.replace(" (wk)", "")
-    # names = names.replace(" (capt.)", "")
-    # names = names.replace(" (c)", "")
-    # names = names.replace(" (capt./wk)", "")
-    # names = names.replace(" (c & wk)", "")
-    # names = names.replace(".", "")
 
     # 2. split the string into names
     names = names.split(", ")
@@ -948,7 +941,7 @@ def getPlaying11Manually() -> list:
             playing_11_ids.append(player_id)
         else:
             print(f"{player_name} not present in any of the squad")
-            player_id = input(f"enter {player_name}_ESPNCricInfo ID: ")
+            player_id = input(f"{player_name} ESPNCricInfo Details")
             playing_11_ids.append(player_id)
 
     # 4. send all the player ids

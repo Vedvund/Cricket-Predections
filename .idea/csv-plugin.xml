@@ -59,21 +59,7 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/all_matches_top3.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/currentAfterTossPrediction.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="/currentPreMatchPrediction.csv">
+        <entry key="/report/currentAfterTossPrediction.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
