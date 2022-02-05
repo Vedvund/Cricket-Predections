@@ -1146,7 +1146,7 @@ def getAllTop3():
     top3_df = top3_df.sort_values(by=['INT_FORM'], ascending=False)
     top3_df = top3_df.sort_values(by=['POSITION'], ascending=False)
     top3_df = top3_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
-    top3_df.to_csv("report/all_matches_top3.csv", index=False)
+    top3_df.to_csv("report/top5Insights.csv", index=False)
     pass
 
 
@@ -1262,7 +1262,7 @@ def getTopAllRounderInsights(all_top3_df):
 
 
 def getInsights():
-    all_top3_df = pd.read_csv("report/all_matches_top3.csv")
+    all_top3_df = pd.read_csv("report/top5Insights.csv")
     getTopPlayersInsights(all_top3_df)
     getTopBattingInsights(all_top3_df)
     getTopBowlingInsights(all_top3_df)
