@@ -829,7 +829,7 @@ def getPreMatchStatistics() -> None:
     sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
-    sorted_statistics_table_df.to_csv("report/currentPreMatchPrediction.csv", index=False)
+    sorted_statistics_table_df.to_csv("report/preMatchPrediction.csv", index=False)
 
     pass
 
@@ -1046,7 +1046,7 @@ def getPlaying11Statistics() -> None:
     sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
-    sorted_statistics_table_df.to_csv("report/currentAfterTossPrediction.csv", index=False)
+    sorted_statistics_table_df.to_csv("report/afterTossPrediction.csv", index=False)
 
     pass
 
@@ -1138,7 +1138,7 @@ def getAllTop3():
                 ids.append(match_id)
             match_df["MATCH_ID"] = ids
 
-            result = match_df.iloc[[1, 2, 3]]
+            result = match_df.iloc[[1, 2, 3, 4, 5]]
 
             frames = [top3_df, result]
             top3_df = pd.concat(frames)

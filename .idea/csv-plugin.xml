@@ -59,6 +59,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/DataBase/playing11Statistics/1293011.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/report/all_matches_top3.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/report/currentAfterTossPrediction.csv">
           <value>
             <Attribute>
