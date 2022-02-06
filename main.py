@@ -829,7 +829,7 @@ def getPreMatchStatistics() -> None:
     sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
-    sorted_statistics_table_df.to_csv("report/preMatchPrediction.csv", index=False)
+    sorted_statistics_table_df.to_csv("currentMatchReports/preMatchPrediction.csv", index=False)
 
     pass
 
@@ -1046,7 +1046,7 @@ def getPlaying11Statistics() -> None:
     sorted_statistics_table_df = statistics_table_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
-    sorted_statistics_table_df.to_csv("report/afterTossPrediction.csv", index=False)
+    sorted_statistics_table_df.to_csv("currentMatchReports/afterTossPrediction.csv", index=False)
 
     pass
 
@@ -1146,7 +1146,7 @@ def getAllTop3():
     top3_df = top3_df.sort_values(by=['INT_FORM'], ascending=False)
     top3_df = top3_df.sort_values(by=['POSITION'], ascending=False)
     top3_df = top3_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
-    top3_df.to_csv("report/top5Insights.csv", index=False)
+    top3_df.to_csv("currentMatchReports/top5Insights.csv", index=False)
     pass
 
 
@@ -1172,7 +1172,7 @@ def getTopPlayersInsights(all_top3_df):
     plt.xlabel("RECENT PREDICTION")
     plt.ylabel("COUNT")
     plt.title("FREQUENCY BASED ON RECENT PREDICTION RESULTS")
-    plt.savefig('report/recent_prediction_insights.png')
+    plt.savefig('currentMatchReports/recent_prediction_insights.png')
     plt.close(fig)
     pass
 
@@ -1200,7 +1200,7 @@ def getTopBattingInsights(all_top3_df):
     plt.xlabel("RECENT PREDICTION of BATTING")
     plt.ylabel("COUNT")
     plt.title("BATTING FREQUENCY BASED ON RECENT PREDICTION RESULTS")
-    plt.savefig('report/batting_insights.png')
+    plt.savefig('currentMatchReports/batting_insights.png')
     plt.close(fig)
     pass
 
@@ -1228,7 +1228,7 @@ def getTopBowlingInsights(all_top3_df):
     plt.xlabel("RECENT PREDICTION of BOWLING")
     plt.ylabel("COUNT")
     plt.title("BOWLING FREQUENCY BASED ON RECENT PREDICTION RESULTS")
-    plt.savefig('report/bowling_insights.png')
+    plt.savefig('currentMatchReports/bowling_insights.png')
     plt.close(fig)
     pass
 
@@ -1256,13 +1256,13 @@ def getTopAllRounderInsights(all_top3_df):
     plt.xlabel("RECENT PREDICTION of ALL ROUNDERS")
     plt.ylabel("COUNT")
     plt.title("ALL ROUNDERS FREQUENCY BASED ON RECENT PREDICTION RESULTS")
-    plt.savefig('report/all_rounder_insights.png')
+    plt.savefig('currentMatchReports/all_rounder_insights.png')
     plt.close(fig)
     pass
 
 
 def getInsights():
-    all_top3_df = pd.read_csv("report/top5Insights.csv")
+    all_top3_df = pd.read_csv("currentMatchReports/top5Insights.csv")
     getTopPlayersInsights(all_top3_df)
     getTopBattingInsights(all_top3_df)
     getTopBowlingInsights(all_top3_df)
