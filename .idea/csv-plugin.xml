@@ -66,6 +66,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/DataBase/playing11Statistics/1293012.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/DataBase/playing11Statistics/1293013.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/currentMatchReports/preMatchPrediction.csv">
           <value>
             <Attribute>
@@ -74,6 +88,13 @@
           </value>
         </entry>
         <entry key="/reports/allMatchesData.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reports/results/1293011.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

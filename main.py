@@ -984,11 +984,12 @@ def extractPlayingXI() -> None:
             totalPlayers -= 1
             print(
                 f"{bothSquadDetails[str(player_id)]['NAME']} already exists in Squad Details, {totalPlayers} players left  to download")
+            bothSquadDetails[str(player_id)]["PLAYING_11_STATUS"] = True
         else:
             getPlayerDetails(player_id)
+            bothSquadDetails[player_id]["PLAYING_11_STATUS"] = True
 
         # 2.2 change the status of PLAYING_11_STATUS of each player in bothSquadDetails
-        bothSquadDetails[str(player_id)]["PLAYING_11_STATUS"] = True
     pass
 
 
@@ -1319,8 +1320,7 @@ def getAllTop5():
         match_df = pd.read_csv(f"reports/results/{matchID}.csv")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
 
-        result = match_df.iloc[[1, 2, 3, 4, 5]]
-
+        result = match_df.iloc[[0, 1, 2, 3, 4]]
         frames = [top5_df, result]
         top5_df = pd.concat(frames)
 
