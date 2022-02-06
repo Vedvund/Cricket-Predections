@@ -1492,6 +1492,8 @@ if __name__ == '__main__':
     if input("Toss Done? (y/n) ") == "y":
         tossStatus = True
         afterToss()
+
+    if tossStatus and input("Do you want to get the match insights? (y/n) ") == "y":
         getInsights()
 
     if tossStatus and (input("Is the match over? (y/n) ") == "y"):
