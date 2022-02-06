@@ -1484,6 +1484,30 @@ def getInsights():
     pass
 
 
+def deleteMatchFiles():
+    global bothSquadDetails, matchUrl
+    match_id = getMatchId(matchUrl)
+    squad_ids = []
+    for player_id in bothSquadDetails:
+        squad_ids.append(player_id)
+    # delete files
+    for player_id in squad_ids:
+        os.remove(f"DataBase/internationalMatchRecords/{player_id}.csv")
+        os.remove(f"DataBase/recentMatchRecords/{player_id}.csv")
+
+    os.remove(f"DataBase/playing11Statistics/{match_id}.csv")
+    os.remove(f"DataBase/preMatchStatistics/{match_id}.csv")
+    os.remove(f"DataBase/squadDetails/{match_id}.json")
+
+    delete_all_files = input("Do you want to delete all the files? (y/n): ")
+    print()
+    if (delete_all_files == "y") and (input("Are you sure? (y/n): ") == "y"):
+        os.rmdir("DataBase")
+        os.rmdir("currentMatchReports")
+
+    pass
+
+
 if __name__ == '__main__':
     clientInputs()
     preMatchPreparation()
@@ -1498,3 +1522,4 @@ if __name__ == '__main__':
 
     if tossStatus and (input("Is the match over? (y/n) ") == "y"):
         createReport()
+        deleteMatchFiles()
