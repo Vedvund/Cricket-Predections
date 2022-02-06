@@ -1489,10 +1489,10 @@ if __name__ == '__main__':
     preMatchPreparation()
 
     tossStatus = False
-    getInsights()
     if input("Toss Done? (y/n) ") == "y":
         tossStatus = True
         afterToss()
+        getInsights()
 
     if tossStatus and (input("Is the match over? (y/n) ") == "y"):
         createReport()
