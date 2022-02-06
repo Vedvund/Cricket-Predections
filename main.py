@@ -135,7 +135,7 @@ def fileExists(file_name, folder_path) -> bool:
     1. Checks if the file exists in the folder
     :param file_name: String --> File name
     :param folder_path: String --> Destination File
-    :return: Boolean --> If it exists or not 
+    :return: Boolean --> If it exists or not
     """
     all_squad_files = os.listdir(folder_path)
     if file_name in all_squad_files:
@@ -220,7 +220,7 @@ def getRunsSimplified(runs) -> int:
 
 def getWicketsSimplified(wickets) -> int:
     """
-    convert wickets extracted into int    
+    convert wickets extracted into int
     :param wickets: str
     :return: int
     """
@@ -430,7 +430,7 @@ def getRecentMatchRecords() -> None:
         if fileExists(file_name, folder_path):
             pagesLeft -= 10
             print(
-                f"for {player_id} recent matches rewords are already downloaded & {pagesLeft} pages to download in recent match records")
+                f"for {player_id} recent matches records are already downloaded & {pagesLeft} pages to download in recent match records")
         else:
             player_matches_url = getPlayerMatchUrl(bothSquadDetails[player_id]["URL"])
             downloadRecentMatchRecords(player_matches_url, player_id)
@@ -886,7 +886,7 @@ def getCleanNames(team_names_string) -> list:
     1. Clear the string from unwanted text
     2. split the string into names
     3. send the names list
-    :param team_names_string: str 
+    :param team_names_string: str
     :return: list
     """
     # 1. Clear the string from unwanted text
@@ -980,15 +980,15 @@ def extractPlayingXI() -> None:
     # 2.1 if not present then extract player details and add them to bothSquadDetails
     totalPlayers = len(playing_11_ids)
     for player_id in playing_11_ids:
-        if player_id in bothSquadDetails:
+        if str(player_id) in bothSquadDetails:
             totalPlayers -= 1
             print(
-                f"{bothSquadDetails[player_id]['NAME']} already exists in Squad Details, {totalPlayers} players left  to download")
+                f"{bothSquadDetails[str(player_id)]['NAME']} already exists in Squad Details, {totalPlayers} players left  to download")
         else:
             getPlayerDetails(player_id)
 
         # 2.2 change the status of PLAYING_11_STATUS of each player in bothSquadDetails
-        bothSquadDetails[player_id]["PLAYING_11_STATUS"] = True
+        bothSquadDetails[str(player_id)]["PLAYING_11_STATUS"] = True
     pass
 
 
@@ -1047,7 +1047,6 @@ def getPlaying11Statistics() -> None:
 
     sorted_statistics_table_df.to_csv(file_path, index=False)
     sorted_statistics_table_df.to_csv("currentMatchReports/afterTossPrediction.csv", index=False)
-
     pass
 
 
@@ -1057,7 +1056,6 @@ def afterToss():
     getInternationalMatchRecords()
     getPreMatchStatistics()
     getPlaying11Statistics()
-
     pass
 
 
@@ -1072,7 +1070,7 @@ def checkDirectory() -> None:
         "DataBase/preMatchStatistics",
         "DataBase/recentMatchRecords",
         "DataBase/squadDetails",
-        "report"
+        "currentMatchReports"
     ]
 
     for path in directories:
@@ -1115,57 +1113,249 @@ def clientInputs() -> None:
 
     # 5. Check directory before going forward
     checkDirectory()
-
     pass
 
 
-def getAllTop3():
-    path = "DataBase/playing11Statistics"
-    all_match_files = os.listdir(path)
-    all_match_files.sort()
-    top3_df = pd.DataFrame(
-        columns=["NAME", "POSITION", "RECENT_FORM", "INT_FORM", "INT_CLASS_FORM", "RECENT_CLASS_FORM",
-                 "RECENT_PREDICTION", "INT_PREDICTION", "DREAM11", "MATCH_ID"]
+def checkReportStatus() -> bool:
+    """
+    # 1.0 Extract match id and open the all matches data file
+    # 2.0 if match id is already in the all matches data then return true else false
+    :return: bool
+    """
+    global matchUrl
+    # 1.0 Extract match id and open the all matches data file
+    match_id = getMatchId(matchUrl)
+    all_matches_data_df = pd.read_csv("reports/allMatchesData.csv")
+
+    # 2.0 if match id is already in the all matches data then return true else false
+    for index, row in all_matches_data_df.iterrows():
+        if row["MATCH_ID"] == int(match_id):
+            return True
+    return False
+
+
+def getMatchesData():
+    """
+    # 1.0 Extract all the details  required for report
+    # 2.0 Open allMatchesData.csv file and add the match details to the file
+    :return: None
+    """
+    # 1.0 Extract all the details  required for report
+    match_id = getMatchId(matchUrl)
+    match_api = Match(match_id)
+    total_runs, total_wickets = getMatchTotalRunsAndWickets(match_api)
+    home_team = match_api.home_team
+    away_team = match_api.team_2_abbreviation
+    if home_team == match_api.team_2_abbreviation:
+        away_team = match_api.team_1_abbreviation
+
+    match_winner = match_api.match_winner
+    winning_side = "AWAY"
+    if match_winner == home_team:
+        winning_side = "HOME"
+    match_report_path = f"report/results/{match_id}.csv"
+
+    # 2.0 Open allMatchesData.csv file and add the match details to the file
+    df = pd.read_csv("reports/allMatchesData.csv")
+    df.loc[len(df.index)] = [match_id, match_api.series_name, match_api.ground_name, match_api.match_class,
+                             match_api.match_title, match_api.lighting, total_runs, total_wickets,
+                             home_team, away_team, match_api.batting_first,
+                             match_api.match_winner, winning_side, match_report_path]
+    df.to_csv("reports/allMatchesData.csv", index=False)
+    pass
+
+
+def getPlayersDream11Points(match_df):
+    """
+    get player details manually
+    :param match_df: DataFrame
+    :return: List
+    """
+    print("\nEnter Dream11 Points Manually")
+    dream11 = []
+    for index, row in match_df.iterrows():
+        player_name = row["NAME"]
+        player_points = int(input(f"{player_name}: "))
+        dream11.append(player_points)
+    return dream11
+
+
+def getPlayerTeamDetails(match_api, match_df):
+    """
+    1.0 extract Team1 and Team2 player Names
+    2.0 add home team player names to team_1_player_names and away team names to team_2_player_names
+    3.0 set home team name and away team name
+    4.0 find home_away and target_chase details of the player
+    :param match_api: dict
+    :param match_df: dataframe
+    :return: list, list
+    """
+    # 1.0 extract Team1 and Team2 player Names
+    team_1 = match_api.team_1_players
+    team_2 = match_api.team_2_players
+
+    team_1_player_names = []
+    team_2_player_names = []
+
+    # 2.0 add home team player names to team_1_player_names and away team names to team_2_player_names
+    for i in range(len(team_1)):
+        if match_api.home_team == match_api.team_1_abbreviation:
+            team_1_player_names.append(team_1[i]["known_as"])
+        else:
+            team_1_player_names.append(team_2[i]["known_as"])
+
+    for i in range(len(team_2)):
+        if match_api.home_team == match_api.team_1_abbreviation:
+            team_2_player_names.append(team_2[i]["known_as"])
+        else:
+            team_2_player_names.append(team_1[i]["known_as"])
+
+    # 3.0 set home team name and away team name
+    home_team = match_api.home_team
+    away_team = match_api.team_2_abbreviation
+    if home_team == match_api.team_2_abbreviation:
+        away_team = match_api.team_1_abbreviation
+
+    team_batting_first = match_api.batting_first
+
+    # 4.0 find home_away and target_chase details of the player
+    home_away = []
+    target_chase = []
+    for index, row in match_df.iterrows():
+        if row["NAME"] in team_1_player_names:
+            home_away.append("HOME")
+            if home_team == team_batting_first:
+                target_chase.append("TARGET")
+            else:
+                target_chase.append("CHASE")
+        else:
+            home_away.append("AWAY")
+            if away_team == team_batting_first:
+                target_chase.append("TARGET")
+            else:
+                target_chase.append("CHASE")
+
+    return home_away, target_chase
+
+
+def getFinalMatchReport():
+    """
+    # 1.0 Open the match file from DataBase/playing11Statistics and sort the DF based on NAME col
+    # 2.0 Check if the DREAM11 col is already in playing11Statistics. if not extract each players' points
+    # 3.0 extract player-details if necessary
+    # 4.0 Rearrange columns of DataFrame
+    :return: None
+    """
+    # 1.0 Open the match file from DataBase/playing11Statistics and sort the DF based on NAME col
+    match_id = getMatchId(matchUrl)
+    match_df = pd.read_csv(f"DataBase/playing11Statistics/{match_id}.csv")
+    match_df = match_df.sort_values(by=['NAME'])
+
+    # 2.0 Check if the DREAM11 col is already in playing11Statistics. if not extract each players' points
+    cols = match_df.columns.tolist()
+    if "DREAM11" not in cols:
+        dream11 = getPlayersDream11Points(match_df)
+        match_df["DREAM11"] = dream11
+
+    # 3.0 extract player-details if necessary
+    match_api = Match(match_id)
+    home_away, target_chase = getPlayerTeamDetails(match_api, match_df)
+    match_df["HOME_AWAY"] = home_away
+    match_df["TARGET_CHASE"] = target_chase
+
+    # 4.0 Rearrange columns of DataFrame
+    cols = ['NAME', 'POSITION', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM', 'INT_FORM', 'INT_CLASS_FORM',
+            'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
+    match_df = match_df[cols]
+    match_df.to_csv(f"reports/results/{match_id}.csv", index=False)
+    pass
+
+
+def createReport():
+    """
+    1.0 Check if match report already exists:
+    2.0 Create final match report
+    :return: nONE
+    """
+    # 1.0 Check if match report already exists:
+    exists = checkReportStatus()
+
+    # 2.0 Create final match report
+    if not exists:
+        getMatchesData()
+        getFinalMatchReport()
+    pass
+
+
+def getAllTop5():
+    """
+    # 1.0 Get similar match ids form reports/allMatchesData.csv file
+    # 2.0 create empty top5 dataframe
+    # 3.0 Extract top 5 players from the similar matches and add them to the top5 dataframe
+    # 4.0 Sort top5 dataframe
+    :return: DataFrame
+    """
+    global matchUrl
+    # 1.0 Get similar match ids form reports/allMatchesData.csv file
+    all_matches_data_df = pd.read_csv("reports/allMatchesData.csv")
+    match_id = getMatchId(matchUrl)
+    match_api = Match(match_id)
+    match_class = match_api.match_class
+
+    all_match_ids = []
+    for index, row in all_matches_data_df.iterrows():
+        if row["MATCH_CLASS"] == match_class:
+            all_match_ids.append(row["MATCH_ID"])
+
+    # 2.0 create empty top5 dataframe
+    all_match_ids.sort()
+    top5_df = pd.DataFrame(
+        columns=['NAME', 'POSITION', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM', 'INT_FORM', 'INT_CLASS_FORM',
+                 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
     )
-    for match_file in all_match_files:
-        match_df = pd.read_csv(f"DataBase/playing11Statistics/{match_file}")
+
+    # 3.0 Extract top 5 players from the similar matches and add them to the top5 dataframe
+    for matchID in all_match_ids:
+        match_df = pd.read_csv(f"reports/results/{matchID}.csv")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
 
-        if 'DREAM11' in match_df.columns:
-            ids = []
-            match_id = match_file.replace(".csv", "")
-            for i in range(len(match_df.index)):
-                ids.append(match_id)
-            match_df["MATCH_ID"] = ids
+        result = match_df.iloc[[1, 2, 3, 4, 5]]
 
-            result = match_df.iloc[[1, 2, 3, 4, 5]]
+        frames = [top5_df, result]
+        top5_df = pd.concat(frames)
 
-            frames = [top3_df, result]
-            top3_df = pd.concat(frames)
-
-    top3_df = top3_df.sort_values(by=['INT_FORM'], ascending=False)
-    top3_df = top3_df.sort_values(by=['POSITION'], ascending=False)
-    top3_df = top3_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
-    top3_df.to_csv("currentMatchReports/top5Insights.csv", index=False)
-    pass
+    # 4.0 Sort top5 dataframe
+    top5_df = top5_df.sort_values(by=['INT_FORM'], ascending=False)
+    top5_df = top5_df.sort_values(by=['POSITION'], ascending=False)
+    top5_df = top5_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
+    top5_df.to_csv("currentMatchReports/top5Insights.csv", index=False)
+    return top5_df
 
 
-def getTopPlayersInsights(all_top3_df):
+def getTopPlayersInsights(top5_df):
+    """
+    # 1.0 get frequency count
+    # 2.0 creating the dataset
+    # 3.0 creating the bar plot
+    :param top5_df: DataFrame
+    :return:
+    """
+    # 1.0 get frequency count
     frequency = {}
-    for index, row in all_top3_df.iterrows():
+    for index, row in top5_df.iterrows():
         recent_prediction = round(row["RECENT_PREDICTION"], 1)
         if recent_prediction not in frequency:
             frequency[recent_prediction] = 0
         frequency[recent_prediction] += 1
 
-    # creating the dataset
+    # 2.0 creating the dataset
     form = list(frequency.keys())
     count = list(frequency.values())
 
     fig = plt.figure(figsize=(10, 5))
     plt.xticks(form)
 
-    # creating the bar plot
+    # 3.0 creating the bar plot
     plt.bar(form, count, color='maroon',
             width=0.4)
 
@@ -1177,23 +1367,31 @@ def getTopPlayersInsights(all_top3_df):
     pass
 
 
-def getTopBattingInsights(all_top3_df):
+def getTopBattingInsights(top5_df):
+    """
+    # 1.0 get frequency count
+    # 2.0 creating the dataset
+    # 3.0 creating the bar plot
+    :param top5_df: DataFrame
+    :return:
+    """
+    # 1.0 get frequency count
     frequency = {}
-    for index, row in all_top3_df.iterrows():
+    for index, row in top5_df.iterrows():
         if row["POSITION"] == "2 Batsmen":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
                 frequency[recent_prediction] = 0
             frequency[recent_prediction] += 1
 
-    # creating the dataset
+    # 2.0 creating the dataset
     form = list(frequency.keys())
     count = list(frequency.values())
 
     fig = plt.figure(figsize=(10, 5))
     plt.xticks(form)
 
-    # creating the bar plot
+    # 3.0 creating the bar plot
     plt.bar(form, count, color='maroon',
             width=0.4)
 
@@ -1205,23 +1403,31 @@ def getTopBattingInsights(all_top3_df):
     pass
 
 
-def getTopBowlingInsights(all_top3_df):
+def getTopBowlingInsights(top5_df):
+    """
+    # 1.0 get frequency count
+    # 2.0 creating the dataset
+    # 3.0 creating the bar plot
+    :param top5_df: DataFrame
+    :return:
+    """
+    # 1.0 get frequency count
     frequency = {}
-    for index, row in all_top3_df.iterrows():
+    for index, row in top5_df.iterrows():
         if row["POSITION"] == "4 Bowler":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
                 frequency[recent_prediction] = 0
             frequency[recent_prediction] += 1
 
-    # creating the dataset
+    # 2.0 creating the dataset
     form = list(frequency.keys())
     count = list(frequency.values())
 
     fig = plt.figure(figsize=(10, 5))
     plt.xticks(form)
 
-    # creating the bar plot
+    # 3.0 creating the bar plot
     plt.bar(form, count, color='maroon',
             width=0.4)
 
@@ -1233,23 +1439,31 @@ def getTopBowlingInsights(all_top3_df):
     pass
 
 
-def getTopAllRounderInsights(all_top3_df):
+def getTopAllRounderInsights(top5_df):
+    """
+    # 1.0 get frequency count
+    # 2.0 creating the dataset
+    # 3.0 creating the bar plot
+    :param top5_df: DataFrame
+    :return:
+    """
+    # 1.0 get frequency count
     frequency = {}
-    for index, row in all_top3_df.iterrows():
+    for index, row in top5_df.iterrows():
         if row["POSITION"] == "3 All Rounder":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
                 frequency[recent_prediction] = 0
             frequency[recent_prediction] += 1
 
-    # creating the dataset
+    # 2.0 creating the dataset
     form = list(frequency.keys())
     count = list(frequency.values())
 
     fig = plt.figure(figsize=(10, 5))
     plt.xticks(form)
 
-    # creating the bar plot
+    # 3.0 creating the bar plot
     plt.bar(form, count, color='maroon',
             width=0.4)
 
@@ -1262,18 +1476,23 @@ def getTopAllRounderInsights(all_top3_df):
 
 
 def getInsights():
-    all_top3_df = pd.read_csv("currentMatchReports/top5Insights.csv")
-    getTopPlayersInsights(all_top3_df)
-    getTopBattingInsights(all_top3_df)
-    getTopBowlingInsights(all_top3_df)
-    getTopAllRounderInsights(all_top3_df)
+    top5_df = getAllTop5()
+    getTopPlayersInsights(top5_df)
+    getTopBattingInsights(top5_df)
+    getTopBowlingInsights(top5_df)
+    getTopAllRounderInsights(top5_df)
     pass
 
 
 if __name__ == '__main__':
     clientInputs()
     preMatchPreparation()
-    getAllTop3()
+
+    tossStatus = False
     getInsights()
     if input("Toss Done? (y/n) ") == "y":
+        tossStatus = True
         afterToss()
+
+    if tossStatus and (input("Is the match over? (y/n) ") == "y"):
+        createReport()
