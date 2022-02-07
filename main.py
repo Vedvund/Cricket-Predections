@@ -1493,7 +1493,10 @@ def deleteMatchFiles():
     # delete files
     for player_id in squad_ids:
         os.remove(f"DataBase/internationalMatchRecords/{player_id}.csv")
-        os.remove(f"DataBase/recentMatchRecords/{player_id}.csv")
+
+        files = os.listdir("DataBase/recentMatchRecords")
+        if f"{player_id}.csv" in files:
+            os.remove(f"DataBase/recentMatchRecords/{player_id}.csv")
 
     os.remove(f"DataBase/playing11Statistics/{match_id}.csv")
     os.remove(f"DataBase/preMatchStatistics/{match_id}.csv")
