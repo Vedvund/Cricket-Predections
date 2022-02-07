@@ -9,6 +9,7 @@ import re
 import time
 import timeit
 from typing import Union
+import shutil
 
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -1505,8 +1506,8 @@ def deleteMatchFiles():
     delete_all_files = input("Do you want to delete all the files? (y/n): ")
     print()
     if (delete_all_files == "y") and (input("Are you sure? (y/n): ") == "y"):
-        os.rmdir("DataBase")
-        os.rmdir("currentMatchReports")
+        shutil.rmtree("DataBase", ignore_errors=True)
+        shutil.rmtree("currentMatchReports", ignore_errors=True)
 
     pass
 

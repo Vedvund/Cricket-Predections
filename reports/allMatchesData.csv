@@ -13,3 +13,5 @@ MATCH_ID,SERIES_NAME,GROUND_NAME,MATCH_CLASS,MATCH_TITLE,LIGHTING,MATCH_RUNS,MAT
 1293012,Pakistan Super League,"National Stadium, Karachi",Twenty20,13th Match,night match,387,11,PZ,MS,MS,MS,AWAY,report/results/1293012.csv
 1278676,West Indies tour of India,"Narendra Modi Stadium, Ahmedabad",ODI,1st ODI,day/night match,354,14,INDIA,WI,WI,INDIA,HOME,report/results/1278676.csv
 1293013,Pakistan Super League,"National Stadium, Karachi",Twenty20,14th Match,night match,312,15,KK,IU,IU,IU,AWAY,report/results/1293013.csv
+1296705,Bangladesh Premier League,Sylhet International Cricket Stadium,Twenty20,21st Match,day match,278,14,CV,BRSAL,BRSAL,BRSAL,AWAY,report/results/1296705.csv
+1293014,Pakistan Super League,"National Stadium, Karachi",Twenty20,15th Match,night match,411,8,QG,LQ,LQ,QG,HOME,report/results/1293014.csv
