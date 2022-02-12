@@ -1492,22 +1492,23 @@ def deleteMatchFiles():
     for player_id in bothSquadDetails:
         squad_ids.append(player_id)
     # delete files
-    for player_id in squad_ids:
-        os.remove(f"DataBase/internationalMatchRecords/{player_id}.csv")
-
-        files = os.listdir("DataBase/recentMatchRecords")
-        if f"{player_id}.csv" in files:
-            os.remove(f"DataBase/recentMatchRecords/{player_id}.csv")
-
-    os.remove(f"DataBase/playing11Statistics/{match_id}.csv")
-    os.remove(f"DataBase/preMatchStatistics/{match_id}.csv")
-    os.remove(f"DataBase/squadDetails/{match_id}.json")
-
     delete_all_files = input("Do you want to delete all the files? (y/n): ")
     print()
     if (delete_all_files == "y") and (input("Are you sure? (y/n): ") == "y"):
         shutil.rmtree("DataBase", ignore_errors=True)
         shutil.rmtree("currentMatchReports", ignore_errors=True)
+
+    else:
+        for player_id in squad_ids:
+            os.remove(f"DataBase/internationalMatchRecords/{player_id}.csv")
+
+            files = os.listdir("DataBase/recentMatchRecords")
+            if f"{player_id}.csv" in files:
+                os.remove(f"DataBase/recentMatchRecords/{player_id}.csv")
+
+        os.remove(f"DataBase/playing11Statistics/{match_id}.csv")
+        os.remove(f"DataBase/preMatchStatistics/{match_id}.csv")
+        os.remove(f"DataBase/squadDetails/{match_id}.json")
 
     pass
 

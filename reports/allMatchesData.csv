@@ -16,3 +16,7 @@ MATCH_ID,SERIES_NAME,GROUND_NAME,MATCH_CLASS,MATCH_TITLE,LIGHTING,MATCH_RUNS,MAT
 1296705,Bangladesh Premier League,Sylhet International Cricket Stadium,Twenty20,21st Match,day match,278,14,CV,BRSAL,BRSAL,BRSAL,AWAY,report/results/1296705.csv
 1293014,Pakistan Super League,"National Stadium, Karachi",Twenty20,15th Match,night match,411,8,QG,LQ,LQ,QG,HOME,report/results/1293014.csv
 1278677,West Indies tour of India,"Narendra Modi Stadium, Ahmedabad",ODI,2nd ODI,day/night match,430,19,INDIA,WI,INDIA,INDIA,HOME,report/results/1278677.csv
+1293015,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,16th Match,night match,322,17,MS,PZ,MS,MS,HOME,report/results/1293015.csv
+1278678,West Indies tour of India,"Narendra Modi Stadium, Ahmedabad",ODI,3rd ODI,day/night match,434,20,INDIA,WI,INDIA,INDIA,HOME,report/results/1278678.csv
+1263471,Sri Lanka tour of Australia,Sydney Cricket Ground,T20I,1st T20I,night match,271,17,AUS,SL,AUS,AUS,HOME,report/results/1263471.csv
+1293016,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,17th Match,night match,312,14,LQ,MS,LQ,LQ,HOME,report/results/1293016.csv
