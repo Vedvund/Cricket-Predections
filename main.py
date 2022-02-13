@@ -942,7 +942,7 @@ def getPlaying11Manually() -> list:
             playing_11_ids.append(player_id)
         else:
             print(f"{player_name} not present in any of the squad")
-            player_id = input(f"{player_name} ESPNCricInfo Details")
+            player_id = input(f"{player_name} ESPNCricInfo Details ")
             playing_11_ids.append(player_id)
 
     # 4. send all the player ids
