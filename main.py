@@ -1329,7 +1329,7 @@ def getAllTop5():
     top5_df = top5_df.sort_values(by=['INT_FORM'], ascending=False)
     top5_df = top5_df.sort_values(by=['POSITION'], ascending=False)
     top5_df = top5_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
-    top5_df.to_csv("currentMatchReports/top5Insights.csv", index=False)
+    top5_df.to_csv("currentMatchReports/top5.csv", index=False)
     return top5_df
 
 
@@ -1363,7 +1363,7 @@ def getTopPlayersInsights(top5_df):
     plt.xlabel("RECENT PREDICTION")
     plt.ylabel("COUNT")
     plt.title("FREQUENCY BASED ON RECENT PREDICTION RESULTS")
-    plt.savefig('currentMatchReports/recent_prediction_insights.png')
+    plt.savefig('currentMatchReports/recent_prediction.png')
     plt.close(fig)
     pass
 
@@ -1399,7 +1399,7 @@ def getTopBattingInsights(top5_df):
     plt.xlabel("RECENT PREDICTION of BATTING")
     plt.ylabel("COUNT")
     plt.title("BATTING FREQUENCY BASED ON RECENT PREDICTION RESULTS")
-    plt.savefig('currentMatchReports/batting_insights.png')
+    plt.savefig('currentMatchReports/batting.png')
     plt.close(fig)
     pass
 
@@ -1435,7 +1435,7 @@ def getTopBowlingInsights(top5_df):
     plt.xlabel("RECENT PREDICTION of BOWLING")
     plt.ylabel("COUNT")
     plt.title("BOWLING FREQUENCY BASED ON RECENT PREDICTION RESULTS")
-    plt.savefig('currentMatchReports/bowling_insights.png')
+    plt.savefig('currentMatchReports/bowling.png')
     plt.close(fig)
     pass
 
@@ -1471,7 +1471,43 @@ def getTopAllRounderInsights(top5_df):
     plt.xlabel("RECENT PREDICTION of ALL ROUNDERS")
     plt.ylabel("COUNT")
     plt.title("ALL ROUNDERS FREQUENCY BASED ON RECENT PREDICTION RESULTS")
-    plt.savefig('currentMatchReports/all_rounder_insights.png')
+    plt.savefig('currentMatchReports/all_rounder.png')
+    plt.close(fig)
+    pass
+
+
+def getTopWicketKeeperInsights(top5_df):
+    """
+    # 1.0 get frequency count
+    # 2.0 creating the dataset
+    # 3.0 creating the bar plot
+    :param top5_df: DataFrame
+    :return:
+    """
+    # 1.0 get frequency count
+    frequency = {}
+    for index, row in top5_df.iterrows():
+        if row["POSITION"] == "1 Wicketkeeper":
+            recent_prediction = round(row["RECENT_PREDICTION"], 1)
+            if recent_prediction not in frequency:
+                frequency[recent_prediction] = 0
+            frequency[recent_prediction] += 1
+
+    # 2.0 creating the dataset
+    form = list(frequency.keys())
+    count = list(frequency.values())
+
+    fig = plt.figure(figsize=(10, 5))
+    plt.xticks(form)
+
+    # 3.0 creating the bar plot
+    plt.bar(form, count, color='maroon',
+            width=0.4)
+
+    plt.xlabel("RECENT PREDICTION of WICKET KEEPERS")
+    plt.ylabel("COUNT")
+    plt.title("WICKET KEEPERS FREQUENCY BASED ON RECENT PREDICTION RESULTS")
+    plt.savefig('currentMatchReports/Wicketkeeper.png')
     plt.close(fig)
     pass
 
@@ -1482,6 +1518,7 @@ def getInsights():
     getTopBattingInsights(top5_df)
     getTopBowlingInsights(top5_df)
     getTopAllRounderInsights(top5_df)
+    getTopWicketKeeperInsights(top5_df)
     pass
 
 
