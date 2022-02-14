@@ -3,35 +3,56 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="/DataBase/playing11Statistics/1293000.csv">
+        <entry key="/reports/allMatchesData.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/DataBase/preMatchStatistics/1269698.csv">
+        <entry key="/reports/results/1278676.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/DataBase/recentMatchRecords/932569.csv">
+        <entry key="/reports/results/1278677.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/currentAfterTossPrediction.csv">
+        <entry key="/reports/results/1293011.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/currentPreMatchPrediction.csv">
+        <entry key="/reports/results/1293012.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reports/results/1293013.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reports/results/1293014.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reports/results/1296705.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

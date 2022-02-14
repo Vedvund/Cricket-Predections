@@ -1,0 +1,26 @@
+MATCH_ID,SERIES_NAME,GROUND_NAME,MATCH_CLASS,MATCH_TITLE,LIGHTING,MATCH_RUNS,MATCH_WICKETS,HOME_TEAM,AWAY_TEAM,BATTING_FIRST,WINNER,WINNING_SIDE,MATCH_REPORT_FILE_PATH
+1293001,Pakistan Super League,"National Stadium, Karachi",Twenty20,2nd Match,night match,381,9,QG,PZ,QG,PZ,AWAY,report/results/1293001.csv
+1293002,Pakistan Super League,"National Stadium, Karachi",Twenty20,3rd Match,day/night match,415,10,MS,LQ,LQ,MS,HOME,report/results/1293002.csv
+1293003,Pakistan Super League,"National Stadium, Karachi",Twenty20,4th Match,night match,228,12,KK,QG,KK,QG,AWAY,report/results/1293003.csv
+1293004,Pakistan Super League,"National Stadium, Karachi",Twenty20,5th Match,day/night match,340,7,PZ,IU,PZ,IU,AWAY,report/results/1293004.csv
+1293005,Pakistan Super League,"National Stadium, Karachi",Twenty20,6th Match,night match,344,11,KK,LQ,KK,LQ,AWAY,report/results/1293005.csv
+1293006,Pakistan Super League,"National Stadium, Karachi",Twenty20,7th Match,night match,342,14,QG,MS,MS,MS,AWAY,report/results/1293006.csv
+1293007,Pakistan Super League,"National Stadium, Karachi",Twenty20,8th Match,night match,414,15,IU,MS,MS,MS,AWAY,report/results/1293007.csv
+1293008,Pakistan Super League,"National Stadium, Karachi",Twenty20,9th Match,night match,369,13,PZ,LQ,LQ,LQ,AWAY,report/results/1293008.csv
+1293009,Pakistan Super League,"National Stadium, Karachi",Twenty20,10th Match,night match,415,14,QG,IU,IU,IU,AWAY,report/results/1293009.csv
+1293010,Pakistan Super League,"National Stadium, Karachi",Twenty20,11th Match,night match,337,10,KK,PZ,PZ,PZ,AWAY,report/results/1293010.csv
+1293011,Pakistan Super League,"National Stadium, Karachi",Twenty20,12th Match,day/night match,340,14,IU,LQ,LQ,LQ,AWAY,report/results/1293011.csv
+1293012,Pakistan Super League,"National Stadium, Karachi",Twenty20,13th Match,night match,387,11,PZ,MS,MS,MS,AWAY,report/results/1293012.csv
+1278676,West Indies tour of India,"Narendra Modi Stadium, Ahmedabad",ODI,1st ODI,day/night match,354,14,INDIA,WI,WI,INDIA,HOME,report/results/1278676.csv
+1293013,Pakistan Super League,"National Stadium, Karachi",Twenty20,14th Match,night match,312,15,KK,IU,IU,IU,AWAY,report/results/1293013.csv
+1296705,Bangladesh Premier League,Sylhet International Cricket Stadium,Twenty20,21st Match,day match,278,14,CV,BRSAL,BRSAL,BRSAL,AWAY,report/results/1296705.csv
+1293014,Pakistan Super League,"National Stadium, Karachi",Twenty20,15th Match,night match,411,8,QG,LQ,LQ,QG,HOME,report/results/1293014.csv
+1278677,West Indies tour of India,"Narendra Modi Stadium, Ahmedabad",ODI,2nd ODI,day/night match,430,19,INDIA,WI,INDIA,INDIA,HOME,report/results/1278677.csv
+1293015,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,16th Match,night match,322,17,MS,PZ,MS,MS,HOME,report/results/1293015.csv
+1278678,West Indies tour of India,"Narendra Modi Stadium, Ahmedabad",ODI,3rd ODI,day/night match,434,20,INDIA,WI,INDIA,INDIA,HOME,report/results/1278678.csv
+1263471,Sri Lanka tour of Australia,Sydney Cricket Ground,T20I,1st T20I,night match,271,17,AUS,SL,AUS,AUS,HOME,report/results/1263471.csv
+1293016,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,17th Match,night match,312,14,LQ,MS,LQ,LQ,HOME,report/results/1293016.csv
+1293017,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,18th Match,night match,402,13,IU,QG,IU,QG,AWAY,report/results/1293017.csv
+1293019,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,20th Match,night match,284,9,LQ,QG,QG,LQ,HOME,report/results/1293019.csv
+1293018,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,19th Match,day/night match,331,12,PZ,KK,PZ,PZ,HOME,report/results/1293018.csv
+1263472,Sri Lanka tour of Australia,Sydney Cricket Ground,T20I,2nd T20I,night match,328,14,AUS,SL,AUS,SL,AWAY,report/results/1263472.csv
