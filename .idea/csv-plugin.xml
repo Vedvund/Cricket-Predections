@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/reports/results/1263471.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reports/results/1263472.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/reports/results/1278676.csv">
           <value>
             <Attribute>
@@ -18,6 +32,13 @@
           </value>
         </entry>
         <entry key="/reports/results/1278677.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reports/results/1293002.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -52,7 +73,28 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/reports/results/1293016.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reports/results/1293019.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/reports/results/1296705.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/testDatabase/1278678.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
