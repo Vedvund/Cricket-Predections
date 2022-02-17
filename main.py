@@ -581,11 +581,11 @@ def getInternationalRecordsTable(player_id) -> None:
                 # 3.2A Extract runs
                 bat2 = 0
                 bat1 = getRunsSimplified(records_dict["Bat1"][i])
-                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB" or bat1 == "sub":
+                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB" or bat1 == "sub" or bat1 == "absent":
                     bat1 = 0
                 if "Bat2" in records_dict:
                     bat2 = getRunsSimplified(records_dict["Bat2"][i])
-                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB" or bat2 == "sub":
+                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB" or bat2 == "sub" or bat2 == "absent":
                     bat2 = 0
                 runs = int(bat1) + int(bat2)
                 table["BAT"].append(runs)
