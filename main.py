@@ -1224,10 +1224,12 @@ def getPlayerTeamDetails(match_api, match_df):
     home_away = []
     target_chase = []
     team = []
+    opposite_team = []
     for i, r in match_df.iterrows():
         if r["NAME"] in team_1_player_names:
             home_away.append("HOME")
             team.append(home_team)
+            opposite_team.append(away_team)
             if home_team == team_batting_first:
                 target_chase.append("TARGET")
             else:
@@ -1235,12 +1237,13 @@ def getPlayerTeamDetails(match_api, match_df):
         else:
             home_away.append("AWAY")
             team.append(away_team)
+            opposite_team.append(home_team)
             if away_team == team_batting_first:
                 target_chase.append("TARGET")
             else:
                 target_chase.append("CHASE")
 
-    return home_away, target_chase, team
+    return home_away, target_chase, team, opposite_team
 
 
 def getFinalMatchReport():
@@ -1264,13 +1267,15 @@ def getFinalMatchReport():
 
     # 3.0 extract player-details if necessary
     match_api = Match(match_id)
-    home_away, target_chase, team_name = getPlayerTeamDetails(match_api, match_df)
+    home_away, target_chase, team_name, opposite_team = getPlayerTeamDetails(match_api, match_df)
     match_df["HOME_AWAY"] = home_away
     match_df["TARGET_CHASE"] = target_chase
     match_df["TEAM_NAME"] = team_name
+    match_df["VS_TEAM"] = opposite_team
 
     # 4.0 Rearrange columns of DataFrame
-    cols = ['NAME', 'POSITION', 'TEAM_NAME', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM', 'INT_FORM', 'INT_CLASS_FORM',
+    cols = ['NAME', 'POSITION', 'TEAM_NAME', 'VS_TEAM', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM', 'INT_FORM',
+            'INT_CLASS_FORM',
             'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
     match_df = match_df[cols]
     match_df.to_csv(f"reports/results/{match_id}.csv", index=False)
@@ -1325,7 +1330,8 @@ def getAllTop5():
         match_df = pd.read_csv(f"reports/results/{matchID}.csv")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
 
-        result = match_df.iloc[[0, 1, 2, 3, 4]]
+        # result = match_df.iloc[[0, 1, 2, 3, 4]]
+        result = match_df.iloc[[0, 1, 2]]
         frames = [top5_df, result]
         top5_df = pd.concat(frames)
 

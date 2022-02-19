@@ -29,3 +29,7 @@ MATCH_ID,SERIES_NAME,GROUND_NAME,MATCH_CLASS,MATCH_TITLE,LIGHTING,MATCH_RUNS,MAT
 1263473,Sri Lanka tour of Australia,"Manuka Oval, Canberra",T20I,3rd T20I,night match,245,10,AUS,SL,SL,AUS,HOME,report/results/1263473.csv
 1293022,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,23rd Match,night match,350,9,MS,KK,KK,MS,HOME,report/results/1293022.csv
 1278679,West Indies tour of India,"Eden Gardens, Kolkata",T20I,1st T20I,night match,319,11,INDIA,WI,WI,INDIA,HOME,report/results/1278679.csv
+1293023,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,24th Match,night match,402,15,IU,PZ,PZ,PZ,AWAY,report/results/1293023.csv
+1278680,West Indies tour of India,"Eden Gardens, Kolkata",T20I,2nd T20I,night match,364,8,INDIA,WI,INDIA,INDIA,HOME,report/results/1278680.csv
+1263474,Sri Lanka tour of Australia,Melbourne Cricket Ground,T20I,4th T20I,night match,282,12,AUS,SL,SL,AUS,HOME,report/results/1263474.csv
+1293025,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,26th Match,night match,276,19,LQ,KK,KK,KK,AWAY,report/results/1293025.csv

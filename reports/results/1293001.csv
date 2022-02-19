@@ -1,23 +1,23 @@
-NAME,POSITION,TEAM_NAME,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
-Ahsan Ali,2 Batsmen,QG,HOME,TARGET,6.33,0.0,0.0,0.0,6.0,0.0,103.0
-Ashir Qureshi,Unknown,QG,HOME,TARGET,4.33,0.0,0.0,0.0,4.0,0.0,2.0
-Ben Cutting,Allrounder,PZ,AWAY,CHASE,1.97,0.0,0.0,1.97,1.5,0.25,4.0
-Ben Duckett,Top-order batter,QG,HOME,TARGET,3.86,0.0,0.0,3.86,4.5,2.25,2.0
-Haider Ali,Middle-order batter,PZ,AWAY,CHASE,4.12,2.52,2.52,3.79,5.5,4.5,26.0
-Hussain Talat,3 All Rounder,PZ,AWAY,CHASE,4.55,1.21,1.21,5.3,6.5,5.75,77.0
-Iftikhar Ahmed,Middle-order batter,QG,HOME,TARGET,3.82,1.75,1.75,1.57,3.5,1.5,29.0
-James Faulkner,Bowling allrounder,QG,HOME,TARGET,6.51,0.0,0.0,0.0,6.0,0.0,27.0
-Mohammad Hasnain,Bowler,QG,HOME,TARGET,3.6,4.22,4.47,4.11,5.0,6.0,8.0
-Mohammad Nawaz,3 All Rounder,QG,HOME,TARGET,4.95,5.02,4.83,5.75,6.5,8.5,95.0
-Naseem Shah,Bowler,QG,HOME,TARGET,5.48,0.67,0.0,4.66,7.0,5.0,33.0
-Pat Brown,Bowler,PZ,AWAY,CHASE,2.5,0.0,0.0,4.05,4.0,2.0,20.0
-Sameen Gul,Bowler,PZ,AWAY,CHASE,4.7,0.0,0.0,0.0,4.0,0.0,60.0
-Sarfaraz Ahmed,Wicketkeeper batter,QG,HOME,TARGET,2.96,0.78,0.55,3.85,3.5,1.5,12.0
-Sherfane Rutherford,Middle-order batter,PZ,AWAY,CHASE,2.46,0.0,0.0,1.52,2.5,0.5,24.0
-Shoaib Malik,Allrounder,PZ,AWAY,CHASE,4.44,2.2,2.2,4.44,6.0,5.5,67.0
-Sohail Khan,Bowler,PZ,AWAY,CHASE,7.44,0.0,0.0,6.46,10.0,10.5,4.0
-Sohail Tanvir,Bowler,QG,HOME,TARGET,2.76,0.0,0.0,2.75,3.0,1.0,-2.0
-Tom Kohler-Cadmore,Batter,PZ,AWAY,CHASE,4.62,0.0,0.0,4.62,6.0,4.0,33.0
-Usman Qadir,Bowler,PZ,AWAY,CHASE,3.99,4.57,4.73,3.85,4.5,5.25,58.0
-Will Smeed,Batter,QG,HOME,TARGET,2.4,0.0,0.0,2.93,3.0,1.0,132.0
-Yasir Khan,Unknown,PZ,AWAY,CHASE,0.0,0.0,0.0,0.0,0.0,0.0,
+NAME,POSITION,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
+Ahsan Ali,2 Batsmen,QG,PZ,HOME,TARGET,6.33,0.0,0.0,0.0,6.0,0.0,103.0
+Ashir Qureshi,Unknown,QG,PZ,HOME,TARGET,4.33,0.0,0.0,0.0,4.0,0.0,2.0
+Ben Cutting,Allrounder,PZ,QG,AWAY,CHASE,1.97,0.0,0.0,1.97,1.5,0.25,4.0
+Ben Duckett,Top-order batter,QG,PZ,HOME,TARGET,3.86,0.0,0.0,3.86,4.5,2.25,2.0
+Haider Ali,Middle-order batter,PZ,QG,AWAY,CHASE,4.12,2.52,2.52,3.79,5.5,4.5,26.0
+Hussain Talat,3 All Rounder,PZ,QG,AWAY,CHASE,4.55,1.21,1.21,5.3,6.5,5.75,77.0
+Iftikhar Ahmed,Middle-order batter,QG,PZ,HOME,TARGET,3.82,1.75,1.75,1.57,3.5,1.5,29.0
+James Faulkner,Bowling allrounder,QG,PZ,HOME,TARGET,6.51,0.0,0.0,0.0,6.0,0.0,27.0
+Mohammad Hasnain,Bowler,QG,PZ,HOME,TARGET,3.6,4.22,4.47,4.11,5.0,6.0,8.0
+Mohammad Nawaz,3 All Rounder,QG,PZ,HOME,TARGET,4.95,5.02,4.83,5.75,6.5,8.5,95.0
+Naseem Shah,Bowler,QG,PZ,HOME,TARGET,5.48,0.67,0.0,4.66,7.0,5.0,33.0
+Pat Brown,Bowler,PZ,QG,AWAY,CHASE,2.5,0.0,0.0,4.05,4.0,2.0,20.0
+Sameen Gul,Bowler,PZ,QG,AWAY,CHASE,4.7,0.0,0.0,0.0,4.0,0.0,60.0
+Sarfaraz Ahmed,Wicketkeeper batter,QG,PZ,HOME,TARGET,2.96,0.78,0.55,3.85,3.5,1.5,12.0
+Sherfane Rutherford,Middle-order batter,PZ,QG,AWAY,CHASE,2.46,0.0,0.0,1.52,2.5,0.5,24.0
+Shoaib Malik,Allrounder,PZ,QG,AWAY,CHASE,4.44,2.2,2.2,4.44,6.0,5.5,67.0
+Sohail Khan,Bowler,PZ,QG,AWAY,CHASE,7.44,0.0,0.0,6.46,10.0,10.5,4.0
+Sohail Tanvir,Bowler,QG,PZ,HOME,TARGET,2.76,0.0,0.0,2.75,3.0,1.0,-2.0
+Tom Kohler-Cadmore,Batter,PZ,QG,AWAY,CHASE,4.62,0.0,0.0,4.62,6.0,4.0,33.0
+Usman Qadir,Bowler,PZ,QG,AWAY,CHASE,3.99,4.57,4.73,3.85,4.5,5.25,58.0
+Will Smeed,Batter,QG,PZ,HOME,TARGET,2.4,0.0,0.0,2.93,3.0,1.0,132.0
+Yasir Khan,Unknown,PZ,QG,AWAY,CHASE,0.0,0.0,0.0,0.0,0.0,0.0,
