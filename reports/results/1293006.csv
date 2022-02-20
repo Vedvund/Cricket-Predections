@@ -1,23 +1,23 @@
-NAME,POSITION,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
-Abbas Afridi,4 Bowler,MS,QG,AWAY,TARGET,5.357,0.0,0.0,0.0,5.0,0.0,4
-Ahsan Ali,2 Batsmen,QG,MS,HOME,CHASE,7.727,0.0,0.0,11.431,12.5,19.25,33
-Ashir Qureshi,Unknown,QG,MS,HOME,CHASE,3.092,0.0,0.0,0.0,3.0,0.0,4
-Ben Duckett,2 Batsmen,QG,MS,HOME,CHASE,3.673,0.0,0.0,3.673,4.5,2.25,73
-David Willey,3 All Rounder,MS,QG,AWAY,TARGET,6.021,5.61,4.025,6.303,9.0,12.5,87
-Iftikhar Ahmed,2 Batsmen,QG,MS,HOME,CHASE,3.097,1.745,1.745,1.269,3.5,1.5,63
-Imran Khan,4 Bowler,MS,QG,AWAY,TARGET,3.411,0.0,0.0,0.0,3.0,0.0,-2
-Imran Tahir,4 Bowler,MS,QG,AWAY,TARGET,8.063,0.0,0.0,9.107,12.5,18.0,109
-James Faulkner,3 All Rounder,QG,MS,HOME,CHASE,5.172,0.0,0.0,4.434,7.0,5.0,55
-Khushdil Shah,2 Batsmen,MS,QG,AWAY,TARGET,3.682,2.074,2.074,3.682,4.5,3.75,115
-Mohammad Hasnain,4 Bowler,QG,MS,HOME,CHASE,3.526,4.216,4.466,3.675,4.5,5.25,56
-Mohammad Nawaz,3 All Rounder,QG,MS,HOME,CHASE,5.494,5.016,4.83,5.706,7.5,9.75,5
-Mohammad Rizwan,1 Wicketkeeper,MS,QG,AWAY,TARGET,7.545,5.95,7.6,8.84,11.0,18.25,10
-Naseem Shah,4 Bowler,QG,MS,HOME,CHASE,7.514,0.67,0.0,11.44,12.5,19.25,3
-Rilee Rossouw,2 Batsmen,MS,QG,AWAY,TARGET,3.814,0.0,0.0,4.379,5.0,3.0,35
-Sarfaraz Ahmed,1 Wicketkeeper,QG,MS,HOME,CHASE,2.602,0.781,0.544,3.344,3.5,1.5,27
-Shahnawaz Dahani,4 Bowler,MS,QG,AWAY,TARGET,2.935,4.481,4.481,2.925,3.0,4.0,4
-Shan Masood,2 Batsmen,MS,QG,AWAY,TARGET,6.333,0.0,0.0,5.868,8.5,7.5,124
-Sohaib Maqsood,2 Batsmen,MS,QG,AWAY,TARGET,2.664,1.46,1.16,2.664,3.0,1.75,29
-Sohail Tanvir,4 Bowler,QG,MS,HOME,CHASE,2.972,0.0,0.0,2.972,3.0,1.0,20
-Tim David,3 All Rounder,MS,QG,AWAY,TARGET,2.911,0.0,0.0,2.911,3.0,1.0,59
-Will Smeed,2 Batsmen,QG,MS,HOME,CHASE,4.308,0.0,0.0,6.116,7.0,6.0,15
+NAME,POSITION,GROUND,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
+Abbas Afridi,4 Bowler,"National Stadium, Karachi",MS,QG,AWAY,TARGET,5.357,0.0,0.0,0.0,5.0,0.0,4
+Ahsan Ali,2 Batsmen,"National Stadium, Karachi",QG,MS,HOME,CHASE,7.727,0.0,0.0,11.431,12.5,19.25,33
+Ashir Qureshi,Unknown,"National Stadium, Karachi",QG,MS,HOME,CHASE,3.092,0.0,0.0,0.0,3.0,0.0,4
+Ben Duckett,2 Batsmen,"National Stadium, Karachi",QG,MS,HOME,CHASE,3.673,0.0,0.0,3.673,4.5,2.25,73
+David Willey,3 All Rounder,"National Stadium, Karachi",MS,QG,AWAY,TARGET,6.021,5.61,4.025,6.303,9.0,12.5,87
+Iftikhar Ahmed,2 Batsmen,"National Stadium, Karachi",QG,MS,HOME,CHASE,3.097,1.745,1.745,1.269,3.5,1.5,63
+Imran Khan,4 Bowler,"National Stadium, Karachi",MS,QG,AWAY,TARGET,3.411,0.0,0.0,0.0,3.0,0.0,-2
+Imran Tahir,4 Bowler,"National Stadium, Karachi",MS,QG,AWAY,TARGET,8.063,0.0,0.0,9.107,12.5,18.0,109
+James Faulkner,3 All Rounder,"National Stadium, Karachi",QG,MS,HOME,CHASE,5.172,0.0,0.0,4.434,7.0,5.0,55
+Khushdil Shah,2 Batsmen,"National Stadium, Karachi",MS,QG,AWAY,TARGET,3.682,2.074,2.074,3.682,4.5,3.75,115
+Mohammad Hasnain,4 Bowler,"National Stadium, Karachi",QG,MS,HOME,CHASE,3.526,4.216,4.466,3.675,4.5,5.25,56
+Mohammad Nawaz,3 All Rounder,"National Stadium, Karachi",QG,MS,HOME,CHASE,5.494,5.016,4.83,5.706,7.5,9.75,5
+Mohammad Rizwan,1 Wicketkeeper,"National Stadium, Karachi",MS,QG,AWAY,TARGET,7.545,5.95,7.6,8.84,11.0,18.25,10
+Naseem Shah,4 Bowler,"National Stadium, Karachi",QG,MS,HOME,CHASE,7.514,0.67,0.0,11.44,12.5,19.25,3
+Rilee Rossouw,2 Batsmen,"National Stadium, Karachi",MS,QG,AWAY,TARGET,3.814,0.0,0.0,4.379,5.0,3.0,35
+Sarfaraz Ahmed,1 Wicketkeeper,"National Stadium, Karachi",QG,MS,HOME,CHASE,2.602,0.781,0.544,3.344,3.5,1.5,27
+Shahnawaz Dahani,4 Bowler,"National Stadium, Karachi",MS,QG,AWAY,TARGET,2.935,4.481,4.481,2.925,3.0,4.0,4
+Shan Masood,2 Batsmen,"National Stadium, Karachi",MS,QG,AWAY,TARGET,6.333,0.0,0.0,5.868,8.5,7.5,124
+Sohaib Maqsood,2 Batsmen,"National Stadium, Karachi",MS,QG,AWAY,TARGET,2.664,1.46,1.16,2.664,3.0,1.75,29
+Sohail Tanvir,4 Bowler,"National Stadium, Karachi",QG,MS,HOME,CHASE,2.972,0.0,0.0,2.972,3.0,1.0,20
+Tim David,3 All Rounder,"National Stadium, Karachi",MS,QG,AWAY,TARGET,2.911,0.0,0.0,2.911,3.0,1.0,59
+Will Smeed,2 Batsmen,"National Stadium, Karachi",QG,MS,HOME,CHASE,4.308,0.0,0.0,6.116,7.0,6.0,15

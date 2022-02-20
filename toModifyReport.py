@@ -57,7 +57,9 @@ def getPlayerTeamDetails(match_api, match_df):
     target_chase = []
     team = []
     opposite_team = []
+    ground = []
     for i, r in match_df.iterrows():
+        ground.append(match_api.ground_name)
         if r["NAME"] in team_1_player_names:
             home_away.append("HOME")
             team.append(home_team)
@@ -75,7 +77,7 @@ def getPlayerTeamDetails(match_api, match_df):
             else:
                 target_chase.append("CHASE")
 
-    return home_away, target_chase, team, opposite_team
+    return home_away, target_chase, team, opposite_team, ground
 
 
 path = "reports/allMatchesData.csv"
@@ -83,13 +85,16 @@ report_df = pd.read_csv(path)
 
 for index, row in report_df.iterrows():
     match_id = row["MATCH_ID"]
+    print(f"working on {match_id}")
 
     match_api = Match(match_id)
     match_df = pd.read_csv(f"reports/results/{match_id}.csv")
-    home_away, target_chase, team, opposite_team = getPlayerTeamDetails(match_api, match_df)
+    home_away, target_chase, team, opposite_team, ground_name = getPlayerTeamDetails(match_api, match_df)
     match_df["VS_TEAM"] = opposite_team
+    match_df["GROUND"] = ground_name
 
-    cols = ['NAME', 'POSITION', 'TEAM_NAME', 'VS_TEAM', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM', 'INT_FORM', 'INT_CLASS_FORM',
+    cols = ['NAME', 'POSITION', 'GROUND', 'TEAM_NAME', 'VS_TEAM', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM',
+            'INT_FORM', 'INT_CLASS_FORM',
             'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
     match_df = match_df[cols]
     match_df.to_csv(f"reports/results/{match_id}.csv", index=False)

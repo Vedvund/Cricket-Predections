@@ -1,23 +1,23 @@
-NAME,POSITION,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
-Aaron Finch,2 Batsmen,AUS,SL,HOME,TARGET,5.101,4.255,4.255,5.101,7.5,9.25,32
-Adam Zampa,4 Bowler,AUS,SL,HOME,TARGET,5.559,6.015,5.788,5.559,7.5,10.5,39
-Avishka Fernando,2 Batsmen,SL,AUS,AWAY,CHASE,4.897,2.392,1.55,5.224,6.5,6.25,10
-Ben McDermott,1 Wicketkeeper,AUS,SL,HOME,TARGET,6.559,2.735,3.098,6.559,9.0,10.75,33
-Chamika Karunaratne,4 Bowler,SL,AUS,AWAY,CHASE,5.542,4.045,3.467,4.889,7.0,7.75,4
-Charith Asalanka,3 All Rounder,SL,AUS,AWAY,CHASE,6.39,4.984,5.207,5.157,8.5,10.75,2
-Danushka Gunathilaka,3 All Rounder,SL,AUS,AWAY,CHASE,3.428,4.425,2.786,3.7,4.5,4.75,10
-Dasun Shanaka,3 All Rounder,SL,AUS,AWAY,CHASE,2.342,3.37,3.881,1.48,2.5,2.75,64
-Dinesh Chandimal,1 Wicketkeeper,SL,AUS,AWAY,CHASE,3.337,3.134,3.766,3.833,4.5,4.5,46
-Dushmantha Chameera,4 Bowler,SL,AUS,AWAY,CHASE,4.747,4.8,4.952,4.974,6.0,7.0,59
-Glenn Maxwell,3 All Rounder,AUS,SL,HOME,TARGET,6.243,3.36,3.36,6.243,9.0,11.25,21
-Josh Hazlewood,4 Bowler,AUS,SL,HOME,TARGET,7.231,7.222,7.374,8.475,11.0,19.25,87
-Josh Inglis,1 Wicketkeeper,AUS,SL,HOME,TARGET,2.548,3.305,3.305,2.796,3.0,3.25,71
-Kane Richardson,4 Bowler,AUS,SL,HOME,TARGET,7.646,5.049,5.049,7.646,10.5,16.0,27
-Maheesh Theekshana,4 Bowler,SL,AUS,AWAY,CHASE,4.925,4.235,3.972,5.721,6.5,7.75,45
-Marcus Stoinis,3 All Rounder,AUS,SL,HOME,TARGET,3.326,3.194,3.194,3.326,4.5,4.5,49
-Matthew Wade,1 Wicketkeeper,AUS,SL,HOME,TARGET,2.907,2.298,2.119,2.907,3.0,2.5,28
-Nuwan Thushara,4 Bowler,SL,AUS,AWAY,CHASE,4.647,0.0,0.0,4.923,6.0,4.0,27
-Pat Cummins,4 Bowler,AUS,SL,HOME,TARGET,5.051,5.596,3.574,2.498,6.0,5.75,59
-Pathum Nissanka,2 Batsmen,SL,AUS,AWAY,CHASE,3.524,3.226,3.968,2.467,4.0,3.75,98
-Steven Smith,2 Batsmen,AUS,SL,HOME,TARGET,1.598,2.798,1.69,0.432,1.0,1.25,31
-Wanindu Hasaranga de Silva,3 All Rounder,SL,AUS,AWAY,CHASE,6.576,7.619,9.873,6.576,9.0,14.75,77
+NAME,POSITION,GROUND,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
+Aaron Finch,2 Batsmen,Sydney Cricket Ground,AUS,SL,HOME,TARGET,5.101,4.255,4.255,5.101,7.5,9.25,32
+Adam Zampa,4 Bowler,Sydney Cricket Ground,AUS,SL,HOME,TARGET,5.559,6.015,5.788,5.559,7.5,10.5,39
+Avishka Fernando,2 Batsmen,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,4.897,2.392,1.55,5.224,6.5,6.25,10
+Ben McDermott,1 Wicketkeeper,Sydney Cricket Ground,AUS,SL,HOME,TARGET,6.559,2.735,3.098,6.559,9.0,10.75,33
+Chamika Karunaratne,4 Bowler,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,5.542,4.045,3.467,4.889,7.0,7.75,4
+Charith Asalanka,3 All Rounder,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,6.39,4.984,5.207,5.157,8.5,10.75,2
+Danushka Gunathilaka,3 All Rounder,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,3.428,4.425,2.786,3.7,4.5,4.75,10
+Dasun Shanaka,3 All Rounder,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,2.342,3.37,3.881,1.48,2.5,2.75,64
+Dinesh Chandimal,1 Wicketkeeper,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,3.337,3.134,3.766,3.833,4.5,4.5,46
+Dushmantha Chameera,4 Bowler,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,4.747,4.8,4.952,4.974,6.0,7.0,59
+Glenn Maxwell,3 All Rounder,Sydney Cricket Ground,AUS,SL,HOME,TARGET,6.243,3.36,3.36,6.243,9.0,11.25,21
+Josh Hazlewood,4 Bowler,Sydney Cricket Ground,AUS,SL,HOME,TARGET,7.231,7.222,7.374,8.475,11.0,19.25,87
+Josh Inglis,1 Wicketkeeper,Sydney Cricket Ground,AUS,SL,HOME,TARGET,2.548,3.305,3.305,2.796,3.0,3.25,71
+Kane Richardson,4 Bowler,Sydney Cricket Ground,AUS,SL,HOME,TARGET,7.646,5.049,5.049,7.646,10.5,16.0,27
+Maheesh Theekshana,4 Bowler,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,4.925,4.235,3.972,5.721,6.5,7.75,45
+Marcus Stoinis,3 All Rounder,Sydney Cricket Ground,AUS,SL,HOME,TARGET,3.326,3.194,3.194,3.326,4.5,4.5,49
+Matthew Wade,1 Wicketkeeper,Sydney Cricket Ground,AUS,SL,HOME,TARGET,2.907,2.298,2.119,2.907,3.0,2.5,28
+Nuwan Thushara,4 Bowler,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,4.647,0.0,0.0,4.923,6.0,4.0,27
+Pat Cummins,4 Bowler,Sydney Cricket Ground,AUS,SL,HOME,TARGET,5.051,5.596,3.574,2.498,6.0,5.75,59
+Pathum Nissanka,2 Batsmen,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,3.524,3.226,3.968,2.467,4.0,3.75,98
+Steven Smith,2 Batsmen,Sydney Cricket Ground,AUS,SL,HOME,TARGET,1.598,2.798,1.69,0.432,1.0,1.25,31
+Wanindu Hasaranga de Silva,3 All Rounder,Sydney Cricket Ground,SL,AUS,AWAY,CHASE,6.576,7.619,9.873,6.576,9.0,14.75,77

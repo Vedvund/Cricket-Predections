@@ -33,3 +33,4 @@ MATCH_ID,SERIES_NAME,GROUND_NAME,MATCH_CLASS,MATCH_TITLE,LIGHTING,MATCH_RUNS,MAT
 1278680,West Indies tour of India,"Eden Gardens, Kolkata",T20I,2nd T20I,night match,364,8,INDIA,WI,INDIA,INDIA,HOME,report/results/1278680.csv
 1263474,Sri Lanka tour of Australia,Melbourne Cricket Ground,T20I,4th T20I,night match,282,12,AUS,SL,SL,AUS,HOME,report/results/1263474.csv
 1293025,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,26th Match,night match,276,19,LQ,KK,KK,KK,AWAY,report/results/1293025.csv
+1293026,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,27th Match,night match,328,15,LQ,IU,LQ,LQ,HOME,report/results/1293026.csv

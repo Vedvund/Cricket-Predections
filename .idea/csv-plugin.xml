@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/reports/results/1278679.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/reports/results/1293002.csv">
           <value>
             <Attribute>
@@ -88,6 +95,13 @@
           </value>
         </entry>
         <entry key="/reports/results/1293019.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/reports/results/1293023.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

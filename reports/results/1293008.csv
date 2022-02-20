@@ -1,23 +1,23 @@
-NAME,POSITION,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
-Abdullah Shafique,2 Batsmen,LQ,PZ,AWAY,TARGET,3.045,4.567,0.0,3.161,4.5,4.25,58
-Arish Ali Khan,4 Bowler,PZ,LQ,HOME,CHASE,6.495,0.0,0.0,0.0,6.0,0.0,0
-Ben Cutting,3 All Rounder,PZ,LQ,HOME,CHASE,2.184,0.0,0.0,2.184,3.0,1.0,24
-David Wiese,3 All Rounder,LQ,PZ,AWAY,TARGET,2.692,7.834,7.834,3.339,3.5,6.75,64
-Dean Foxcroft,Unknown,LQ,PZ,AWAY,TARGET,6.597,0.0,0.0,4.264,8.0,6.0,12
-Fakhar Zaman,2 Batsmen,LQ,PZ,AWAY,TARGET,6.276,3.608,2.874,6.574,9.0,11.0,116
-Haider Ali,2 Batsmen,PZ,LQ,HOME,CHASE,4.719,2.516,2.516,4.107,6.0,5.5,68
-Haris Rauf,4 Bowler,LQ,PZ,AWAY,TARGET,7.689,4.602,4.382,6.992,10.0,13.5,12
-Hazratullah Zazai,2 Batsmen,PZ,LQ,HOME,CHASE,8.575,3.081,3.081,0.0,8.0,2.25,10
-Hussain Talat,3 All Rounder,PZ,LQ,HOME,CHASE,3.419,1.209,1.209,3.042,4.5,3.0,44
-Kamran Akmal,1 Wicketkeeper,PZ,LQ,HOME,CHASE,3.713,0.0,0.0,3.078,4.5,2.25,71
-Kamran Ghulam,Unknown,LQ,PZ,AWAY,TARGET,5.458,0.0,0.0,7.035,8.5,8.75,45
-Mohammad Hafeez,3 All Rounder,LQ,PZ,AWAY,TARGET,3.57,2.753,2.753,2.748,4.0,3.0,56
-Rashid Khan,4 Bowler,LQ,PZ,AWAY,TARGET,7.654,8.255,7.443,7.813,10.5,18.0,57
-Salman Irshad,3 All Rounder,PZ,LQ,HOME,CHASE,4.406,0.0,0.0,4.942,6.0,4.0,51
-Shaheen Shah Afridi,4 Bowler,LQ,PZ,AWAY,TARGET,6.527,5.422,4.544,6.05,9.0,12.5,76
-Sherfane Rutherford,2 Batsmen,PZ,LQ,HOME,CHASE,3.037,0.0,0.0,3.264,4.5,2.25,36
-Shoaib Malik,3 All Rounder,PZ,LQ,HOME,CHASE,4.968,2.199,2.199,4.968,6.0,5.5,18
-Usman Qadir,4 Bowler,PZ,LQ,HOME,CHASE,4.788,3.781,3.879,4.735,6.0,6.25,36
-Wahab Riaz,4 Bowler,PZ,LQ,HOME,CHASE,5.175,0.0,0.0,6.965,8.0,7.5,4
-Zaman Khan,Unknown,LQ,PZ,AWAY,TARGET,2.322,0.0,0.0,2.019,3.0,1.0,99
-Zeeshan Ashraf,1 Wicketkeeper,LQ,PZ,AWAY,TARGET,4.998,0.0,0.0,0.0,4.0,0.0,4
+NAME,POSITION,GROUND,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
+Abdullah Shafique,2 Batsmen,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,3.045,4.567,0.0,3.161,4.5,4.25,58
+Arish Ali Khan,4 Bowler,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,6.495,0.0,0.0,0.0,6.0,0.0,0
+Ben Cutting,3 All Rounder,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,2.184,0.0,0.0,2.184,3.0,1.0,24
+David Wiese,3 All Rounder,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,2.692,7.834,7.834,3.339,3.5,6.75,64
+Dean Foxcroft,Unknown,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,6.597,0.0,0.0,4.264,8.0,6.0,12
+Fakhar Zaman,2 Batsmen,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,6.276,3.608,2.874,6.574,9.0,11.0,116
+Haider Ali,2 Batsmen,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,4.719,2.516,2.516,4.107,6.0,5.5,68
+Haris Rauf,4 Bowler,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,7.689,4.602,4.382,6.992,10.0,13.5,12
+Hazratullah Zazai,2 Batsmen,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,8.575,3.081,3.081,0.0,8.0,2.25,10
+Hussain Talat,3 All Rounder,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,3.419,1.209,1.209,3.042,4.5,3.0,44
+Kamran Akmal,1 Wicketkeeper,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,3.713,0.0,0.0,3.078,4.5,2.25,71
+Kamran Ghulam,Unknown,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,5.458,0.0,0.0,7.035,8.5,8.75,45
+Mohammad Hafeez,3 All Rounder,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,3.57,2.753,2.753,2.748,4.0,3.0,56
+Rashid Khan,4 Bowler,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,7.654,8.255,7.443,7.813,10.5,18.0,57
+Salman Irshad,3 All Rounder,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,4.406,0.0,0.0,4.942,6.0,4.0,51
+Shaheen Shah Afridi,4 Bowler,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,6.527,5.422,4.544,6.05,9.0,12.5,76
+Sherfane Rutherford,2 Batsmen,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,3.037,0.0,0.0,3.264,4.5,2.25,36
+Shoaib Malik,3 All Rounder,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,4.968,2.199,2.199,4.968,6.0,5.5,18
+Usman Qadir,4 Bowler,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,4.788,3.781,3.879,4.735,6.0,6.25,36
+Wahab Riaz,4 Bowler,"National Stadium, Karachi",PZ,LQ,HOME,CHASE,5.175,0.0,0.0,6.965,8.0,7.5,4
+Zaman Khan,Unknown,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,2.322,0.0,0.0,2.019,3.0,1.0,99
+Zeeshan Ashraf,1 Wicketkeeper,"National Stadium, Karachi",LQ,PZ,AWAY,TARGET,4.998,0.0,0.0,0.0,4.0,0.0,4

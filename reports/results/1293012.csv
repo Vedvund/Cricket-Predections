@@ -1,23 +1,23 @@
-NAME,POSITION,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
-Abbas Afridi,4 Bowler,MS,PZ,AWAY,TARGET,4.369,0.0,0.0,0.0,4.0,0.0,39
-Anwar Ali,4 Bowler,MS,PZ,AWAY,TARGET,2.154,0.0,0.0,4.277,4.0,2.0,0
-Ben Cutting,3 All Rounder,PZ,MS,HOME,CHASE,1.664,0.0,0.0,1.664,1.5,0.25,81
-Blessing Muzarabani,4 Bowler,MS,PZ,AWAY,TARGET,5.895,4.646,3.918,0.0,5.0,2.75,29
-Haider Ali,2 Batsmen,PZ,MS,HOME,CHASE,4.745,2.516,2.516,4.144,6.0,5.5,40
-Hazratullah Zazai,2 Batsmen,PZ,MS,HOME,CHASE,7.965,3.081,3.081,3.493,8.5,7.5,60
-Imran Tahir,4 Bowler,MS,PZ,AWAY,TARGET,7.185,0.0,0.0,8.01,11.0,14.0,85
-Johnson Charles,1 Wicketkeeper,MS,PZ,AWAY,TARGET,3.692,0.0,0.0,0.0,3.0,0.0,12
-Kamran Akmal,1 Wicketkeeper,PZ,MS,HOME,CHASE,3.66,0.0,0.0,3.824,4.5,2.25,16
-Khushdil Shah,2 Batsmen,MS,PZ,AWAY,TARGET,5.531,2.074,2.074,5.531,7.5,7.75,45
-Mohammad Rizwan,1 Wicketkeeper,MS,PZ,AWAY,TARGET,6.626,5.95,7.6,7.692,9.5,14.75,136
-Mohammad Umar,4 Bowler,PZ,MS,HOME,CHASE,5.853,0.0,0.0,6.684,8.0,7.5,7
-Salman Irshad,4 Bowler,PZ,MS,HOME,CHASE,3.771,0.0,0.0,3.671,4.5,2.25,29
-Saqib Mahmood,4 Bowler,PZ,MS,HOME,CHASE,5.273,5.057,2.397,5.485,7.5,9.25,6
-Shahnawaz Dahani,4 Bowler,MS,PZ,AWAY,TARGET,2.935,4.481,4.481,2.925,3.0,4.0,81
-Shan Masood,2 Batsmen,MS,PZ,AWAY,TARGET,6.848,0.0,0.0,6.726,9.0,9.0,50
-Sherfane Rutherford,2 Batsmen,PZ,MS,HOME,CHASE,2.74,0.0,0.0,3.045,3.5,1.5,14
-Shoaib Malik,3 All Rounder,PZ,MS,HOME,CHASE,4.528,2.199,2.199,4.528,6.0,5.5,40
-Sohaib Maqsood,2 Batsmen,MS,PZ,AWAY,TARGET,2.269,1.46,1.16,2.269,3.0,1.75,44
-Tim David,3 All Rounder,MS,PZ,AWAY,TARGET,3.63,0.0,0.0,3.63,4.5,2.25,91
-Usman Qadir,4 Bowler,PZ,MS,HOME,CHASE,4.119,3.781,3.879,3.992,5.5,5.25,47
-Wahab Riaz,4 Bowler,PZ,MS,HOME,CHASE,4.179,0.0,0.0,5.224,6.5,5.0,0
+NAME,POSITION,GROUND,TEAM_NAME,VS_TEAM,HOME_AWAY,TARGET_CHASE,RECENT_FORM,INT_FORM,INT_CLASS_FORM,RECENT_CLASS_FORM,RECENT_PREDICTION,INT_PREDICTION,DREAM11
+Abbas Afridi,4 Bowler,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,4.369,0.0,0.0,0.0,4.0,0.0,39
+Anwar Ali,4 Bowler,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,2.154,0.0,0.0,4.277,4.0,2.0,0
+Ben Cutting,3 All Rounder,"National Stadium, Karachi",PZ,MS,HOME,CHASE,1.664,0.0,0.0,1.664,1.5,0.25,81
+Blessing Muzarabani,4 Bowler,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,5.895,4.646,3.918,0.0,5.0,2.75,29
+Haider Ali,2 Batsmen,"National Stadium, Karachi",PZ,MS,HOME,CHASE,4.745,2.516,2.516,4.144,6.0,5.5,40
+Hazratullah Zazai,2 Batsmen,"National Stadium, Karachi",PZ,MS,HOME,CHASE,7.965,3.081,3.081,3.493,8.5,7.5,60
+Imran Tahir,4 Bowler,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,7.185,0.0,0.0,8.01,11.0,14.0,85
+Johnson Charles,1 Wicketkeeper,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,3.692,0.0,0.0,0.0,3.0,0.0,12
+Kamran Akmal,1 Wicketkeeper,"National Stadium, Karachi",PZ,MS,HOME,CHASE,3.66,0.0,0.0,3.824,4.5,2.25,16
+Khushdil Shah,2 Batsmen,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,5.531,2.074,2.074,5.531,7.5,7.75,45
+Mohammad Rizwan,1 Wicketkeeper,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,6.626,5.95,7.6,7.692,9.5,14.75,136
+Mohammad Umar,4 Bowler,"National Stadium, Karachi",PZ,MS,HOME,CHASE,5.853,0.0,0.0,6.684,8.0,7.5,7
+Salman Irshad,4 Bowler,"National Stadium, Karachi",PZ,MS,HOME,CHASE,3.771,0.0,0.0,3.671,4.5,2.25,29
+Saqib Mahmood,4 Bowler,"National Stadium, Karachi",PZ,MS,HOME,CHASE,5.273,5.057,2.397,5.485,7.5,9.25,6
+Shahnawaz Dahani,4 Bowler,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,2.935,4.481,4.481,2.925,3.0,4.0,81
+Shan Masood,2 Batsmen,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,6.848,0.0,0.0,6.726,9.0,9.0,50
+Sherfane Rutherford,2 Batsmen,"National Stadium, Karachi",PZ,MS,HOME,CHASE,2.74,0.0,0.0,3.045,3.5,1.5,14
+Shoaib Malik,3 All Rounder,"National Stadium, Karachi",PZ,MS,HOME,CHASE,4.528,2.199,2.199,4.528,6.0,5.5,40
+Sohaib Maqsood,2 Batsmen,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,2.269,1.46,1.16,2.269,3.0,1.75,44
+Tim David,3 All Rounder,"National Stadium, Karachi",MS,PZ,AWAY,TARGET,3.63,0.0,0.0,3.63,4.5,2.25,91
+Usman Qadir,4 Bowler,"National Stadium, Karachi",PZ,MS,HOME,CHASE,4.119,3.781,3.879,3.992,5.5,5.25,47
+Wahab Riaz,4 Bowler,"National Stadium, Karachi",PZ,MS,HOME,CHASE,4.179,0.0,0.0,5.224,6.5,5.0,0
