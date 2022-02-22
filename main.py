@@ -1579,3 +1579,4 @@ if __name__ == '__main__':
     if tossStatus and (input("Is the match over? (y/n) ") == "y"):
         createReport()
         deleteMatchFiles()
+
