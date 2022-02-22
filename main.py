@@ -581,11 +581,11 @@ def getInternationalRecordsTable(player_id) -> None:
                 # 3.2A Extract runs
                 bat2 = 0
                 bat1 = getRunsSimplified(records_dict["Bat1"][i])
-                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB" or bat1 == "sub":
+                if bat1 == "DNB" or bat1 == "-" or bat1 == "TDNB" or bat1 == "sub" or bat1 == "absent":
                     bat1 = 0
                 if "Bat2" in records_dict:
                     bat2 = getRunsSimplified(records_dict["Bat2"][i])
-                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB" or bat2 == "sub":
+                if bat2 == "DNB" or bat2 == "-" or bat2 == "TDNB" or bat2 == "sub" or bat2 == "absent":
                     bat2 = 0
                 runs = int(bat1) + int(bat2)
                 table["BAT"].append(runs)
@@ -1223,21 +1223,29 @@ def getPlayerTeamDetails(match_api, match_df):
     # 4.0 find home_away and target_chase details of the player
     home_away = []
     target_chase = []
-    for index, row in match_df.iterrows():
-        if row["NAME"] in team_1_player_names:
+    team = []
+    opposite_team = []
+    ground = []
+    for i, r in match_df.iterrows():
+        ground.append(match_api.ground_name)
+        if r["NAME"] in team_1_player_names:
             home_away.append("HOME")
+            team.append(home_team)
+            opposite_team.append(away_team)
             if home_team == team_batting_first:
                 target_chase.append("TARGET")
             else:
                 target_chase.append("CHASE")
         else:
             home_away.append("AWAY")
+            team.append(away_team)
+            opposite_team.append(home_team)
             if away_team == team_batting_first:
                 target_chase.append("TARGET")
             else:
                 target_chase.append("CHASE")
 
-    return home_away, target_chase
+    return home_away, target_chase, team, opposite_team, ground
 
 
 def getFinalMatchReport():
@@ -1261,13 +1269,16 @@ def getFinalMatchReport():
 
     # 3.0 extract player-details if necessary
     match_api = Match(match_id)
-    home_away, target_chase = getPlayerTeamDetails(match_api, match_df)
+    home_away, target_chase, team_name, opposite_team, ground_name = getPlayerTeamDetails(match_api, match_df)
     match_df["HOME_AWAY"] = home_away
     match_df["TARGET_CHASE"] = target_chase
+    match_df["TEAM_NAME"] = team_name
+    match_df["VS_TEAM"] = opposite_team
+    match_df["GROUND"] = ground_name
 
     # 4.0 Rearrange columns of DataFrame
-    cols = ['NAME', 'POSITION', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM', 'INT_FORM', 'INT_CLASS_FORM',
-            'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
+    cols = ['NAME', 'POSITION', 'GROUND', 'TEAM_NAME', 'VS_TEAM', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM',
+            'INT_FORM', 'INT_CLASS_FORM', 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
     match_df = match_df[cols]
     match_df.to_csv(f"reports/results/{match_id}.csv", index=False)
     pass
@@ -1312,8 +1323,9 @@ def getAllTop5():
     # 2.0 create empty top5 dataframe
     all_match_ids.sort()
     top5_df = pd.DataFrame(
-        columns=['NAME', 'POSITION', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM', 'INT_FORM', 'INT_CLASS_FORM',
-                 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
+        columns=['NAME', 'POSITION', 'GROUND', 'TEAM_NAME', 'VS_TEAM', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM',
+                 'INT_FORM',
+                 'INT_CLASS_FORM', 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
     )
 
     # 3.0 Extract top 5 players from the similar matches and add them to the top5 dataframe
@@ -1321,7 +1333,9 @@ def getAllTop5():
         match_df = pd.read_csv(f"reports/results/{matchID}.csv")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
 
+        # result = match_df.iloc[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
         result = match_df.iloc[[0, 1, 2, 3, 4]]
+        # result = match_df.iloc[[0, 1, 2]]
         frames = [top5_df, result]
         top5_df = pd.concat(frames)
 
