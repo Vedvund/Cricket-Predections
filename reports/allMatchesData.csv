@@ -41,3 +41,7 @@ MATCH_ID,SERIES_NAME,GROUND_NAME,MATCH_CLASS,MATCH_TITLE,LIGHTING,MATCH_RUNS,MAT
 1293029,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,30th Match,night match,316,15,LQ,PZ,PZ,PZ,AWAY,report/results/1293029.csv
 1293030,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,Qualifier,night match,298,11,LQ,MS,MS,MS,AWAY,report/results/1293030.csv
 1299829,Afghanistan tour of Bangladesh,"Zahur Ahmed Chowdhury Stadium, Chattogram",ODI,1st ODI,day/night match,434,16,BAN,AFG,AFG,BAN,HOME,report/results/1299829.csv
+1293031,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,Eliminator 1,night match,339,10,IU,PZ,PZ,IU,HOME,report/results/1293031.csv
+1278684,Sri Lanka tour of India,"Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",T20I,1st T20I,night match,336,8,INDIA,SL,INDIA,INDIA,HOME,report/results/1278684.csv
+1293032,Pakistan Super League,"Gaddafi Stadium, Lahore",Twenty20,Eliminator 2,night match,330,17,LQ,IU,LQ,LQ,HOME,report/results/1293032.csv
+1299830,Afghanistan tour of Bangladesh,"Zahur Ahmed Chowdhury Stadium, Chattogram",ODI,2nd ODI,day/night match,524,14,BAN,AFG,BAN,BAN,HOME,report/results/1299830.csv
