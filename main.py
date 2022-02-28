@@ -1324,8 +1324,7 @@ def getAllTop5():
     all_match_ids.sort()
     top5_df = pd.DataFrame(
         columns=['NAME', 'POSITION', 'GROUND', 'TEAM_NAME', 'VS_TEAM', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM',
-                 'INT_FORM',
-                 'INT_CLASS_FORM', 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
+                 'INT_FORM', 'INT_CLASS_FORM', 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
     )
 
     # 3.0 Extract top 5 players from the similar matches and add them to the top5 dataframe
@@ -1579,4 +1578,3 @@ if __name__ == '__main__':
     if tossStatus and (input("Is the match over? (y/n) ") == "y"):
         createReport()
         deleteMatchFiles()
-
