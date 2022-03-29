@@ -21,7 +21,7 @@ import requests
 # Global Variable
 # global bothSquadDetails
 bothSquadDetails = {}
-sleepTime = 2
+sleepTime = 1
 totalPlayers = 0
 pagesLeft = 0
 matchUrl = ""
@@ -1111,7 +1111,7 @@ def clientInputs() -> None:
     intPeriod = 1
 
     # 4. Enter current match class
-    matchClass = input(" please enter type of match class (T20/Test/ODI): ")
+    matchClass = input("please enter type of match class (T20/Test/ODI): ")
 
     # 5. Check directory before going forward
     checkDirectory()
@@ -1308,7 +1308,7 @@ def getAllTop5():
     # 4.0 Sort top5 dataframe
     :return: DataFrame
     """
-    global matchUrl
+    global matchUrl, bothSquadDetails
     # 1.0 Get similar match ids form reports/allMatchesData.csv file
     all_matches_data_df = pd.read_csv("reports/allMatchesData.csv")
     match_id = getMatchId(matchUrl)
@@ -1317,8 +1317,16 @@ def getAllTop5():
 
     all_match_ids = []
     for index, row in all_matches_data_df.iterrows():
-        if row["MATCH_CLASS"] == match_class:
-            all_match_ids.append(row["MATCH_ID"])
+        all_match_ids.append(row["MATCH_ID"])
+        # if row["MATCH_CLASS"] == match_class:
+        #     all_match_ids.append(row["MATCH_ID"])
+
+    # Upgrade under progress
+    both_teams_playing_11_names = []
+    for player_id in bothSquadDetails:
+        if bothSquadDetails[player_id]["PLAYING_11_STATUS"]:
+            both_teams_playing_11_names.append(bothSquadDetails[player_id]["NAME"])
+
 
     # 2.0 create empty top5 dataframe
     all_match_ids.sort()
@@ -1332,9 +1340,19 @@ def getAllTop5():
         match_df = pd.read_csv(f"reports/results/{matchID}.csv")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
 
+        # Upgrade under progress
+        rows_list = []
+        row_id = 0
+        for index, row in match_df.iterrows():
+            if row['NAME'] in both_teams_playing_11_names:
+                rows_list.append(row_id)
+            row_id += 1
+
         # result = match_df.iloc[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
-        result = match_df.iloc[[0, 1, 2, 3, 4]]
+        # result = match_df.iloc[[0, 1, 2, 3, 4]]
         # result = match_df.iloc[[0, 1, 2]]
+        result = match_df.iloc[rows_list]
+
         frames = [top5_df, result]
         top5_df = pd.concat(frames)
 

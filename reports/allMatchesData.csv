@@ -52,3 +52,7 @@ MATCH_ID,SERIES_NAME,GROUND_NAME,MATCH_CLASS,MATCH_TITLE,LIGHTING,MATCH_RUNS,MAT
 1299832,Afghanistan tour of Bangladesh,"Shere Bangla National Stadium, Mirpur",T20I,1st T20I,day/night match,249,18,BAN,AFG,BAN,BAN,HOME,report/results/1299832.csv
 1299833,Afghanistan tour of Bangladesh,"Shere Bangla National Stadium, Mirpur",T20I,2nd T20I,day/night match,236,11,BAN,AFG,BAN,AFG,AWAY,report/results/1299833.csv
 1278682,Sri Lanka tour of India,"Punjab Cricket Association IS Bindra Stadium, Mohali, Chandigarh",Test,1st Test,day match,926,28,INDIA,SL,INDIA,INDIA,HOME,report/results/1278682.csv
+1304047,Indian Premier League,"Wankhede Stadium, Mumbai",Twenty20,1st Match,night match,264,9,CSK,KKR,CSK,KKR,AWAY,report/results/1304047.csv
+1304048,Indian Premier League,"Brabourne Stadium, Mumbai",Twenty20,2nd Match,day/night match,356,11,DC,MI,MI,DC,HOME,report/results/1304048.csv
+1304049,Indian Premier League,"Dr DY Patil Sports Academy, Mumbai",Twenty20,3rd Match,night match,413,7,PBKS,RCB,RCB,PBKS,HOME,report/results/1304049.csv
+1304050,Indian Premier League,"Wankhede Stadium, Mumbai",Twenty20,4th Match,night match,319,11,GT,LSG,LSG,GT,HOME,report/results/1304050.csv
