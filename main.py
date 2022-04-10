@@ -190,7 +190,7 @@ def getPlayerMatchUrl(player_url) -> None or str:
     # 1. Extract tab widgets from url
     html_text = requests.get(player_url, time.sleep(sleepTime)).text
     soup = BeautifulSoup(html_text, "lxml")
-    tab_widgets = soup.find_all("a", class_="widget-tab-link")
+    tab_widgets = soup.find_all("a", class_="ds-h-10")
 
     # 2. check if the matches' page exists
     if len(tab_widgets) < 2:
@@ -198,7 +198,7 @@ def getPlayerMatchUrl(player_url) -> None or str:
 
     # 3. if exists then extract the url
     for i in range(len(tab_widgets)):
-        page_url = soup.find_all("a", class_="widget-tab-link")[i]['href']
+        page_url = soup.find_all("a", class_="ds-h-10")[i]['href']
         if "matches" in page_url:
             return "https://www.espncricinfo.com" + page_url
 
@@ -325,12 +325,13 @@ def downloadRecentMatchRecords(player_matches_url, player_id) -> None:
     table_headers = soup.find_all("th")
     df_columns = []
     for header in table_headers:
-        if header.text == "FORMAT":
+        header = header.text.upper()
+        if header == "FORMAT":
             df_columns.append("MATCH_ID")
             table_body["MATCH_ID"] = []
         else:
-            df_columns.append(header.text)
-            table_body[header.text] = []
+            df_columns.append(header)
+            table_body[header] = []
 
     # 3.2B Get match ids for generating additional info and update table_body
     recent_matches_ids = []
@@ -1317,16 +1318,15 @@ def getAllTop5():
 
     all_match_ids = []
     for index, row in all_matches_data_df.iterrows():
-        all_match_ids.append(row["MATCH_ID"])
-        # if row["MATCH_CLASS"] == match_class:
-        #     all_match_ids.append(row["MATCH_ID"])
+        # all_match_ids.append(row["MATCH_ID"])
+        if row["MATCH_CLASS"] == match_class:
+            all_match_ids.append(row["MATCH_ID"])
 
     # Upgrade under progress
     both_teams_playing_11_names = []
     for player_id in bothSquadDetails:
         if bothSquadDetails[player_id]["PLAYING_11_STATUS"]:
             both_teams_playing_11_names.append(bothSquadDetails[player_id]["NAME"])
-
 
     # 2.0 create empty top5 dataframe
     all_match_ids.sort()

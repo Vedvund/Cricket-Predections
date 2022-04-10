@@ -63,3 +63,10 @@ MATCH_ID,SERIES_NAME,GROUND_NAME,MATCH_CLASS,MATCH_TITLE,LIGHTING,MATCH_RUNS,MAT
 1304055,Indian Premier League,"Dr DY Patil Sports Academy, Mumbai",Twenty20,9th Match,day/night match,363,16,MI,RR,RR,RR,AWAY,report/results/1304055.csv
 1304056,Indian Premier League,"Maharashtra Cricket Association Stadium, Pune",Twenty20,10th Match,night match,328,15,GT,DC,GT,GT,HOME,report/results/1304056.csv
 1304057,Indian Premier League,"Brabourne Stadium, Mumbai",Twenty20,11th Match,night match,306,18,CSK,PBKS,PBKS,PBKS,AWAY,report/results/1304057.csv
+1304058,Indian Premier League,"Dr DY Patil Sports Academy, Mumbai",Twenty20,12th Match,night match,326,16,SRH,LSG,LSG,LSG,AWAY,report/results/1304058.csv
+1304059,Indian Premier League,"Wankhede Stadium, Mumbai",Twenty20,13th Match,night match,342,9,RR,RCB,RR,RCB,AWAY,report/results/1304059.csv
+1304060,Indian Premier League,"Maharashtra Cricket Association Stadium, Pune",Twenty20,14th Match,night match,323,9,KKR,MI,MI,KKR,HOME,report/results/1304060.csv
+1304061,Indian Premier League,"Dr DY Patil Sports Academy, Mumbai",Twenty20,15th Match,night match,304,7,LSG,DC,DC,LSG,HOME,report/results/1304061.csv
+1304062,Indian Premier League,"Brabourne Stadium, Mumbai",Twenty20,16th Match,night match,379,13,PBKS,GT,PBKS,GT,AWAY,report/results/1304062.csv
+1304063,Indian Premier League,"Dr DY Patil Sports Academy, Mumbai",Twenty20,17th Match,day/night match,309,9,CSK,SRH,CSK,SRH,AWAY,report/results/1304063.csv
+1304064,Indian Premier League,"Maharashtra Cricket Association Stadium, Pune",Twenty20,18th Match,night match,303,9,RCB,MI,MI,RCB,HOME,report/results/1304064.csv
