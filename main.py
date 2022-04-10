@@ -1301,12 +1301,12 @@ def createReport():
     pass
 
 
-def getAllTop5():
+def getAllTop11():
     """
     # 1.0 Get similar match ids form reports/allMatchesData.csv file
-    # 2.0 create empty top5 dataframe
-    # 3.0 Extract top 5 players from the similar matches and add them to the top5 dataframe
-    # 4.0 Sort top5 dataframe
+    # 2.0 create empty top11 dataframe
+    # 3.0 Extract top 5 players from the similar matches and add them to the top11 dataframe
+    # 4.0 Sort top11 dataframe
     :return: DataFrame
     """
     global matchUrl, bothSquadDetails
@@ -1328,14 +1328,14 @@ def getAllTop5():
         if bothSquadDetails[player_id]["PLAYING_11_STATUS"]:
             both_teams_playing_11_names.append(bothSquadDetails[player_id]["NAME"])
 
-    # 2.0 create empty top5 dataframe
+    # 2.0 create empty top11 dataframe
     all_match_ids.sort()
-    top5_df = pd.DataFrame(
+    top11_df = pd.DataFrame(
         columns=['NAME', 'POSITION', 'GROUND', 'TEAM_NAME', 'VS_TEAM', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM',
                  'INT_FORM', 'INT_CLASS_FORM', 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
     )
 
-    # 3.0 Extract top 5 players from the similar matches and add them to the top5 dataframe
+    # 3.0 Extract top 5 players from the similar matches and add them to the top11 dataframe
     for matchID in all_match_ids:
         match_df = pd.read_csv(f"reports/results/{matchID}.csv")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
@@ -1348,33 +1348,33 @@ def getAllTop5():
                 rows_list.append(row_id)
             row_id += 1
 
-        # result = match_df.iloc[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
+        result = match_df.iloc[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
         # result = match_df.iloc[[0, 1, 2, 3, 4]]
         # result = match_df.iloc[[0, 1, 2]]
-        result = match_df.iloc[rows_list]
+        # result = match_df.iloc[rows_list]
 
-        frames = [top5_df, result]
-        top5_df = pd.concat(frames)
+        frames = [top11_df, result]
+        top11_df = pd.concat(frames)
 
-    # 4.0 Sort top5 dataframe
-    top5_df = top5_df.sort_values(by=['INT_FORM'], ascending=False)
-    top5_df = top5_df.sort_values(by=['POSITION'], ascending=False)
-    top5_df = top5_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
-    top5_df.to_csv("currentMatchReports/top5.csv", index=False)
-    return top5_df
+    # 4.0 Sort top11 dataframe
+    top11_df = top11_df.sort_values(by=['INT_FORM'], ascending=False)
+    top11_df = top11_df.sort_values(by=['POSITION'], ascending=False)
+    top11_df = top11_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
+    top11_df.to_csv("currentMatchReports/top11.csv", index=False)
+    return top11_df
 
 
-def getTopPlayersInsights(top5_df):
+def getTopPlayersInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         recent_prediction = round(row["RECENT_PREDICTION"], 1)
         if recent_prediction not in frequency:
             frequency[recent_prediction] = 0
@@ -1399,17 +1399,17 @@ def getTopPlayersInsights(top5_df):
     pass
 
 
-def getTopBattingInsights(top5_df):
+def getTopBattingInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         if row["POSITION"] == "2 Batsmen":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
@@ -1435,17 +1435,17 @@ def getTopBattingInsights(top5_df):
     pass
 
 
-def getTopBowlingInsights(top5_df):
+def getTopBowlingInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         if row["POSITION"] == "4 Bowler":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
@@ -1471,17 +1471,17 @@ def getTopBowlingInsights(top5_df):
     pass
 
 
-def getTopAllRounderInsights(top5_df):
+def getTopAllRounderInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         if row["POSITION"] == "3 All Rounder":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
@@ -1507,17 +1507,17 @@ def getTopAllRounderInsights(top5_df):
     pass
 
 
-def getTopWicketKeeperInsights(top5_df):
+def getTopWicketKeeperInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         if row["POSITION"] == "1 Wicketkeeper":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
@@ -1544,12 +1544,12 @@ def getTopWicketKeeperInsights(top5_df):
 
 
 def getInsights():
-    top5_df = getAllTop5()
-    getTopPlayersInsights(top5_df)
-    getTopBattingInsights(top5_df)
-    getTopBowlingInsights(top5_df)
-    getTopAllRounderInsights(top5_df)
-    getTopWicketKeeperInsights(top5_df)
+    top11_df = getAllTop11()
+    getTopPlayersInsights(top11_df)
+    getTopBattingInsights(top11_df)
+    getTopBowlingInsights(top11_df)
+    getTopAllRounderInsights(top11_df)
+    getTopWicketKeeperInsights(top11_df)
     pass
 
 
