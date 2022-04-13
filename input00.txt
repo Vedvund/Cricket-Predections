@@ -1,8 +1,0 @@
-https://www.espncricinfo.com/series/indian-premier-league-2022-1298423/rajasthan-royals-vs-lucknow-super-giants-20th-match-1304066/live-cricket-score
-n # VPM Status
-T20 # Type of Match
-n # Toss status
-y # Playing 11 Status
-y # Playing 11 availability Status
-y # Match insights
-n # Match over
