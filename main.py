@@ -435,7 +435,10 @@ def getRecentMatchRecords() -> None:
                 f"for {player_id} recent matches records are already downloaded & {pagesLeft} pages to download in recent match records")
         else:
             player_matches_url = getPlayerMatchUrl(bothSquadDetails[player_id]["URL"])
-            downloadRecentMatchRecords(player_matches_url, player_id)
+            try:
+                downloadRecentMatchRecords(player_matches_url, player_id)
+            except Exception as e:
+                print(f"Error occurred while downloading recent matches of {player_id} player, Error: {e}")
     pass
 
 
