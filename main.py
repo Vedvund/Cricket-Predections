@@ -1010,7 +1010,7 @@ def getPlaying11Statistics() -> None:
 
     # 1.0 Create table dictionary with empty values
     table = {"NAME": [], "POSITION": [], "RECENT_FORM": [], "INT_FORM": [], "INT_CLASS_FORM": [],
-             "RECENT_CLASS_FORM": [], "RECENT_PREDICTION": [], "INT_PREDICTION": []}
+             "RECENT_CLASS_FORM": [], "RECENT_PREDICTION": [], "INT_PREDICTION": [], 'FAN-CODE': [], 'CAPTAIN_PLAYER': []}
 
     # 2.0 check PLAYING_11_STATUS in bothSquadDetails and extract data and append them to the table
     for player in bothSquadDetails:
@@ -1038,6 +1038,9 @@ def getPlaying11Statistics() -> None:
 
             int_class = bothSquadDetails[player]["INT_PREDICTION"]
             table["INT_PREDICTION"].append(round(int_class, 3))
+
+            table["FAN-CODE"].append("0")
+            table["CAPTAIN_PLAYER"].append("n")
 
     # 3.0 Create csv file from table dictionary
     match_id = getMatchId(matchUrl)
