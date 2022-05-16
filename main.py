@@ -1111,7 +1111,7 @@ def clientInputs() -> None:
     intPeriod = 1
 
     # 4. Enter current match class
-    matchClass = input(" please enter type of match class (T20/Test/ODI): ")
+    matchClass = input("please enter type of match class (T20/Test/ODI): ")
 
     # 5. Check directory before going forward
     checkDirectory()
