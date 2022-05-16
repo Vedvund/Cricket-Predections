@@ -21,7 +21,7 @@ import requests
 # Global Variable
 # global bothSquadDetails
 bothSquadDetails = {}
-sleepTime = 2
+sleepTime = 1
 totalPlayers = 0
 pagesLeft = 0
 matchUrl = ""
@@ -190,7 +190,7 @@ def getPlayerMatchUrl(player_url) -> None or str:
     # 1. Extract tab widgets from url
     html_text = requests.get(player_url, time.sleep(sleepTime)).text
     soup = BeautifulSoup(html_text, "lxml")
-    tab_widgets = soup.find_all("a", class_="widget-tab-link")
+    tab_widgets = soup.find_all("a", class_="ds-h-10")
 
     # 2. check if the matches' page exists
     if len(tab_widgets) < 2:
@@ -198,7 +198,7 @@ def getPlayerMatchUrl(player_url) -> None or str:
 
     # 3. if exists then extract the url
     for i in range(len(tab_widgets)):
-        page_url = soup.find_all("a", class_="widget-tab-link")[i]['href']
+        page_url = soup.find_all("a", class_="ds-h-10")[i]['href']
         if "matches" in page_url:
             return "https://www.espncricinfo.com" + page_url
 
@@ -325,12 +325,13 @@ def downloadRecentMatchRecords(player_matches_url, player_id) -> None:
     table_headers = soup.find_all("th")
     df_columns = []
     for header in table_headers:
-        if header.text == "FORMAT":
+        header = header.text.upper()
+        if header == "FORMAT":
             df_columns.append("MATCH_ID")
             table_body["MATCH_ID"] = []
         else:
-            df_columns.append(header.text)
-            table_body[header.text] = []
+            df_columns.append(header)
+            table_body[header] = []
 
     # 3.2B Get match ids for generating additional info and update table_body
     recent_matches_ids = []
@@ -434,7 +435,10 @@ def getRecentMatchRecords() -> None:
                 f"for {player_id} recent matches records are already downloaded & {pagesLeft} pages to download in recent match records")
         else:
             player_matches_url = getPlayerMatchUrl(bothSquadDetails[player_id]["URL"])
-            downloadRecentMatchRecords(player_matches_url, player_id)
+            try:
+                downloadRecentMatchRecords(player_matches_url, player_id)
+            except Exception as e:
+                print(f"Error occurred while downloading recent matches of {player_id} player, Error: {e}")
     pass
 
 
@@ -1006,7 +1010,7 @@ def getPlaying11Statistics() -> None:
 
     # 1.0 Create table dictionary with empty values
     table = {"NAME": [], "POSITION": [], "RECENT_FORM": [], "INT_FORM": [], "INT_CLASS_FORM": [],
-             "RECENT_CLASS_FORM": [], "RECENT_PREDICTION": [], "INT_PREDICTION": []}
+             "RECENT_CLASS_FORM": [], "RECENT_PREDICTION": [], "INT_PREDICTION": [], 'FAN-CODE': [], 'CAPTAIN_PLAYER': []}
 
     # 2.0 check PLAYING_11_STATUS in bothSquadDetails and extract data and append them to the table
     for player in bothSquadDetails:
@@ -1034,6 +1038,9 @@ def getPlaying11Statistics() -> None:
 
             int_class = bothSquadDetails[player]["INT_PREDICTION"]
             table["INT_PREDICTION"].append(round(int_class, 3))
+
+            table["FAN-CODE"].append("0")
+            table["CAPTAIN_PLAYER"].append("n")
 
     # 3.0 Create csv file from table dictionary
     match_id = getMatchId(matchUrl)
@@ -1300,15 +1307,15 @@ def createReport():
     pass
 
 
-def getAllTop5():
+def getAllTop11():
     """
     # 1.0 Get similar match ids form reports/allMatchesData.csv file
-    # 2.0 create empty top5 dataframe
-    # 3.0 Extract top 5 players from the similar matches and add them to the top5 dataframe
-    # 4.0 Sort top5 dataframe
+    # 2.0 create empty top11 dataframe
+    # 3.0 Extract top 5 players from the similar matches and add them to the top11 dataframe
+    # 4.0 Sort top11 dataframe
     :return: DataFrame
     """
-    global matchUrl
+    global matchUrl, bothSquadDetails
     # 1.0 Get similar match ids form reports/allMatchesData.csv file
     all_matches_data_df = pd.read_csv("reports/allMatchesData.csv")
     match_id = getMatchId(matchUrl)
@@ -1317,47 +1324,63 @@ def getAllTop5():
 
     all_match_ids = []
     for index, row in all_matches_data_df.iterrows():
+        # all_match_ids.append(row["MATCH_ID"])
         if row["MATCH_CLASS"] == match_class:
             all_match_ids.append(row["MATCH_ID"])
 
-    # 2.0 create empty top5 dataframe
+    # Upgrade under progress
+    both_teams_playing_11_names = []
+    for player_id in bothSquadDetails:
+        if bothSquadDetails[player_id]["PLAYING_11_STATUS"]:
+            both_teams_playing_11_names.append(bothSquadDetails[player_id]["NAME"])
+
+    # 2.0 create empty top11 dataframe
     all_match_ids.sort()
-    top5_df = pd.DataFrame(
+    top11_df = pd.DataFrame(
         columns=['NAME', 'POSITION', 'GROUND', 'TEAM_NAME', 'VS_TEAM', 'HOME_AWAY', 'TARGET_CHASE', 'RECENT_FORM',
-                 'INT_FORM',
-                 'INT_CLASS_FORM', 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
+                 'INT_FORM', 'INT_CLASS_FORM', 'RECENT_CLASS_FORM', 'RECENT_PREDICTION', 'INT_PREDICTION', 'DREAM11']
     )
 
-    # 3.0 Extract top 5 players from the similar matches and add them to the top5 dataframe
+    # 3.0 Extract top 5 players from the similar matches and add them to the top11 dataframe
     for matchID in all_match_ids:
         match_df = pd.read_csv(f"reports/results/{matchID}.csv")
         match_df = match_df.sort_values(by=['DREAM11'], ascending=False)
 
-        # result = match_df.iloc[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
-        result = match_df.iloc[[0, 1, 2, 3, 4]]
+        # Upgrade under progress
+        rows_list = []
+        row_id = 0
+        for index, row in match_df.iterrows():
+            if row['NAME'] in both_teams_playing_11_names:
+                rows_list.append(row_id)
+            row_id += 1
+
+        result = match_df.iloc[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]]
+        # result = match_df.iloc[[0, 1, 2, 3, 4]]
         # result = match_df.iloc[[0, 1, 2]]
-        frames = [top5_df, result]
-        top5_df = pd.concat(frames)
+        # result = match_df.iloc[rows_list]
 
-    # 4.0 Sort top5 dataframe
-    top5_df = top5_df.sort_values(by=['INT_FORM'], ascending=False)
-    top5_df = top5_df.sort_values(by=['POSITION'], ascending=False)
-    top5_df = top5_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
-    top5_df.to_csv("currentMatchReports/top5.csv", index=False)
-    return top5_df
+        frames = [top11_df, result]
+        top11_df = pd.concat(frames)
+
+    # 4.0 Sort top11 dataframe
+    top11_df = top11_df.sort_values(by=['INT_FORM'], ascending=False)
+    top11_df = top11_df.sort_values(by=['POSITION'], ascending=False)
+    top11_df = top11_df.sort_values(by=['RECENT_PREDICTION'], ascending=False)
+    top11_df.to_csv("currentMatchReports/top11.csv", index=False)
+    return top11_df
 
 
-def getTopPlayersInsights(top5_df):
+def getTopPlayersInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         recent_prediction = round(row["RECENT_PREDICTION"], 1)
         if recent_prediction not in frequency:
             frequency[recent_prediction] = 0
@@ -1382,17 +1405,17 @@ def getTopPlayersInsights(top5_df):
     pass
 
 
-def getTopBattingInsights(top5_df):
+def getTopBattingInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         if row["POSITION"] == "2 Batsmen":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
@@ -1418,17 +1441,17 @@ def getTopBattingInsights(top5_df):
     pass
 
 
-def getTopBowlingInsights(top5_df):
+def getTopBowlingInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         if row["POSITION"] == "4 Bowler":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
@@ -1454,17 +1477,17 @@ def getTopBowlingInsights(top5_df):
     pass
 
 
-def getTopAllRounderInsights(top5_df):
+def getTopAllRounderInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         if row["POSITION"] == "3 All Rounder":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
@@ -1490,17 +1513,17 @@ def getTopAllRounderInsights(top5_df):
     pass
 
 
-def getTopWicketKeeperInsights(top5_df):
+def getTopWicketKeeperInsights(top11_df):
     """
     # 1.0 get frequency count
     # 2.0 creating the dataset
     # 3.0 creating the bar plot
-    :param top5_df: DataFrame
+    :param top11_df: DataFrame
     :return:
     """
     # 1.0 get frequency count
     frequency = {}
-    for index, row in top5_df.iterrows():
+    for index, row in top11_df.iterrows():
         if row["POSITION"] == "1 Wicketkeeper":
             recent_prediction = round(row["RECENT_PREDICTION"], 1)
             if recent_prediction not in frequency:
@@ -1527,12 +1550,12 @@ def getTopWicketKeeperInsights(top5_df):
 
 
 def getInsights():
-    top5_df = getAllTop5()
-    getTopPlayersInsights(top5_df)
-    getTopBattingInsights(top5_df)
-    getTopBowlingInsights(top5_df)
-    getTopAllRounderInsights(top5_df)
-    getTopWicketKeeperInsights(top5_df)
+    top11_df = getAllTop11()
+    getTopPlayersInsights(top11_df)
+    getTopBattingInsights(top11_df)
+    getTopBowlingInsights(top11_df)
+    getTopAllRounderInsights(top11_df)
+    getTopWicketKeeperInsights(top11_df)
     pass
 
 
